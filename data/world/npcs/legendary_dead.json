@@ -1,0 +1,70 @@
+{
+  "description": "이미 죽었으나 강호에 그림자가 남은 자들. 그들의 비급·유물·원한이 살아있다.",
+  "ancient_legends": [
+    {
+      "id": "ld_former_cheonma_blood",
+      "name": "전대 천마 — 혈룡(血龍)",
+      "died": "60년 전 정마대전 종결시",
+      "highest_realm": "hyeongyeong_wansuk",
+      "legacy": "혈마대법 완성자. 무림맹 일곱 절정고수와 동귀어진. 그의 비급은 행방불명. 시신도 찾지 못함.",
+      "consequences_today": "그 비급을 찾는 자가 도처에 있다. 후예가 살아있다는 풍문."
+    },
+    {
+      "id": "ld_geomseon",
+      "name": "검선(劍仙) 이백우(李白雨)",
+      "died": "120년 전",
+      "highest_realm": "hyeongyeong_geuk",
+      "legacy": "현경 극의 검도. 그가 남긴 검결(劍訣)은 화산·점창·종남 등에 단편적으로 전해진다.",
+      "consequences_today": "각 정파에 단편으로 남은 그의 검결. 완본은 어디에도 없다."
+    },
+    {
+      "id": "ld_dohyeonseong",
+      "name": "도현성(刀玄星) 우흑(于黑)",
+      "died": "80년 전",
+      "highest_realm": "hwagyeong_geuk",
+      "legacy": "도(刀)의 전설. 그의 도법은 사라졌다.",
+      "consequences_today": "그의 도가 어디 있는지 누구도 모름."
+    },
+    {
+      "id": "ld_dokseong",
+      "name": "독성(毒星) 당광천(唐光天)",
+      "died": "100년 전",
+      "highest_realm": "hwagyeong_chuip",
+      "legacy": "당가의 전설. 천하의 독을 다 알았다. 후손이 현재 가주.",
+      "consequences_today": "당가 비전의 시조."
+    },
+    {
+      "id": "ld_chwiseon",
+      "name": "취선(醉仙) 호일(胡一)",
+      "died": "70년 전",
+      "highest_realm": "hwagyeong_wansuk",
+      "legacy": "개방의 전설. 항룡십팔장의 완성자.",
+      "consequences_today": "그의 비결은 개방 방주에게만 전해진다."
+    },
+    {
+      "id": "ld_amjeon",
+      "name": "암전(暗殿) — 정체 미상",
+      "died": "50년 전",
+      "highest_realm": "hwagyeong_geuk",
+      "legacy": "전대 적살왕. 살문의 신화. 단 한 번 임무를 실패했다는 풍문, 그 후 사라짐.",
+      "consequences_today": "전대 적살왕의 죽음을 의심하는 자도 있다."
+    },
+    {
+      "id": "ld_ahmae",
+      "name": "암매(暗梅)",
+      "died": "약 40년 전",
+      "highest_realm": "chojeoljeong_geuk",
+      "legacy": "한 시대를 풍미한 절세 여 무인. 화산파 출신. 강호 풍문의 시.",
+      "consequences_today": "그녀의 검결은 화산에 비밀히 전해진다."
+    },
+    {
+      "id": "ld_geomma",
+      "name": "검마(劍魔) 한심(韓沈)",
+      "died": "30년 전",
+      "highest_realm": "hwagyeong_chuip",
+      "legacy": "정파 출신이나 사문에서 추방. 마검의 전설. 그의 검은 사라졌다.",
+      "consequences_today": "그의 검을 찾는 자가 있다. 추방의 진실을 아는 자는 소수."
+    }
+  ],
+  "note": "더 오래된 전설(검선·도제·신마 등)은 역사 속의 전설로 강호에 떠돈다. 각 문파에 단편적으로 남은 무공은 자기 문파의 시조라 주장."
+}

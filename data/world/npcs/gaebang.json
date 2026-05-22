@@ -1,0 +1,39 @@
+{
+  "sect_id": "gaebang",
+  "description": "개방. 천하제일대방. 결(結, 매듭)의 수로 계급.",
+  "leadership": [
+    {"id": "gaebang_bangju", "ref": "chwiwang", "note": "팔왕 취왕 호삼 — 방주"}
+  ],
+  "rank_system": "8결~9결: 장로급, 7결: 호법, 6결: 분타주, 5결~4결: 일반 제자, 3결 이하: 외문/평거지",
+  "elders": [
+    {"id": "gaebang_e1", "name": "철곤개(鐵棍丐) 노삼(老三)", "age": 70, "position": "9결 장로", "realm": "hwagyeong_chuip", "notes": "방주의 사형. 비공식 2인자."},
+    {"id": "gaebang_e2", "name": "신산개(神算丐) 백종(白宗)", "age": 67, "position": "9결 장로", "realm": "chojeoljeong_geuk", "personality": "셈에 밝음. 정보 분석.", "notes": ""},
+    {"id": "gaebang_e3", "name": "취룡개(醉龍丐) 마쾌(馬快)", "age": 64, "position": "8결 장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "gaebang_e4", "name": "비풍개(飛風丐) 진걸(陳乞)", "age": 62, "position": "8결 장로", "realm": "jeoljeong_geuk", "notes": "전령."},
+    {"id": "gaebang_e5", "name": "강풍개(强風丐) 우산(于山)", "age": 60, "position": "8결 장로", "realm": "jeoljeong_geuk", "notes": "분쟁 조정."}
+  ],
+  "hodok": [
+    {"id": "gaebang_h1", "name": "취호(醉虎)", "age": 50, "position": "7결 호법", "realm": "jeoljeong_wansuk", "notes": ""},
+    {"id": "gaebang_h2", "name": "취룡(醉龍)", "age": 48, "position": "7결 호법", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "gaebang_h3", "name": "취표(醉豹)", "age": 47, "position": "7결 호법", "realm": "jeoljeong_chuip", "notes": ""}
+  ],
+  "branch_heads": [
+    {"id": "gaebang_b1", "name": "낙양분타주 우삼(于三)", "age": 45, "position": "6결 분타주", "realm": "ilryu_geuk", "notes": "본단 인근 책임."},
+    {"id": "gaebang_b2", "name": "장안분타주 마이(馬二)", "age": 42, "position": "6결 분타주", "realm": "ilryu_wansuk", "notes": "관중 책임."},
+    {"id": "gaebang_b3", "name": "성도분타주 진걸(陳傑)", "age": 40, "position": "6결 분타주", "realm": "ilryu_wansuk", "notes": "사천 책임."},
+    {"id": "gaebang_b4", "name": "남경분타주 양산(楊山)", "age": 41, "position": "6결 분타주", "realm": "ilryu_wansuk", "notes": "강남 책임."},
+    {"id": "gaebang_b5", "name": "북경분타주 호삼(胡三)", "age": 43, "position": "6결 분타주", "realm": "ilryu_chuip", "notes": "(방주와 동명이인)."},
+    {"id": "gaebang_b6", "name": "무한분타주 곽이(郭二)", "age": 39, "position": "6결 분타주", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "gaebang_b7", "name": "항주분타주 정수(鄭水)", "age": 38, "position": "6결 분타주", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "ordinary": [
+    {"id": "gaebang_o1", "name": "장걸(張乞)", "age": 30, "position": "5결 제자", "realm": "iryu_geuk", "notes": ""},
+    {"id": "gaebang_o2", "name": "왕걸(王乞)", "age": 28, "position": "5결 제자", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "gaebang_o3", "name": "이걸(李乞)", "age": 25, "position": "5결 제자", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "gaebang_o4", "name": "조걸(趙乞)", "age": 23, "position": "4결 제자", "realm": "iryu_chuip", "notes": ""},
+    {"id": "gaebang_o5", "name": "전걸(田乞)", "age": 22, "position": "4결 제자", "realm": "iryu_chuip", "notes": ""},
+    {"id": "gaebang_o6", "name": "한걸(韓乞)", "age": 20, "position": "4결 제자", "realm": "iryu_chuip", "notes": ""},
+    {"id": "gaebang_o7", "name": "임소걸(林小乞)", "age": 18, "position": "3결 신참", "realm": "samryu_geuk", "notes": "젊은 신참."},
+    {"id": "gaebang_o8", "name": "주소걸(朱小乞)", "age": 16, "position": "3결 신참", "realm": "samryu_wansuk", "notes": ""}
+  ]
+}

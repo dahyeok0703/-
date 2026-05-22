@@ -1,0 +1,42 @@
+{
+  "sect_id": "wudang",
+  "description": "무당파 인물. 장문인은 supreme_ranks(muwicheon) 참조.",
+  "leadership": [
+    {"id": "wudang_jangmun", "ref": "muwicheon", "note": "육천 무위천 현허진인 — 장문인"}
+  ],
+  "elders": [
+    {"id": "wudang_e_hyeon_jin", "name": "현진(玄眞)진인", "age": 73, "position": "수석장로", "realm": "hwagyeong_chuip", "personality": "묵묵한 도사. 장문 다음 권위.", "notes": "태극검의 깊이가 장문에 버금."},
+    {"id": "wudang_e_hyeon_jeong", "name": "현정(玄正)진인", "age": 70, "position": "장로", "realm": "chojeoljeong_geuk", "personality": "엄정.", "notes": "계율 담당."},
+    {"id": "wudang_e_hyeon_un", "name": "현운(玄雲)진인", "age": 68, "position": "장로", "realm": "chojeoljeong_geuk", "personality": "유연.", "notes": "외사 담당."},
+    {"id": "wudang_e_hyeon_pyeong", "name": "현평(玄平)진인", "age": 67, "position": "장로", "realm": "chojeoljeong_wansuk", "personality": "온화.", "notes": "후학 양성."},
+    {"id": "wudang_e_hyeon_gak", "name": "현각(玄覺)진인", "age": 66, "position": "장로", "realm": "chojeoljeong_wansuk", "personality": "지혜.", "notes": "도장(道藏) 관리."},
+    {"id": "wudang_e_hyeon_su", "name": "현수(玄修)진인", "age": 64, "position": "장로", "realm": "chojeoljeong_chuip", "personality": "수도자.", "notes": "내공심법 전수."},
+    {"id": "wudang_e_hyeon_dam", "name": "현담(玄潭)진인", "age": 63, "position": "장로", "realm": "chojeoljeong_chuip", "personality": "조용.", "notes": "단약 제조."}
+  ],
+  "head_disciples": [
+    {"id": "wudang_d_jeong_un", "name": "정운(靜雲)", "age": 41, "position": "수석 1제자", "realm": "jeoljeong_geuk", "personality": "차세대 장문 후보.", "notes": "현허 직제자."},
+    {"id": "wudang_d_jeong_su", "name": "정수(靜水)", "age": 39, "position": "수석 2제자", "realm": "jeoljeong_wansuk", "personality": "유려.", "notes": "태극검 후계자."},
+    {"id": "wudang_d_jeong_seon", "name": "정선(靜禪)", "age": 38, "position": "수석 3제자", "realm": "jeoljeong_wansuk", "personality": "선(禪)적.", "notes": ""},
+    {"id": "wudang_d_jeong_won", "name": "정원(靜遠)", "age": 37, "position": "수석 4제자", "realm": "jeoljeong_chuip", "personality": "원대.", "notes": ""},
+    {"id": "wudang_d_jeong_hyo", "name": "정효(靜曉)", "age": 36, "position": "수석 5제자", "realm": "jeoljeong_chuip", "personality": "맑음.", "notes": ""}
+  ],
+  "regular_disciples": [
+    {"id": "wudang_dr_cheong_un", "name": "청운(淸雲)", "age": 32, "position": "내문 제자", "realm": "ilryu_geuk", "personality": "성실.", "notes": ""},
+    {"id": "wudang_dr_cheong_pung", "name": "청풍(淸風)", "age": 30, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "산뜻.", "notes": "보법 특화."},
+    {"id": "wudang_dr_cheong_sa", "name": "청사(淸思)", "age": 29, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "사색가.", "notes": ""},
+    {"id": "wudang_dr_cheong_il", "name": "청일(淸一)", "age": 28, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "외골수.", "notes": "태극검 매진."},
+    {"id": "wudang_dr_cheong_mu", "name": "청무(淸霧)", "age": 27, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "신비.", "notes": ""},
+    {"id": "wudang_dr_cheong_seo", "name": "청서(淸書)", "age": 25, "position": "내문 제자", "realm": "iryu_geuk", "personality": "학자형.", "notes": "도장(道藏) 연구."},
+    {"id": "wudang_dr_cheong_ya", "name": "청야(淸夜)", "age": 24, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "밤형.", "notes": ""},
+    {"id": "wudang_dr_cheong_hyang", "name": "청향(淸香)", "age": 23, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "온화.", "notes": "여도사."},
+    {"id": "wudang_dr_cheong_san", "name": "청산(淸山)", "age": 22, "position": "내문 제자", "realm": "iryu_chuip", "personality": "묵직.", "notes": ""},
+    {"id": "wudang_dr_cheong_woo", "name": "청우(淸雨)", "age": 21, "position": "내문 제자", "realm": "iryu_chuip", "personality": "순수.", "notes": ""}
+  ],
+  "outer_disciples": [
+    {"id": "wudang_o_jiwoon", "name": "지운(志雲)", "age": 19, "position": "외문 제자", "realm": "samryu_geuk", "personality": "열정.", "notes": ""},
+    {"id": "wudang_o_jiho", "name": "지호(志浩)", "age": 17, "position": "외문 제자", "realm": "samryu_wansuk", "personality": "활발.", "notes": ""},
+    {"id": "wudang_o_jiseo", "name": "지서(志舒)", "age": 15, "position": "외문 제자", "realm": "samryu_wansuk", "personality": "재기.", "notes": "여도사."},
+    {"id": "wudang_o_jisu", "name": "지수(志秀)", "age": 13, "position": "외문 제자", "realm": "samryu_chuip", "personality": "순수.", "notes": ""},
+    {"id": "wudang_o_jiyoung", "name": "지영(志永)", "age": 11, "position": "외문 제자", "realm": "samryu_chuip", "personality": "어림.", "notes": ""}
+  ]
+}

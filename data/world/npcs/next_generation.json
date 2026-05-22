@@ -1,0 +1,279 @@
+{
+  "description": "후기지수(後起之秀). 차세대 강호의 별. 20-30대의 절정·일류급 무인 중 천하에 이름이 알려진 자들.",
+  "ranking_note": "후기지수 사이에도 비공식 순위가 있다. 무림맹 주관 후기지수 비무대회가 5년마다 열린다.",
+  "orthodox_youth_top10": [
+    {
+      "id": "ng_namgung_soga",
+      "ref": "namgung_soga",
+      "rank": 1,
+      "name": "남궁소가(南宮笑歌)",
+      "age": 26,
+      "sect": "namgung",
+      "realm": "jeoljeong_chuip",
+      "specialty": "제왕검형",
+      "reputation": "후기지수 제일검. 무림맹 비무대회 2회 연속 우승.",
+      "personality": "오만하나 실력."
+    },
+    {
+      "id": "ng_shaolin_d1",
+      "ref": "shaolin_d_jeongyeon",
+      "rank": 2,
+      "name": "정연(正然)",
+      "age": 42,
+      "sect": "shaolin",
+      "realm": "jeoljeong_geuk",
+      "specialty": "달마검·역근경",
+      "reputation": "(나이 많지만 차세대 방장 후보로 후기지수에 분류)",
+      "personality": "준엄·정통."
+    },
+    {
+      "id": "ng_wudang_d1",
+      "ref": "wudang_d_jeong_un",
+      "rank": 3,
+      "name": "정운(靜雲)",
+      "age": 41,
+      "sect": "wudang",
+      "realm": "jeoljeong_geuk",
+      "specialty": "태극검",
+      "personality": "유려·차분."
+    },
+    {
+      "id": "ng_huashan_d1",
+      "ref": "huashan_d_seokyeon",
+      "rank": 4,
+      "name": "석연(石蓮)",
+      "age": 35,
+      "sect": "huashan",
+      "realm": "jeoljeong_geuk",
+      "specialty": "매화검",
+      "personality": "준엄."
+    },
+    {
+      "id": "ng_emei_d1",
+      "ref": "emei_d1",
+      "rank": 5,
+      "name": "정묘(靜妙)사태",
+      "age": 36,
+      "sect": "emei",
+      "realm": "jeoljeong_chuip",
+      "specialty": "아미구양공",
+      "personality": "차세대 여 무인 중 최강."
+    },
+    {
+      "id": "ng_danga_d1",
+      "ref": "danga_soga",
+      "rank": 6,
+      "name": "당광(唐光)",
+      "age": 28,
+      "sect": "danga",
+      "realm": "jeoljeong_chuip",
+      "specialty": "독·암기",
+      "personality": "엄정."
+    },
+    {
+      "id": "ng_hwangbo_d1",
+      "ref": "hwangbo_soga",
+      "rank": 7,
+      "name": "황보태(皇甫泰)",
+      "age": 27,
+      "sect": "hwangbo",
+      "realm": "jeoljeong_chuip",
+      "specialty": "황보권",
+      "personality": "호방·우직."
+    },
+    {
+      "id": "ng_jegal_d1",
+      "ref": "jegal_soga",
+      "rank": 8,
+      "name": "제갈우(諸葛宇)",
+      "age": 26,
+      "sect": "jegal",
+      "realm": "jeoljeong_chuip",
+      "specialty": "진법·검",
+      "personality": "총명."
+    },
+    {
+      "id": "ng_moyong_d1",
+      "ref": "moyong_soga",
+      "rank": 9,
+      "name": "모용규(慕容珪)",
+      "age": 24,
+      "sect": "moyong",
+      "realm": "jeoljeong_chuip",
+      "specialty": "참합지·두전성이",
+      "personality": "냉정·계산적. 음흉."
+    },
+    {
+      "id": "ng_jeomchang_d1",
+      "ref": "jeomchang_d1",
+      "rank": 10,
+      "name": "남우(南雨)",
+      "age": 32,
+      "sect": "jeomchang",
+      "realm": "jeoljeong_chuip",
+      "specialty": "사일검",
+      "personality": "쾌검의 후계."
+    }
+  ],
+  "young_orthodox_under25": [
+    {
+      "id": "ng_seolhwa",
+      "ref": "seolhwa",
+      "name": "한설(韓雪)",
+      "age": 23,
+      "sect": "huashan",
+      "realm": "ilryu_geuk",
+      "specialty": "매화검·자하신공",
+      "personality": "중원사화 설화. 무림맹주의 딸."
+    },
+    {
+      "id": "ng_yuhwa",
+      "ref": "yuhwa",
+      "name": "모용유(慕容柔)",
+      "age": 21,
+      "sect": "moyong",
+      "realm": "ilryu_wansuk",
+      "personality": "중원사화 유화."
+    },
+    {
+      "id": "ng_okhwa",
+      "ref": "okhwa",
+      "name": "당령(唐鈴)",
+      "age": 19,
+      "sect": "danga",
+      "realm": "ilryu_chuip",
+      "personality": "중원사화 옥화."
+    },
+    {
+      "id": "ng_namgung_wol",
+      "ref": "namgung_daughter",
+      "name": "남궁월(南宮月)",
+      "age": 16,
+      "sect": "namgung",
+      "realm": "iryu_geuk",
+      "personality": "사화 후보. 차세대 미녀."
+    },
+    {
+      "id": "ng_hwangbo_ryeong",
+      "ref": "hwangbo_daughter",
+      "name": "황보령(皇甫鈴)",
+      "age": 20,
+      "sect": "hwangbo",
+      "realm": "ilryu_wansuk",
+      "personality": "당령과 친우. 명랑."
+    },
+    {
+      "id": "ng_jegal_hye",
+      "ref": "jegal_daughter",
+      "name": "제갈혜(諸葛慧)",
+      "age": 18,
+      "sect": "jegal",
+      "realm": "ilryu_chuip",
+      "personality": "지혜로운 미녀. 책사 기질."
+    },
+    {
+      "id": "ng_moyong_yeon",
+      "ref": "moyong_daughter2",
+      "name": "모용연(慕容姸)",
+      "age": 17,
+      "sect": "moyong",
+      "realm": "ilryu_chuip",
+      "personality": "유화의 동생."
+    },
+    {
+      "id": "ng_namgung_hwi",
+      "ref": "namgung_2son",
+      "name": "남궁휘(南宮輝)",
+      "age": 23,
+      "sect": "namgung",
+      "realm": "ilryu_geuk",
+      "personality": "형의 그늘에 야망을 숨김."
+    },
+    {
+      "id": "ng_qingcheng_d2",
+      "ref": "qingcheng_d2",
+      "name": "송청(松靑)",
+      "age": 32,
+      "sect": "qingcheng",
+      "realm": "ilryu_geuk",
+      "personality": "쾌검 천재."
+    }
+  ],
+  "unorthodox_youth": [
+    {
+      "id": "ng_chwiwang_disciple",
+      "name": "위소(衛笑)",
+      "age": 25,
+      "sect": "gaebang",
+      "realm": "ilryu_geuk",
+      "specialty": "타구봉법(미완)",
+      "personality": "취왕 호삼의 직제자. 차세대 방주 후보."
+    },
+    {
+      "id": "ng_haomun_y",
+      "name": "은영(銀影)",
+      "age": 22,
+      "sect": "haomun",
+      "realm": "ilryu_chuip",
+      "personality": "여리 문주의 양녀.",
+      "specialty": "정보·암기·미모"
+    },
+    {
+      "id": "ng_noklim_y",
+      "name": "갈휘(葛輝)",
+      "age": 24,
+      "sect": "noklim",
+      "realm": "ilryu_wansuk",
+      "personality": "사도련주 갈우의 양자.",
+      "specialty": "도법·산전"
+    },
+    {
+      "id": "ng_salmun_y",
+      "name": "청영(靑影)",
+      "age": 23,
+      "sect": "salmun",
+      "realm": "ilryu_geuk",
+      "personality": "여 살수. 적살왕의 직제자.",
+      "specialty": "탈혼수"
+    }
+  ],
+  "demonic_youth": [
+    {
+      "id": "ng_cheonma_h1",
+      "ref": "cheonma_c4",
+      "name": "화령(花靈)",
+      "age": 32,
+      "sect": "cheonma",
+      "realm": "ilryu_geuk",
+      "specialty": "혈요공",
+      "personality": "절세 미녀. 마교 차세대 여인."
+    },
+    {
+      "id": "ng_cheonma_h2",
+      "name": "혈휘(血輝)",
+      "age": 26,
+      "sect": "cheonma",
+      "realm": "ilryu_geuk",
+      "personality": "천마 직계 후보. 정체 미상."
+    }
+  ],
+  "rogue_youth": [
+    {
+      "id": "ng_rogue_1",
+      "name": "낭검 한우(韓宇)",
+      "age": 28,
+      "sect": null,
+      "realm": "ilryu_geuk",
+      "personality": "낭인. 어느 세력에도 속하지 않는다.",
+      "specialty": "검의 잡학"
+    },
+    {
+      "id": "ng_rogue_2",
+      "name": "은수(隱秀)",
+      "age": 22,
+      "sect": null,
+      "realm": "iryu_geuk",
+      "personality": "정체 미상의 미인. 가끔 강호에 나타나 큰 일을 일으킨다는 풍문."
+    }
+  ]
+}

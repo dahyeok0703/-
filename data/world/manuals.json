@@ -1,0 +1,106 @@
+{
+  "description": "비급(秘笈) 종합. 무공·심법·기예서 약 90종. 무공 자체의 데이터는 martial_arts.json 참조.",
+  "_link_note": "manual_ref가 art_id 형태면 martial_arts.json의 그 무공 비급.",
+  "category_orthodox_shaolin": [
+    {"id": "mn_001", "name": "역근경(易筋經) — 진본", "art_ref": "yeokgeungyeong", "rarity": "신물", "where": "소림 장경각 최상층."},
+    {"id": "mn_002", "name": "세수경(洗髓經)", "art_ref": "sesugyeong", "rarity": "신물", "where": "소림 비전."},
+    {"id": "mn_003", "name": "달마검결(達磨劍訣)", "art_ref": "dalmageom", "rarity": "진귀", "where": "소림 비전."},
+    {"id": "mn_004", "name": "백보신권 비결", "art_ref": "baekbosinkwon", "rarity": "진귀", "where": "소림 외문 비전."},
+    {"id": "mn_005", "name": "나한권보(羅漢拳譜)", "art_ref": "nahankwon", "rarity": "귀함", "where": "소림 외문 공개."},
+    {"id": "mn_006", "name": "금강불괴(金剛不壞) 비결", "art_ref": "geumgangbulgoe", "rarity": "신물", "where": "소림 외문 최상."},
+    {"id": "mn_007", "name": "반야선공(般若禪功)", "art_ref": "banyaseongong", "rarity": "진귀", "where": "소림 내문."},
+    {"id": "mn_008", "name": "위타십팔법(韋陀十八法)", "art_ref": "witasipfalbeop", "rarity": "귀함", "where": "소림 외문."}
+  ],
+  "category_orthodox_wudang": [
+    {"id": "mn_010", "name": "태극권보(太極拳譜)", "art_ref": "taegeukkwon", "rarity": "진귀", "where": "무당 비전."},
+    {"id": "mn_011", "name": "태극검결(太極劍訣)", "art_ref": "taegeukgeom", "rarity": "진귀", "where": "무당 비전."},
+    {"id": "mn_012", "name": "양의검법(兩儀劍法)", "art_ref": "yangeuigeom", "rarity": "진귀", "where": "무당 비전."},
+    {"id": "mn_013", "name": "순양무극공(純陽無極功)", "art_ref": "sunyangmugeukkong", "rarity": "신물", "where": "무당 최상비전."},
+    {"id": "mn_014", "name": "현허도법(玄虛道法)", "art_ref": "hyeonheodobeop", "rarity": "진귀", "where": "무당."}
+  ],
+  "category_orthodox_huashan": [
+    {"id": "mn_020", "name": "이십사수매화검법 비결", "art_ref": "maehwagombeop", "rarity": "진귀", "where": "화산 비전."},
+    {"id": "mn_021", "name": "자하신공(紫霞神功)", "art_ref": "jahasinkong", "rarity": "진귀", "where": "화산 비전."},
+    {"id": "mn_022", "name": "화산검결(華山劍訣)", "art_ref": "huashangeom", "rarity": "귀함", "where": "화산 외문."},
+    {"id": "mn_023", "name": "낙영검법(落英劍法)", "art_ref": "nakyoung", "rarity": "귀함", "where": "화산."}
+  ],
+  "category_orthodox_etc": [
+    {"id": "mn_030", "name": "사일검법(射日劍法)", "art_ref": "sailgeombeop", "rarity": "진귀", "where": "점창 비전."},
+    {"id": "mn_031", "name": "운룡대팔식(雲龍大八式)", "art_ref": "ungryongdaepalsik", "rarity": "진귀", "where": "곤륜 비전."},
+    {"id": "mn_032", "name": "혼원일기공(混元一氣功)", "art_ref": "honwon", "rarity": "진귀", "where": "공동 비전."},
+    {"id": "mn_033", "name": "칠상권보(七傷拳譜)", "art_ref": "chilsangkwon", "rarity": "진귀", "where": "공동 비전."},
+    {"id": "mn_034", "name": "아미구양공(峨眉九陽功)", "art_ref": "amigooyang", "rarity": "진귀", "where": "아미 비전."},
+    {"id": "mn_035", "name": "복호장(伏虎掌)", "art_ref": "bokhojang", "rarity": "진귀", "where": "아미 비전."},
+    {"id": "mn_036", "name": "청풍검법(靑風劍法)", "art_ref": "cheongpung", "rarity": "귀함", "where": "청성."},
+    {"id": "mn_037", "name": "구궁신행보(九宮神行步)", "art_ref": "guggungbo", "rarity": "진귀", "where": "청성."},
+    {"id": "mn_038", "name": "종남검법(終南劍法)", "art_ref": "jongnamgeom", "rarity": "귀함", "where": "종남."},
+    {"id": "mn_039", "name": "천하삼십육검(天下三十六劍)", "art_ref": "samsiprokjkeom", "rarity": "진귀", "where": "종남 비전."}
+  ],
+  "category_orthodox_gaebang": [
+    {"id": "mn_045", "name": "항룡십팔장(降龍十八掌)", "art_ref": "hangryongsipfaljang", "rarity": "신물", "where": "개방 방주에게만 전수."},
+    {"id": "mn_046", "name": "타구봉법(打狗棒法)", "art_ref": "tagubongbeop", "rarity": "신물", "where": "개방 방주에게만."},
+    {"id": "mn_047", "name": "취팔선보(醉八仙步)", "art_ref": "chwipalseonbo", "rarity": "진귀", "where": "개방 장로 이상."}
+  ],
+  "category_orthodox_clans": [
+    {"id": "mn_050", "name": "제왕검형(帝王劍形)", "art_ref": "jewanggeomhyeong", "rarity": "진귀", "where": "남궁세가 가전."},
+    {"id": "mn_051", "name": "창궁검법(蒼穹劍法)", "art_ref": "changunggeom", "rarity": "진귀", "where": "남궁세가."},
+    {"id": "mn_052", "name": "황보권보(皇甫拳譜)", "art_ref": "hwangbokwon", "rarity": "진귀", "where": "황보세가."},
+    {"id": "mn_053", "name": "패왕도법(覇王刀法)", "art_ref": "paewangdobeop", "rarity": "진귀", "where": "황보세가."},
+    {"id": "mn_054", "name": "참합지(參合指)", "art_ref": "chamhabji", "rarity": "진귀", "where": "모용세가."},
+    {"id": "mn_055", "name": "두전성이(斗轉星移)", "art_ref": "dujeonseongi", "rarity": "신물", "where": "모용세가 최상비전."},
+    {"id": "mn_056", "name": "당문 비전 독공", "art_ref": "dangmun_dokgong", "rarity": "신물", "where": "당가 가주에게만."},
+    {"id": "mn_057", "name": "만천화우(滿天花雨)", "art_ref": "mancheonhwau", "rarity": "신물", "where": "당가 비전."},
+    {"id": "mn_058", "name": "추혼탈백수(追魂奪魄手)", "art_ref": "chuhontalbaeksu", "rarity": "진귀", "where": "당가."},
+    {"id": "mn_059", "name": "팔진도(八陣圖)", "art_ref": "paljindo", "rarity": "신물", "where": "제갈세가."},
+    {"id": "mn_060", "name": "와룡진(臥龍陣)", "art_ref": "waryongjin", "rarity": "진귀", "where": "제갈세가."},
+    {"id": "mn_061", "name": "공명신기(孔明神機)", "art_ref": "gongmyeong", "rarity": "신물", "where": "제갈세가."}
+  ],
+  "category_unorthodox": [
+    {"id": "mn_070", "name": "녹림도법", "art_ref": "noklim_dobeop", "rarity": "귀함", "where": "녹림."},
+    {"id": "mn_071", "name": "벽력도(霹靂刀)", "art_ref": "byeokryeokdo", "rarity": "진귀", "where": "녹림 비전."},
+    {"id": "mn_072", "name": "산전기공", "art_ref": "sanjeongigong", "rarity": "귀함", "where": "녹림."},
+    {"id": "mn_073", "name": "수룡창법(水龍槍法)", "art_ref": "suryongchang", "rarity": "진귀", "where": "장강수로채."},
+    {"id": "mn_074", "name": "파랑도법(波浪刀法)", "art_ref": "parangdo", "rarity": "진귀", "where": "장강수로채."},
+    {"id": "mn_075", "name": "잠룡수공(潛龍水功)", "art_ref": "jamryong", "rarity": "진귀", "where": "장강수로채."},
+    {"id": "mn_076", "name": "탈혼수(奪魂手)", "art_ref": "talhonsu", "rarity": "신물", "where": "살문 비전."},
+    {"id": "mn_077", "name": "그림자보법", "art_ref": "shadowbo", "rarity": "진귀", "where": "살문."},
+    {"id": "mn_078", "name": "독비도법(毒匕刀法)", "art_ref": "dokbi", "rarity": "진귀", "where": "살문."}
+  ],
+  "category_demonic": [
+    {"id": "mn_080", "name": "천마신공(天魔神功)", "art_ref": "cheonmasinkong", "rarity": "전설", "where": "천마에게만."},
+    {"id": "mn_081", "name": "혈마대법(血魔大法)", "art_ref": "hyeolma", "rarity": "신물", "where": "천마신교 비전."},
+    {"id": "mn_082", "name": "흡성대법(吸星大法)", "art_ref": "heupseongdaebeop", "rarity": "신물", "where": "마교 비전."},
+    {"id": "mn_083", "name": "마라구절검(魔羅九絶劍)", "art_ref": "maragujeolgeom", "rarity": "신물", "where": "천마신교 호교법왕에게."},
+    {"id": "mn_084", "name": "광혈공(狂血功)", "art_ref": "gwanghyeolgong", "rarity": "진귀", "where": "마교."},
+    {"id": "mn_085", "name": "혈요공(血妖功)", "art_ref": "hyeolyogong", "rarity": "진귀", "where": "마교 여 마인."},
+    {"id": "mn_086", "name": "마궁신공(魔弓神功)", "art_ref": "maggung", "rarity": "진귀", "where": "마궁법왕."}
+  ],
+  "legendary_lost": [
+    {"id": "mn_090", "name": "구음진경(九陰眞經)", "art_ref": "guyumjingyeong", "rarity": "전설", "where": "행방불명."},
+    {"id": "mn_091", "name": "구양진경(九陽眞經)", "art_ref": "guyangjingyeong", "rarity": "전설", "where": "행방불명."},
+    {"id": "mn_092", "name": "선천기경(先天氣經)", "art_ref": "seoncheon", "rarity": "전설", "where": "전설."},
+    {"id": "mn_093", "name": "현경비록(玄境秘錄)", "art_ref": null, "rarity": "전설", "where": "현경에 든 자만이 쓸 수 있다는 비록."},
+    {"id": "mn_094", "name": "검선유경(劍仙遺經)", "art_ref": null, "rarity": "전설", "where": "검선 이백우의 유고. 단편으로 분산."},
+    {"id": "mn_095", "name": "혈룡유록(血龍遺錄)", "art_ref": null, "rarity": "전설", "where": "전대 천마의 유록. 행방불명."},
+    {"id": "mn_096", "name": "도제유도결(刀帝遺刀訣)", "art_ref": null, "rarity": "전설", "where": "도제 우흑의 유결."},
+    {"id": "mn_097", "name": "기관전서(機關全書)", "art_ref": null, "rarity": "전설", "where": "고대 기관술의 정점. 제갈세가가 단편을 갖고 있다."}
+  ],
+  "manuscripts_misc": [
+    {"id": "mn_100", "name": "낡은 잡문(雜文)", "art_ref": null, "rarity": "흔함", "where": "시장. 진위 불명. 사기 다수."},
+    {"id": "mn_101", "name": "지방 무관 권보", "art_ref": null, "rarity": "흔함", "where": "지방 무관 비전. 삼류~이류."},
+    {"id": "mn_102", "name": "낭인 검결", "art_ref": null, "rarity": "귀함", "where": "낭인 노고수가 남긴 사권. 일류급."},
+    {"id": "mn_103", "name": "표국 비전 검결", "art_ref": null, "rarity": "귀함", "where": "큰 표국 비전. 일류급."},
+    {"id": "mn_104", "name": "은거기인 사권(私券)", "art_ref": null, "rarity": "진귀", "where": "전대 은거기인의 사권. 절정급."},
+    {"id": "mn_105", "name": "주술서(呪術書)", "art_ref": null, "rarity": "귀함", "where": "남만 무사(巫師)의 주술. 무공 아님."},
+    {"id": "mn_106", "name": "약왕문 의서(藥王門醫書)", "art_ref": null, "rarity": "진귀", "where": "약왕문 비전. 의술."},
+    {"id": "mn_107", "name": "고대 진법서(陣法書)", "art_ref": null, "rarity": "진귀", "where": "고대 무덤 등에서 발견."},
+    {"id": "mn_108", "name": "환술서(幻術書)", "art_ref": null, "rarity": "귀함", "where": "환술. 진짜 효과는 모름."},
+    {"id": "mn_109", "name": "기경팔맥론(奇經八脈論)", "art_ref": null, "rarity": "진귀", "where": "내공 이론. 누구나 도움."},
+    {"id": "mn_110", "name": "음경팔맥론(陰經八脈論)", "art_ref": null, "rarity": "진귀", "where": "내공 이론(음). 여 무인."}
+  ],
+  "fakes": [
+    {"id": "mn_120", "name": "구음진경 — 위서(僞書)", "art_ref": null, "rarity": "흔함", "where": "강호에 도는 위서. 익히면 주화입마."},
+    {"id": "mn_121", "name": "역근경 — 위서", "art_ref": null, "rarity": "흔함", "where": "위서. 익히면 시간 낭비."},
+    {"id": "mn_122", "name": "천마신공 — 위서", "art_ref": null, "rarity": "흔함", "where": "위서."}
+  ]
+}

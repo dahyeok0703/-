@@ -1,0 +1,62 @@
+{
+  "sect_id": "cheonma",
+  "description": "천마신교. 신강 천산 천마신궁. 마교의 본단.",
+  "structure": "천마(교주) → 십이장로 → 호교법왕 4인 → 팔대마장 → 마인 다수",
+  "leadership": [
+    {"id": "cheonma_supreme", "ref": "magcheon", "note": "육천 마천 — 천마"}
+  ],
+  "twelve_elders": [
+    {"id": "cheonma_e1", "name": "혈장로(血長老)", "age": 70, "position": "수석장로", "realm": "hwagyeong_chuip", "personality": "혈마대법의 적통.", "notes": "장로 중 1좌."},
+    {"id": "cheonma_e2", "name": "흑장로(黑長老)", "age": 68, "position": "장로", "realm": "hwagyeong_chuip", "notes": ""},
+    {"id": "cheonma_e3", "name": "백장로(白長老)", "age": 66, "position": "장로", "realm": "chojeoljeong_geuk", "notes": ""},
+    {"id": "cheonma_e4", "name": "청장로(靑長老)", "age": 65, "position": "장로", "realm": "chojeoljeong_geuk", "notes": ""},
+    {"id": "cheonma_e5", "name": "녹장로(綠長老)", "age": 63, "position": "장로", "realm": "chojeoljeong_geuk", "notes": "독공 전문."},
+    {"id": "cheonma_e6", "name": "황장로(黃長老)", "age": 60, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_e7", "name": "자장로(紫長老)", "age": 58, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_e8", "name": "은장로(銀長老)", "age": 55, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_e9", "name": "금장로(金長老)", "age": 53, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_e10", "name": "철장로(鐵長老)", "age": 51, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_e11", "name": "옥장로(玉長老)", "age": 50, "position": "장로(여)", "realm": "chojeoljeong_chuip", "notes": "마교 유일의 여 장로."},
+    {"id": "cheonma_e12", "name": "현장로(玄長老)", "age": 48, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""}
+  ],
+  "four_holy_kings": [
+    {"id": "cheonma_h1", "ref": "mageomje", "note": "오황 마검제 — 호교법왕 수좌"},
+    {"id": "cheonma_h2", "name": "마궁법왕(魔弓法王)", "age": 55, "position": "호교법왕", "realm": "hwagyeong_chuip", "personality": "활의 정점.", "notes": ""},
+    {"id": "cheonma_h3", "name": "마도법왕(魔刀法王)", "age": 53, "position": "호교법왕", "realm": "hwagyeong_chuip", "personality": "도법의 정점.", "notes": ""},
+    {"id": "cheonma_h4", "name": "마창법왕(魔槍法王)", "age": 50, "position": "호교법왕", "realm": "chojeoljeong_geuk", "personality": "창의 정점.", "notes": ""}
+  ],
+  "eight_demon_generals": [
+    {"id": "cheonma_d1", "name": "혈웅마장(血熊魔將)", "age": 48, "position": "팔대마장", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_d2", "name": "흑호마장(黑虎魔將)", "age": 46, "position": "팔대마장", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_d3", "name": "비응마장(飛鷹魔將)", "age": 44, "position": "팔대마장", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_d4", "name": "혈사마장(血蛇魔將)", "age": 42, "position": "팔대마장", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "cheonma_d5", "name": "철구마장(鐵狗魔將)", "age": 41, "position": "팔대마장", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "cheonma_d6", "name": "광랑마장(狂狼魔將)", "age": 40, "position": "팔대마장", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "cheonma_d7", "name": "독서마장(毒蛇魔將)", "age": 38, "position": "팔대마장", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_d8", "name": "광혈마장(狂血魔將)", "age": 37, "position": "팔대마장", "realm": "jeoljeong_chuip", "notes": ""}
+  ],
+  "captains": [
+    {"id": "cheonma_c1", "name": "혈룡대장 우혈(于血)", "age": 38, "position": "혈룡대 대장", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "cheonma_c2", "name": "흑풍대장 마암(馬暗)", "age": 36, "position": "흑풍대 대장", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "cheonma_c3", "name": "백골대장 정백(鄭白)", "age": 35, "position": "백골대 대장", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "cheonma_c4", "name": "혈요대장(여) 화령(花靈)", "age": 32, "position": "혈요대 대장", "realm": "ilryu_geuk", "personality": "여 마인. 절세 미녀.", "notes": "후기지수급."},
+    {"id": "cheonma_c5", "name": "마독대장 호독(胡毒)", "age": 34, "position": "마독대 대장", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "cheonma_c6", "name": "광혈대장 조혈(趙血)", "age": 33, "position": "광혈대 대장", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "warriors": [
+    {"id": "cheonma_w1", "name": "마인 일호", "age": 28, "position": "마인", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "cheonma_w2", "name": "마인 이호", "age": 26, "position": "마인", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "cheonma_w3", "name": "마인 삼호", "age": 25, "position": "마인", "realm": "iryu_geuk", "notes": ""},
+    {"id": "cheonma_w4", "name": "마인 사호", "age": 23, "position": "마인", "realm": "iryu_geuk", "notes": ""},
+    {"id": "cheonma_w5", "name": "마인 오호(여)", "age": 22, "position": "마인", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "cheonma_w6", "name": "마인 육호", "age": 20, "position": "마인", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "cheonma_w7", "name": "마인 칠호", "age": 19, "position": "마인", "realm": "iryu_chuip", "notes": ""},
+    {"id": "cheonma_w8", "name": "마인 팔호", "age": 18, "position": "마인", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "young_demons": [
+    {"id": "cheonma_y1", "name": "예비마인 일", "age": 15, "position": "예비", "realm": "samryu_wansuk", "notes": "어릴 적부터 광신 교육."},
+    {"id": "cheonma_y2", "name": "예비마인 이", "age": 13, "position": "예비", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "cheonma_y3", "name": "예비마인 삼", "age": 11, "position": "예비", "realm": "samryu_chuip", "notes": ""},
+    {"id": "cheonma_y4", "name": "예비마인 사", "age": 9, "position": "예비", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "sect_id": "jongnam",
+  "description": "종남파. 보수적이며 정통 검도.",
+  "leadership": [
+    {"id": "jongnam_jangmun", "name": "북풍진인(北風眞人)", "age": 67, "position": "장문인", "realm": "chojeoljeong_geuk", "personality": "엄숙·고전적.", "notes": "종남의 위엄."}
+  ],
+  "elders": [
+    {"id": "jongnam_e1", "name": "남풍(南風)도장", "age": 65, "position": "장로", "realm": "chojeoljeong_chuip", "personality": "원로.", "notes": ""},
+    {"id": "jongnam_e2", "name": "동풍(東風)도장", "age": 62, "position": "장로", "realm": "jeoljeong_geuk", "personality": "강직.", "notes": ""},
+    {"id": "jongnam_e3", "name": "서풍(西風)도장", "age": 60, "position": "장로", "realm": "jeoljeong_geuk", "personality": "보수적.", "notes": ""},
+    {"id": "jongnam_e4", "name": "추풍(秋風)도장", "age": 58, "position": "장로", "realm": "jeoljeong_wansuk", "personality": "사색가.", "notes": ""},
+    {"id": "jongnam_e5", "name": "춘풍(春風)도장", "age": 56, "position": "장로", "realm": "jeoljeong_wansuk", "personality": "유연.", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "jongnam_d1", "name": "현우(顯雨)", "age": 38, "position": "수석제자", "realm": "jeoljeong_chuip", "personality": "준수.", "notes": "차세대 장문 후보."},
+    {"id": "jongnam_d2", "name": "현운(顯雲)", "age": 35, "position": "이제자", "realm": "ilryu_geuk", "personality": "직선적.", "notes": ""},
+    {"id": "jongnam_d3", "name": "현일(顯日)", "age": 33, "position": "삼제자", "realm": "ilryu_wansuk", "personality": "야망.", "notes": ""},
+    {"id": "jongnam_d4", "name": "현월(顯月)", "age": 30, "position": "사제자", "realm": "ilryu_wansuk", "personality": "차분.", "notes": ""},
+    {"id": "jongnam_d5", "name": "현성(顯星)", "age": 28, "position": "오제자", "realm": "ilryu_chuip", "personality": "수재.", "notes": ""},
+    {"id": "jongnam_dr1", "name": "양우(陽雨)", "age": 26, "position": "내문", "realm": "iryu_geuk", "personality": "성실.", "notes": ""},
+    {"id": "jongnam_dr2", "name": "양운(陽雲)", "age": 24, "position": "내문", "realm": "iryu_wansuk", "personality": "활발.", "notes": ""},
+    {"id": "jongnam_dr3", "name": "양월(陽月)", "age": 22, "position": "내문", "realm": "iryu_chuip", "personality": "맑음.", "notes": ""},
+    {"id": "jongnam_dr4", "name": "양성(陽星)", "age": 20, "position": "내문", "realm": "iryu_chuip", "personality": "어려도 재능.", "notes": ""}
+  ],
+  "outer": [
+    {"id": "jongnam_o1", "name": "백수(白秀)", "age": 17, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "jongnam_o2", "name": "백경(白景)", "age": 15, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "jongnam_o3", "name": "백휘(白輝)", "age": 13, "position": "외문", "realm": "samryu_chuip", "notes": ""},
+    {"id": "jongnam_o4", "name": "백림(白林)", "age": 11, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

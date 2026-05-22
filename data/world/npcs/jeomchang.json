@@ -1,0 +1,28 @@
+{
+  "sect_id": "jeomchang",
+  "description": "점창파. 천하 제일의 쾌검.",
+  "leadership": [
+    {"id": "jeomchang_jangmun", "ref": "geomseong", "note": "칠성 검성 검우 — 장문"}
+  ],
+  "elders": [
+    {"id": "jeomchang_e1", "name": "검사(劍砂)", "age": 62, "position": "수석장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "jeomchang_e2", "name": "검산(劍山)", "age": 58, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "jeomchang_e3", "name": "검호(劍湖)", "age": 56, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "jeomchang_e4", "name": "검우(劍雨)", "age": 54, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "jeomchang_d1", "name": "남우(南雨)", "age": 32, "position": "대제자", "realm": "jeoljeong_chuip", "personality": "검우 장문의 직제자.", "notes": "차세대 쾌검 후보."},
+    {"id": "jeomchang_d2", "name": "남청(南靑)", "age": 30, "position": "이제자", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "jeomchang_d3", "name": "남풍(南風)", "age": 28, "position": "삼제자", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jeomchang_d4", "name": "남산(南山)", "age": 26, "position": "사제자", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jeomchang_d5", "name": "남일(南日)", "age": 25, "position": "오제자", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "jeomchang_dr1", "name": "창운(蒼雲)", "age": 23, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "jeomchang_dr2", "name": "창수(蒼水)", "age": 22, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "jeomchang_dr3", "name": "창월(蒼月)", "age": 20, "position": "내문", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "outer": [
+    {"id": "jeomchang_o1", "name": "남영(南映)", "age": 17, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "jeomchang_o2", "name": "남휘(南輝)", "age": 15, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "jeomchang_o3", "name": "남림(南林)", "age": 13, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

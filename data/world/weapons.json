@@ -1,0 +1,127 @@
+{
+  "description": "병기(兵器) 종합 카탈로그. 약 120종.",
+  "rarity_scale": ["흔함", "귀함", "진귀", "신물", "전설"],
+  "grade_definition": {
+    "흔함": "양산 무기. 일반 강철. 표준 표사·무사가 사용.",
+    "귀함": "장인이 만든 명품. 일류 무사의 애병.",
+    "진귀": "역사적 명검·도. 절정 고수의 애병.",
+    "신물": "전대 절대 고수의 병기. 인연이 닿아야 손에 든다.",
+    "전설": "한 시대에 한둘. 그 자체가 강호의 사건."
+  },
+  "swords": [
+    {"id": "wp_s001", "name": "묵철검(墨鐵劍)", "type": "검", "rarity": "흔함", "price_silver": 30, "effect": "표준."},
+    {"id": "wp_s002", "name": "백철검(白鐵劍)", "type": "검", "rarity": "흔함", "price_silver": 30, "effect": "표준."},
+    {"id": "wp_s003", "name": "강철검(强鐵劍)", "type": "검", "rarity": "흔함", "price_silver": 40, "effect": "튼튼한 보병검."},
+    {"id": "wp_s004", "name": "송문검(松紋劍)", "type": "검", "rarity": "귀함", "price_silver": 200, "effect": "장인 명품. 가볍고 날카로움."},
+    {"id": "wp_s005", "name": "춘추검(春秋劍)", "type": "검", "rarity": "귀함", "price_silver": 250, "effect": "장인 작품."},
+    {"id": "wp_s006", "name": "은화검(銀華劍)", "type": "검", "rarity": "귀함", "price_silver": 300, "effect": "은상감 명품."},
+    {"id": "wp_s007", "name": "행명검(行命劍)", "type": "검", "rarity": "진귀", "price_silver": 1000, "effect": "검명(劍鳴)이 울린다."},
+    {"id": "wp_s008", "name": "자하검(紫霞劍)", "type": "검", "rarity": "진귀", "price_silver": 1500, "effect": "화산파 수석 제자급."},
+    {"id": "wp_s009", "name": "벽운검(碧雲劍)", "type": "검", "rarity": "진귀", "price_silver": 1200, "effect": "구름빛 검신."},
+    {"id": "wp_s010", "name": "남궁가전 검(劍)", "type": "검", "rarity": "진귀", "price_silver": "비매", "effect": "남궁세가 가전 명검."},
+    {"id": "wp_s011", "name": "용천검(龍泉劍)", "type": "검", "rarity": "신물", "price_silver": "비매", "effect": "용천 옛 명검. 한 자루로 만 자루를 베어도 이가 빠지지 않는다."},
+    {"id": "wp_s012", "name": "어장검(魚腸劍)", "type": "검(단)", "rarity": "신물", "price_silver": "비매", "effect": "물고기 배에 들어갈 만큼 작으나 한 사람을 죽인다."},
+    {"id": "wp_s013", "name": "막야검(莫邪劍)", "type": "검", "rarity": "신물", "price_silver": "비매", "effect": "고대 명검."},
+    {"id": "wp_s014", "name": "간장검(干將劍)", "type": "검", "rarity": "신물", "price_silver": "비매", "effect": "막야의 짝."},
+    {"id": "wp_s015", "name": "태아검(泰阿劍)", "type": "검", "rarity": "신물", "price_silver": "비매", "effect": "황제의 검."},
+    {"id": "wp_s016", "name": "천마혈검(天魔血劍)", "type": "검", "rarity": "전설", "price_silver": "비매", "effect": "현 천마 소지. 죽은 자의 원념이 깃듦."},
+    {"id": "wp_s017", "name": "검선유검(劍仙遺劍)", "type": "검", "rarity": "전설", "price_silver": "비매", "effect": "검선 이백우의 유검. 행방불명."},
+    {"id": "wp_s018", "name": "운검(雲劍)", "type": "검", "rarity": "진귀", "price_silver": 800, "effect": "구름처럼 가볍다."},
+    {"id": "wp_s019", "name": "비룡검(飛龍劍)", "type": "검", "rarity": "진귀", "price_silver": 900, "effect": "용처럼 빠르다."},
+    {"id": "wp_s020", "name": "한매검(寒梅劍)", "type": "검", "rarity": "귀함", "price_silver": 350, "effect": "한매 무늬 새김. 화산 외문 표준."},
+    {"id": "wp_s021", "name": "추수검(秋水劍)", "type": "검", "rarity": "귀함", "price_silver": 400, "effect": "추수처럼 맑다."},
+    {"id": "wp_s022", "name": "백연검(白蓮劍)", "type": "검", "rarity": "귀함", "price_silver": 350, "effect": "백련 무늬. 아미파 제자."},
+    {"id": "wp_s023", "name": "현풍검(玄風劍)", "type": "검", "rarity": "진귀", "price_silver": 700, "effect": "검에 검은 바람 무늬."},
+    {"id": "wp_s024", "name": "주작검(朱雀劍)", "type": "검", "rarity": "진귀", "price_silver": 1000, "effect": "주작 무늬. 화염 친화."},
+    {"id": "wp_s025", "name": "현무검(玄武劍)", "type": "검", "rarity": "진귀", "price_silver": 1000, "effect": "현무 무늬. 방어 친화."}
+  ],
+  "sabers": [
+    {"id": "wp_d001", "name": "유엽도(柳葉刀)", "type": "도", "rarity": "흔함", "price_silver": 30, "effect": "표준 도."},
+    {"id": "wp_d002", "name": "야전도(野戰刀)", "type": "도", "rarity": "흔함", "price_silver": 35, "effect": "전장용."},
+    {"id": "wp_d003", "name": "단도(短刀)", "type": "도", "rarity": "흔함", "price_silver": 20, "effect": "단병."},
+    {"id": "wp_d004", "name": "박도(撲刀)", "type": "도", "rarity": "흔함", "price_silver": 40, "effect": "두꺼운 도."},
+    {"id": "wp_d005", "name": "강도(强刀)", "type": "도", "rarity": "귀함", "price_silver": 250, "effect": "장인 명품."},
+    {"id": "wp_d006", "name": "월아도(月牙刀)", "type": "도", "rarity": "귀함", "price_silver": 300, "effect": "초승달 무늬."},
+    {"id": "wp_d007", "name": "비룡도(飛龍刀)", "type": "도", "rarity": "진귀", "price_silver": 900, "effect": "용처럼 빠른 도."},
+    {"id": "wp_d008", "name": "흑풍도(黑風刀)", "type": "도", "rarity": "진귀", "price_silver": 800, "effect": "녹림왕의 애도와 비슷."},
+    {"id": "wp_d009", "name": "참절도(斬絶刀)", "type": "도", "rarity": "진귀", "price_silver": 1100, "effect": "단숨에 베어 끊는다."},
+    {"id": "wp_d010", "name": "혈도(血刀)", "type": "도", "rarity": "신물", "price_silver": "비매", "effect": "마교 호교법왕급."},
+    {"id": "wp_d011", "name": "도제유도(刀帝遺刀)", "type": "도", "rarity": "전설", "price_silver": "비매", "effect": "도제 우흑의 유도. 행방불명."},
+    {"id": "wp_d012", "name": "녹림왕 도(刀)", "type": "도", "rarity": "신물", "price_silver": "비매", "effect": "갈우의 애도. 산을 가른다고."},
+    {"id": "wp_d013", "name": "구절도(九絶刀)", "type": "도", "rarity": "진귀", "price_silver": 1300, "effect": "아홉 마디 절도."},
+    {"id": "wp_d014", "name": "곡도(曲刀)", "type": "도", "rarity": "귀함", "price_silver": 200, "effect": "굽은 도. 서역식."},
+    {"id": "wp_d015", "name": "쌍단도(雙短刀)", "type": "도(쌍)", "rarity": "귀함", "price_silver": 350, "effect": "한 쌍의 단도."}
+  ],
+  "spears": [
+    {"id": "wp_p001", "name": "장창(長槍)", "type": "창", "rarity": "흔함", "price_silver": 25, "effect": "표준."},
+    {"id": "wp_p002", "name": "철창(鐵槍)", "type": "창", "rarity": "흔함", "price_silver": 30, "effect": "두꺼운 창."},
+    {"id": "wp_p003", "name": "사명창(四明槍)", "type": "창", "rarity": "귀함", "price_silver": 200, "effect": "장인 명품."},
+    {"id": "wp_p004", "name": "비룡창(飛龍槍)", "type": "창", "rarity": "진귀", "price_silver": 800, "effect": "용처럼 빠르다."},
+    {"id": "wp_p005", "name": "수룡창(水龍槍)", "type": "창", "rarity": "진귀", "price_silver": 900, "effect": "장강수로채 채주급."},
+    {"id": "wp_p006", "name": "패왕창(覇王槍)", "type": "창", "rarity": "신물", "price_silver": "비매", "effect": "전설의 명창."},
+    {"id": "wp_p007", "name": "양각창(羊角槍)", "type": "창", "rarity": "귀함", "price_silver": 250, "effect": "양각 모양 창두."},
+    {"id": "wp_p008", "name": "철호창(鐵虎槍)", "type": "창", "rarity": "진귀", "price_silver": 700, "effect": "호랑이 새김."},
+    {"id": "wp_p009", "name": "쌍창(雙槍)", "type": "창(쌍)", "rarity": "귀함", "price_silver": 350, "effect": "한 쌍."},
+    {"id": "wp_p010", "name": "혈창(血槍)", "type": "창", "rarity": "진귀", "price_silver": 1000, "effect": "붉은 창. 마교 마장급."}
+  ],
+  "staves_and_clubs": [
+    {"id": "wp_st001", "name": "철곤(鐵棍)", "type": "곤", "rarity": "흔함", "price_silver": 20, "effect": "표준."},
+    {"id": "wp_st002", "name": "선장(禪杖)", "type": "장", "rarity": "흔함", "price_silver": 30, "effect": "소림 승려용."},
+    {"id": "wp_st003", "name": "용두장(龍頭杖)", "type": "장", "rarity": "귀함", "price_silver": 200, "effect": "용 머리 새김."},
+    {"id": "wp_st004", "name": "타구봉(打狗棒)", "type": "봉(죽)", "rarity": "신물", "price_silver": "비매", "effect": "개방 방주만의 죽봉."},
+    {"id": "wp_st005", "name": "쇠철곤(灰鐵棍)", "type": "곤", "rarity": "귀함", "price_silver": 150, "effect": "묵직."},
+    {"id": "wp_st006", "name": "강선장(剛禪杖)", "type": "장", "rarity": "진귀", "price_silver": 600, "effect": "소림 수호법왕급."},
+    {"id": "wp_st007", "name": "혈장(血杖)", "type": "장", "rarity": "진귀", "price_silver": 800, "effect": "마교 장로급."}
+  ],
+  "fists_and_gloves": [
+    {"id": "wp_f001", "name": "철권갑(鐵拳鉀)", "type": "권갑", "rarity": "흔함", "price_silver": 50, "effect": "주먹 보호."},
+    {"id": "wp_f002", "name": "동권갑(銅拳鉀)", "type": "권갑", "rarity": "귀함", "price_silver": 150, "effect": "동 보강."},
+    {"id": "wp_f003", "name": "금강권갑(金剛拳鉀)", "type": "권갑", "rarity": "진귀", "price_silver": 700, "effect": "소림 수호자급."},
+    {"id": "wp_f004", "name": "혈투갑(血鬪鉀)", "type": "권갑", "rarity": "진귀", "price_silver": 800, "effect": "마교 권사용."}
+  ],
+  "whips_and_chains": [
+    {"id": "wp_wh001", "name": "강편(剛鞭)", "type": "편", "rarity": "흔함", "price_silver": 25, "effect": "표준."},
+    {"id": "wp_wh002", "name": "구절편(九節鞭)", "type": "편", "rarity": "귀함", "price_silver": 200, "effect": "아홉 마디."},
+    {"id": "wp_wh003", "name": "혈편(血鞭)", "type": "편", "rarity": "진귀", "price_silver": 700, "effect": "붉은 편."},
+    {"id": "wp_wh004", "name": "철쇄(鐵鎖)", "type": "쇄", "rarity": "귀함", "price_silver": 200, "effect": "쇠사슬."},
+    {"id": "wp_wh005", "name": "유엽쌍쇄(柳葉雙鎖)", "type": "쇄(쌍)", "rarity": "진귀", "price_silver": 700, "effect": "쌍."}
+  ],
+  "hidden_weapons": [
+    {"id": "wp_h001", "name": "표창(鏢槍)", "type": "암기", "rarity": "흔함", "price_silver": 5, "effect": "표준."},
+    {"id": "wp_h002", "name": "비도(飛刀)", "type": "암기", "rarity": "흔함", "price_silver": 5, "effect": "표준."},
+    {"id": "wp_h003", "name": "삼릉추(三稜錐)", "type": "암기", "rarity": "흔함", "price_silver": 5, "effect": "표준."},
+    {"id": "wp_h004", "name": "당가 비전 표(鏢)", "type": "암기", "rarity": "진귀", "price_silver": 500, "effect": "독을 머금는다."},
+    {"id": "wp_h005", "name": "추혼표(追魂鏢)", "type": "암기", "rarity": "진귀", "price_silver": 700, "effect": "혼을 쫓는다는 추표."},
+    {"id": "wp_h006", "name": "독비도(毒匕刀)", "type": "암기", "rarity": "진귀", "price_silver": 800, "effect": "살문 살수의 비도."},
+    {"id": "wp_h007", "name": "성낭(星囊)", "type": "암기", "rarity": "귀함", "price_silver": 300, "effect": "별 모양 암기 묶음."},
+    {"id": "wp_h008", "name": "용아침(龍牙針)", "type": "암기", "rarity": "진귀", "price_silver": 600, "effect": "용 이빨 모양."},
+    {"id": "wp_h009", "name": "은침(銀針)", "type": "암기(독)", "rarity": "귀함", "price_silver": 200, "effect": "독에 적신 침."},
+    {"id": "wp_h010", "name": "만천화우 표(滿天花雨鏢)", "type": "암기(세트)", "rarity": "신물", "price_silver": "비매", "effect": "당가 가주급. 하늘 가득 꽃비처럼."}
+  ],
+  "bows_and_crossbows": [
+    {"id": "wp_b001", "name": "장궁(長弓)", "type": "활", "rarity": "흔함", "price_silver": 40, "effect": "표준."},
+    {"id": "wp_b002", "name": "강궁(强弓)", "type": "활", "rarity": "귀함", "price_silver": 200, "effect": "장력 큰 활."},
+    {"id": "wp_b003", "name": "비룡궁(飛龍弓)", "type": "활", "rarity": "진귀", "price_silver": 800, "effect": "용의 힘."},
+    {"id": "wp_b004", "name": "노(弩)", "type": "쇠뇌", "rarity": "흔함", "price_silver": 80, "effect": "표준 쇠뇌."},
+    {"id": "wp_b005", "name": "연발노(連發弩)", "type": "쇠뇌", "rarity": "귀함", "price_silver": 300, "effect": "연속 발사."},
+    {"id": "wp_b006", "name": "제갈노(諸葛弩)", "type": "쇠뇌", "rarity": "진귀", "price_silver": 700, "effect": "제갈세가 비전. 십연발."}
+  ],
+  "fans_and_others": [
+    {"id": "wp_fa001", "name": "철선(鐵扇)", "type": "부채", "rarity": "귀함", "price_silver": 250, "effect": "강철 부챗살."},
+    {"id": "wp_fa002", "name": "절명선(絶命扇)", "type": "부채", "rarity": "진귀", "price_silver": 700, "effect": "치명적인 부채."},
+    {"id": "wp_fa003", "name": "독선(毒扇)", "type": "부채", "rarity": "진귀", "price_silver": 700, "effect": "독 발산."},
+    {"id": "wp_o001", "name": "필통검(筆筒劍)", "type": "은닉검", "rarity": "귀함", "price_silver": 300, "effect": "붓통 안 단검."},
+    {"id": "wp_o002", "name": "지팡이검", "type": "은닉검", "rarity": "귀함", "price_silver": 300, "effect": "지팡이 안 단검."},
+    {"id": "wp_o003", "name": "옥소(玉簫)", "type": "악기 무기", "rarity": "진귀", "price_silver": 600, "effect": "옥피리. 무기와 악기 겸용."},
+    {"id": "wp_o004", "name": "철금(鐵琴)", "type": "악기 무기", "rarity": "진귀", "price_silver": 700, "effect": "현이 무기."}
+  ],
+  "armor_and_shields": [
+    {"id": "wp_ar001", "name": "갑포(甲袍)", "type": "갑옷", "rarity": "흔함", "price_silver": 100, "effect": "표준."},
+    {"id": "wp_ar002", "name": "연자갑(連子甲)", "type": "갑옷", "rarity": "귀함", "price_silver": 400, "effect": "쇠사슬 갑옷."},
+    {"id": "wp_ar003", "name": "금사연갑(金絲軟甲)", "type": "갑옷(연)", "rarity": "진귀", "price_silver": 2000, "effect": "비단 안 금사. 보이지 않게 입는다. 검 막음."},
+    {"id": "wp_ar004", "name": "흑린갑(黑鱗甲)", "type": "갑옷", "rarity": "진귀", "price_silver": 1500, "effect": "흑린."},
+    {"id": "wp_ar005", "name": "단순 방패", "type": "방패", "rarity": "흔함", "price_silver": 30, "effect": "표준."},
+    {"id": "wp_ar006", "name": "철방패(鐵盾)", "type": "방패", "rarity": "귀함", "price_silver": 100, "effect": "두꺼움."},
+    {"id": "wp_ar007", "name": "용린 방패", "type": "방패", "rarity": "진귀", "price_silver": 1500, "effect": "용 비늘 비유."}
+  ]
+}

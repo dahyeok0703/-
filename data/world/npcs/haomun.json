@@ -1,0 +1,35 @@
+{
+  "sect_id": "haomun",
+  "description": "하오문. 천민(거지·기녀·점소이·뱃사공 등)의 정보 조직. 사도련 산하.",
+  "leadership": [
+    {"id": "haomun_munju", "ref": "haoseong", "note": "칠성 하오성 여리 — 문주"}
+  ],
+  "department": "정보부·자금부·운수부·살문부(별개로 살문과 협력)·미인부(기녀 관리)·외부 연락부",
+  "department_heads": [
+    {"id": "haomun_h1", "name": "정보부장 호광(胡光)", "age": 50, "position": "정보부 총책", "realm": "jeoljeong_wansuk", "personality": "교활.", "notes": "여리의 사형제."},
+    {"id": "haomun_h2", "name": "자금부장 마부(馬富)", "age": 48, "position": "자금부 총책", "realm": "jeoljeong_chuip", "personality": "셈에 밝다.", "notes": ""},
+    {"id": "haomun_h3", "name": "운수부장 진보(陳寶)", "age": 45, "position": "운수부 총책", "realm": "ilryu_geuk", "personality": "발이 빠르다.", "notes": "장강수로채와 공조."},
+    {"id": "haomun_h4", "name": "미인부장 옥부인(玉夫人)", "age": 42, "position": "미인부 총책", "realm": "ilryu_wansuk", "personality": "기녀 출신 노련한 여인.", "notes": "기루들과의 연락."},
+    {"id": "haomun_h5", "name": "외부연락부장 우혀(于혀)", "age": 40, "position": "외부 연락", "realm": "ilryu_wansuk", "notes": "정파·관과의 비밀 연락."}
+  ],
+  "branch_heads": [
+    {"id": "haomun_b1", "name": "낙양분타주 정삼(鄭三)", "age": 45, "position": "낙양 분타", "realm": "ilryu_wansuk", "notes": "개방과 경쟁."},
+    {"id": "haomun_b2", "name": "장안분타주 마사(馬四)", "age": 43, "position": "장안 분타", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "haomun_b3", "name": "성도분타주 황오(黃五)", "age": 41, "position": "성도 분타", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "haomun_b4", "name": "남경분타주 진육(陳六)", "age": 39, "position": "남경 분타", "realm": "iryu_geuk", "notes": ""},
+    {"id": "haomun_b5", "name": "항주분타주 곽칠(郭七)", "age": 38, "position": "항주 분타", "realm": "iryu_geuk", "notes": ""},
+    {"id": "haomun_b6", "name": "북경분타주 호팔(胡八)", "age": 37, "position": "북경 분타", "realm": "iryu_wansuk", "notes": ""}
+  ],
+  "field_agents": [
+    {"id": "haomun_f1", "name": "점소이 노련(老蓮)", "age": 50, "position": "객잔 정보원", "realm": "samryu_geuk", "notes": "낙양 가장 큰 객잔."},
+    {"id": "haomun_f2", "name": "마부 우산(于山)", "age": 40, "position": "마부 정보원", "realm": "samryu_geuk", "notes": ""},
+    {"id": "haomun_f3", "name": "기녀 옥월(玉月)", "age": 28, "position": "기루 정보원", "realm": "iryu_chuip", "notes": "천향각 소속."},
+    {"id": "haomun_f4", "name": "기녀 화월(花月)", "age": 26, "position": "기루 정보원", "realm": "iryu_chuip", "notes": "옥봉루 소속."},
+    {"id": "haomun_f5", "name": "뱃사공 곽수(郭水)", "age": 45, "position": "수상 정보원", "realm": "iryu_geuk", "notes": ""},
+    {"id": "haomun_f6", "name": "도공 한기(韓器)", "age": 50, "position": "도공 정보원", "realm": "samryu_wansuk", "notes": "장인들 사이의 정보."},
+    {"id": "haomun_f7", "name": "약방 주인 우약(于藥)", "age": 55, "position": "약방 정보원", "realm": "samryu_geuk", "notes": ""},
+    {"id": "haomun_f8", "name": "점소이 소이(小二)", "age": 25, "position": "객잔 정보원", "realm": "samryu_chuip", "notes": "젊은 정보원."},
+    {"id": "haomun_f9", "name": "마차꾼 정마(鄭馬)", "age": 35, "position": "마차 정보원", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "haomun_f10", "name": "거지 노이(老二)", "age": 60, "position": "거리 정보원", "realm": "samryu_chuip", "notes": "거리에 늘 앉아있다."}
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "sect_id": "namgung",
+  "description": "남궁세가. 강남 합비. 검의 명문.",
+  "leadership": [
+    {"id": "namgung_gaju", "ref": "geomje", "note": "오황 검제 남궁천 — 가주"}
+  ],
+  "family_elders": [
+    {"id": "namgung_e1", "name": "남궁웅(南宮雄)", "age": 60, "position": "태상장로(가주 숙부)", "realm": "chojeoljeong_geuk", "notes": "전대 가주의 동생."},
+    {"id": "namgung_e2", "name": "남궁호(南宮浩)", "age": 56, "position": "장로(가주 사촌)", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "namgung_e3", "name": "남궁철(南宮鐵)", "age": 54, "position": "장로", "realm": "jeoljeong_geuk", "notes": "외부 활동."},
+    {"id": "namgung_e4", "name": "남궁산(南宮山)", "age": 52, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "namgung_e5", "name": "남궁우(南宮宇)", "age": 50, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "main_line": [
+    {"id": "namgung_soga", "name": "남궁소가(南宮笑歌)", "age": 26, "position": "소가주(장남)", "realm": "jeoljeong_chuip", "personality": "준수·자존심. 차세대 검의 정점 후보.", "notes": "후기지수 핵심."},
+    {"id": "namgung_2son", "name": "남궁휘(南宮輝)", "age": 23, "position": "차남", "realm": "ilryu_geuk", "personality": "형의 그늘에서 자람. 야망.", "notes": ""},
+    {"id": "namgung_3son", "name": "남궁우(南宮羽)", "age": 19, "position": "삼남", "realm": "ilryu_wansuk", "personality": "쾌활.", "notes": "막내 아들."},
+    {"id": "namgung_daughter", "ref": "월화 남궁월", "name": "남궁월(南宮月)", "age": 16, "position": "막내딸", "realm": "iryu_geuk", "personality": "절세 미녀. 사화 후보.", "notes": "후기지수."}
+  ],
+  "cadet_branch": [
+    {"id": "namgung_c1", "name": "남궁평(南宮平)", "age": 45, "position": "방계 장로", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "namgung_c2", "name": "남궁극(南宮戟)", "age": 42, "position": "방계", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "namgung_c3", "name": "남궁천(南宮川)", "age": 38, "position": "방계", "realm": "ilryu_wansuk", "personality": "(가주와 동명이인)", "notes": ""},
+    {"id": "namgung_c4", "name": "남궁수(南宮秀)", "age": 28, "position": "방계 차세대", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "guard_officers": [
+    {"id": "namgung_g1", "name": "고풍(高豊) 호위대장", "age": 47, "position": "외성호위대장", "realm": "jeoljeong_chuip", "notes": "외인 출신 충신."},
+    {"id": "namgung_g2", "name": "장무(張武) 부대장", "age": 40, "position": "외성호위 부대장", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "namgung_g3", "name": "주산(朱山) 검사장", "age": 38, "position": "검술 사범", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "young_disciples": [
+    {"id": "namgung_y1", "name": "남궁민(南宮敏)", "age": 14, "position": "방계 자제", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "namgung_y2", "name": "남궁율(南宮律)", "age": 12, "position": "방계 자제", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "namgung_y3", "name": "남궁선(南宮宣)", "age": 10, "position": "방계 자제", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

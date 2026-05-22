@@ -1,0 +1,35 @@
+{
+  "sect_id": "emei",
+  "description": "아미파. 여승 중심.",
+  "leadership": [
+    {"id": "emei_jangmun", "ref": "yeoseong", "note": "칠성 여성 혜정사태 — 장문"}
+  ],
+  "elders": [
+    {"id": "emei_e1", "name": "혜청(慧淸)사태", "age": 65, "position": "수석장로", "realm": "chojeoljeong_chuip", "personality": "엄정.", "notes": ""},
+    {"id": "emei_e2", "name": "혜연(慧蓮)사태", "age": 62, "position": "장로", "realm": "jeoljeong_geuk", "personality": "자비.", "notes": ""},
+    {"id": "emei_e3", "name": "혜원(慧圓)사태", "age": 60, "position": "장로", "realm": "jeoljeong_geuk", "personality": "지혜.", "notes": ""},
+    {"id": "emei_e4", "name": "혜정(慧靜)사태", "age": 58, "position": "장로", "realm": "jeoljeong_wansuk", "personality": "고요.", "notes": "(장문과 동명이인)"},
+    {"id": "emei_e5", "name": "혜선(慧禪)사태", "age": 56, "position": "장로", "realm": "jeoljeong_wansuk", "personality": "선(禪)적.", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "emei_d1", "name": "정묘(靜妙)", "age": 36, "position": "대제자", "realm": "jeoljeong_chuip", "personality": "차세대 장문 후보.", "notes": ""},
+    {"id": "emei_d2", "name": "정연(靜蓮)", "age": 33, "position": "이제자", "realm": "ilryu_geuk", "personality": "온화.", "notes": ""},
+    {"id": "emei_d3", "name": "정수(靜秀)", "age": 31, "position": "삼제자", "realm": "ilryu_wansuk", "personality": "준수.", "notes": ""},
+    {"id": "emei_d4", "name": "정월(靜月)", "age": 29, "position": "사제자", "realm": "ilryu_wansuk", "personality": "차분.", "notes": ""},
+    {"id": "emei_d5", "name": "정화(靜華)", "age": 27, "position": "오제자", "realm": "ilryu_chuip", "personality": "꽃 같은 미모.", "notes": "후기지수 후보."},
+    {"id": "emei_dr1", "name": "묘진(妙眞)", "age": 25, "position": "내문", "realm": "iryu_geuk", "notes": ""},
+    {"id": "emei_dr2", "name": "묘청(妙淸)", "age": 23, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "emei_dr3", "name": "묘선(妙仙)", "age": 22, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "emei_dr4", "name": "묘란(妙蘭)", "age": 21, "position": "내문", "realm": "iryu_chuip", "notes": ""},
+    {"id": "emei_dr5", "name": "묘설(妙雪)", "age": 20, "position": "내문", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "outer": [
+    {"id": "emei_o1", "name": "소청(小淸)", "age": 18, "position": "외문", "realm": "samryu_geuk", "notes": ""},
+    {"id": "emei_o2", "name": "소연(小蓮)", "age": 16, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "emei_o3", "name": "소월(小月)", "age": 14, "position": "외문", "realm": "samryu_chuip", "notes": ""},
+    {"id": "emei_o4", "name": "소화(小華)", "age": 12, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ],
+  "lay_male_disciples": [
+    {"id": "emei_lm1", "name": "장무(張武)", "age": 30, "position": "속가제자(남)", "realm": "ilryu_chuip", "notes": "남자 속가제자는 본산 출입 제한."}
+  ]
+}

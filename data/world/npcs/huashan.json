@@ -1,0 +1,42 @@
+{
+  "sect_id": "huashan",
+  "description": "화산파. 장문은 검천 한천(현 무림맹주).",
+  "leadership": [
+    {"id": "huashan_jangmun", "ref": "geomcheon", "note": "육천 검천 한천 — 무림맹주 겸 화산 장문"}
+  ],
+  "elders": [
+    {"id": "huashan_e_un_ji", "name": "운지(雲池)도장", "age": 70, "position": "수석장로(기검파)", "realm": "hwagyeong_chuip", "personality": "기(氣)를 중시. 정통파.", "notes": "기검 파벌의 영수."},
+    {"id": "huashan_e_un_san", "name": "운산(雲山)도장", "age": 68, "position": "장로(검기파)", "realm": "chojeoljeong_geuk", "personality": "검의 형(形)을 중시.", "notes": "검기 파벌. 두 파벌 알력의 한 축."},
+    {"id": "huashan_e_un_seol", "name": "운설(雲雪)도장", "age": 66, "position": "장로", "realm": "chojeoljeong_wansuk", "personality": "엄격.", "notes": "계율 담당."},
+    {"id": "huashan_e_un_ha", "name": "운하(雲霞)도장", "age": 64, "position": "장로", "realm": "chojeoljeong_wansuk", "personality": "온화.", "notes": "외사 담당."},
+    {"id": "huashan_e_un_hyang", "name": "운향(雲香)사태", "age": 62, "position": "장로(여)", "realm": "chojeoljeong_chuip", "personality": "단호한 여도사.", "notes": "여제자 담당."},
+    {"id": "huashan_e_un_pyo", "name": "운표(雲飄)도장", "age": 60, "position": "장로", "realm": "chojeoljeong_chuip", "personality": "유랑형.", "notes": "외부 활동 잦음."}
+  ],
+  "head_disciples": [
+    {"id": "huashan_d_seokyeon", "name": "석연(石蓮)", "age": 35, "position": "대제자(大弟子)", "realm": "jeoljeong_geuk", "personality": "준엄. 차세대 장문 후보.", "notes": "한천 직제자."},
+    {"id": "huashan_d_seokpung", "name": "석풍(石風)", "age": 34, "position": "이제자", "realm": "jeoljeong_wansuk", "personality": "쾌활.", "notes": "매화검 후계자."},
+    {"id": "huashan_d_seokho", "name": "석호(石浩)", "age": 32, "position": "삼제자", "realm": "jeoljeong_chuip", "personality": "용맹.", "notes": ""},
+    {"id": "huashan_d_seokyeong", "name": "석영(石暎)", "age": 30, "position": "사제자", "realm": "jeoljeong_chuip", "personality": "준수.", "notes": ""}
+  ],
+  "notable_disciples": [
+    {"id": "huashan_d_hanseol", "ref": "seolhwa", "note": "중원사화 설화 한설 — 한천의 외동딸"}
+  ],
+  "regular_disciples": [
+    {"id": "huashan_dr_meihwa1", "name": "매월(梅月)", "age": 26, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "이지적.", "notes": "여제자."},
+    {"id": "huashan_dr_meihwa2", "name": "매향(梅香)", "age": 25, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "수줍음.", "notes": "여제자."},
+    {"id": "huashan_dr_jeokhwa", "name": "적화(赤華)", "age": 27, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "정열.", "notes": ""},
+    {"id": "huashan_dr_baekhwa", "name": "백화(白華)", "age": 24, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "차분.", "notes": ""},
+    {"id": "huashan_dr_cheonghwa", "name": "청화(靑華)", "age": 23, "position": "내문 제자", "realm": "iryu_geuk", "personality": "성실.", "notes": ""},
+    {"id": "huashan_dr_geumhwa", "name": "금화(金華)", "age": 22, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "야망.", "notes": ""},
+    {"id": "huashan_dr_eunhwa", "name": "은화(銀華)", "age": 21, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "차가움.", "notes": "여제자."},
+    {"id": "huashan_dr_oghwa", "name": "옥화(玉華)", "age": 20, "position": "내문 제자", "realm": "iryu_chuip", "personality": "순수.", "notes": "여제자."}
+  ],
+  "outer_disciples": [
+    {"id": "huashan_o_sa1", "name": "사명(沙明)", "age": 18, "position": "외문 제자", "realm": "samryu_geuk", "personality": "활발.", "notes": ""},
+    {"id": "huashan_o_sa2", "name": "사훈(沙勳)", "age": 17, "position": "외문 제자", "realm": "samryu_wansuk", "personality": "투지.", "notes": ""},
+    {"id": "huashan_o_sa3", "name": "사연(沙姸)", "age": 16, "position": "외문 제자(여)", "realm": "samryu_wansuk", "personality": "재능.", "notes": "여."},
+    {"id": "huashan_o_sa4", "name": "사림(沙林)", "age": 14, "position": "외문 제자", "realm": "samryu_chuip", "personality": "성실.", "notes": ""},
+    {"id": "huashan_o_sa5", "name": "사휘(沙輝)", "age": 12, "position": "외문 제자", "realm": "samryu_chuip", "personality": "어림.", "notes": ""}
+  ],
+  "factional_note": "기검파 vs 검기파의 오랜 알력. 한천 맹주는 두 파를 화해시키려 노력 중이나 잠복 갈등."
+}

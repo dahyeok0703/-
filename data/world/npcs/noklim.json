@@ -1,0 +1,43 @@
+{
+  "sect_id": "noklim",
+  "description": "녹림 72채. 산적 연맹. 사도련 산하.",
+  "leadership": [
+    {"id": "noklim_wang", "ref": "sadoryeon_ju", "note": "팔왕 독안마왕 갈우 — 녹림왕 겸 사도련주"}
+  ],
+  "structure": "72채(寨). 각 채마다 채주. 큰 채는 절정급, 작은 채는 일류~이류.",
+  "great_chiefs": [
+    {"id": "noklim_g1", "name": "흑풍채주 사호(史豪)", "age": 50, "position": "흑풍채(黑風寨) 채주", "realm": "jeoljeong_geuk", "personality": "냉혹·실리.", "notes": "갈우의 측근."},
+    {"id": "noklim_g2", "name": "복호채주 진맹(陳猛)", "age": 47, "position": "복호채(伏虎寨) 채주", "realm": "jeoljeong_chuip", "personality": "사납다.", "notes": ""},
+    {"id": "noklim_g3", "name": "비응채주 마산(馬山)", "age": 45, "position": "비응채(飛鷹寨) 채주", "realm": "jeoljeong_chuip", "personality": "민첩.", "notes": "궁술 절기."},
+    {"id": "noklim_g4", "name": "철각채주 우정(于鼎)", "age": 48, "position": "철각채(鐵脚寨) 채주", "realm": "jeoljeong_wansuk", "personality": "묵직.", "notes": ""},
+    {"id": "noklim_g5", "name": "벽력채주 호중(胡中)", "age": 44, "position": "벽력채(霹靂寨) 채주", "realm": "jeoljeong_wansuk", "personality": "급한 성격.", "notes": ""}
+  ],
+  "middle_chiefs": [
+    {"id": "noklim_m1", "name": "광산채주 등천(鄧天)", "age": 41, "position": "광산채 채주", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "noklim_m2", "name": "비룡채주 사룡(史龍)", "age": 39, "position": "비룡채 채주", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "noklim_m3", "name": "황우채주 황건(黃乾)", "age": 37, "position": "황우채 채주", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "noklim_m4", "name": "흑랑채주 림표(林豹)", "age": 36, "position": "흑랑채 채주", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "noklim_m5", "name": "맹호채주 우호(于豪)", "age": 35, "position": "맹호채 채주", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "noklim_m6", "name": "은표채주 정은(鄭銀)", "age": 33, "position": "은표채 채주", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "noklim_m7", "name": "백산채주 백우(白雨)", "age": 32, "position": "백산채 채주", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "small_chiefs": [
+    {"id": "noklim_s1", "name": "소채주 왕광(王光)", "age": 30, "position": "소채주", "realm": "iryu_geuk", "notes": ""},
+    {"id": "noklim_s2", "name": "소채주 이쾌(李快)", "age": 28, "position": "소채주", "realm": "iryu_geuk", "notes": ""},
+    {"id": "noklim_s3", "name": "소채주 조산(趙山)", "age": 27, "position": "소채주", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "noklim_s4", "name": "소채주 한걸(韓傑)", "age": 25, "position": "소채주", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "noklim_s5", "name": "소채주 정호(鄭豪)", "age": 24, "position": "소채주", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "lieutenants": [
+    {"id": "noklim_l1", "name": "부채주 황림(黃林)", "age": 32, "position": "부채주", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "noklim_l2", "name": "부채주 최산(崔山)", "age": 30, "position": "부채주", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "noklim_l3", "name": "부채주 양호(梁豪)", "age": 28, "position": "부채주", "realm": "iryu_chuip", "notes": ""},
+    {"id": "noklim_l4", "name": "부채주 강맹(姜猛)", "age": 26, "position": "부채주", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "rank_and_file": [
+    {"id": "noklim_r1", "name": "도적 일(一)", "age": 25, "position": "졸병", "realm": "samryu_geuk", "notes": ""},
+    {"id": "noklim_r2", "name": "도적 이(二)", "age": 22, "position": "졸병", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "noklim_r3", "name": "도적 삼(三)", "age": 19, "position": "졸병", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "noklim_r4", "name": "도적 사(四)", "age": 17, "position": "졸병", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

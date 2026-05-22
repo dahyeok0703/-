@@ -1,0 +1,32 @@
+{
+  "sect_id": "jegal",
+  "description": "제갈세가. 양양. 진법·지략의 가문.",
+  "leadership": [
+    {"id": "jegal_gaju", "ref": "jisaengseong", "note": "칠성 지생성 제갈량명 — 가주"}
+  ],
+  "family_elders": [
+    {"id": "jegal_e1", "name": "제갈선(諸葛宣)", "age": 62, "position": "태상장로", "realm": "chojeoljeong_chuip", "notes": "가주의 숙부."},
+    {"id": "jegal_e2", "name": "제갈평(諸葛平)", "age": 55, "position": "장로", "realm": "jeoljeong_geuk", "notes": "진법 사범."},
+    {"id": "jegal_e3", "name": "제갈술(諸葛述)", "age": 52, "position": "장로", "realm": "jeoljeong_wansuk", "notes": "기관(機關) 사범."},
+    {"id": "jegal_e4", "name": "제갈서(諸葛書)", "age": 48, "position": "장로", "realm": "jeoljeong_chuip", "notes": "학자 장로."}
+  ],
+  "main_line": [
+    {"id": "jegal_soga", "name": "제갈우(諸葛宇)", "age": 26, "position": "소가주(장남)", "realm": "jeoljeong_chuip", "personality": "총명·신중. 차세대 가주.", "notes": "후기지수."},
+    {"id": "jegal_2son", "name": "제갈공(諸葛公)", "age": 22, "position": "차남", "realm": "ilryu_wansuk", "personality": "재기.", "notes": ""},
+    {"id": "jegal_daughter", "name": "제갈혜(諸葛慧)", "age": 18, "position": "장녀", "realm": "ilryu_chuip", "personality": "지혜로운 미녀.", "notes": "후기지수."}
+  ],
+  "cadet": [
+    {"id": "jegal_c1", "name": "제갈산(諸葛山)", "age": 43, "position": "방계", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "jegal_c2", "name": "제갈성(諸葛星)", "age": 38, "position": "방계", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jegal_c3", "name": "제갈명(諸葛明)", "age": 35, "position": "방계", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "specialists": [
+    {"id": "jegal_s1", "name": "제갈기(諸葛機)", "age": 55, "position": "기관학자", "realm": "ilryu_geuk", "notes": "기관진법 설계."},
+    {"id": "jegal_s2", "name": "제갈책(諸葛策)", "age": 48, "position": "병법학자", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jegal_s3", "name": "제갈도(諸葛圖)", "age": 42, "position": "지도학자", "realm": "iryu_geuk", "notes": ""}
+  ],
+  "young": [
+    {"id": "jegal_y1", "name": "제갈민(諸葛敏)", "age": 14, "position": "방계 자제", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "jegal_y2", "name": "제갈경(諸葛景)", "age": 12, "position": "방계 자제", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

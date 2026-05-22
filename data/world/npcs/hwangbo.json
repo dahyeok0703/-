@@ -1,0 +1,32 @@
+{
+  "sect_id": "hwangbo",
+  "description": "황보세가. 산동. 권각·중검.",
+  "leadership": [
+    {"id": "hwangbo_gaju", "ref": "kwonje", "note": "오황 권제 황보극 — 가주"}
+  ],
+  "family_elders": [
+    {"id": "hwangbo_e1", "name": "황보철(皇甫鐵)", "age": 60, "position": "태상장로", "realm": "chojeoljeong_geuk", "notes": "가주의 형."},
+    {"id": "hwangbo_e2", "name": "황보산(皇甫山)", "age": 56, "position": "장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "hwangbo_e3", "name": "황보무(皇甫武)", "age": 54, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "hwangbo_e4", "name": "황보강(皇甫剛)", "age": 52, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""}
+  ],
+  "main_line": [
+    {"id": "hwangbo_soga", "name": "황보태(皇甫泰)", "age": 27, "position": "소가주", "realm": "jeoljeong_chuip", "personality": "호방·우직. 부친을 닮음.", "notes": "후기지수."},
+    {"id": "hwangbo_2son", "name": "황보광(皇甫光)", "age": 23, "position": "차남", "realm": "ilryu_geuk", "personality": "기지가 있음.", "notes": ""},
+    {"id": "hwangbo_3son", "name": "황보운(皇甫雲)", "age": 18, "position": "삼남", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "hwangbo_daughter", "name": "황보령(皇甫鈴)", "age": 20, "position": "장녀", "realm": "ilryu_wansuk", "personality": "활발·당가 당령과 친우.", "notes": "후기지수."}
+  ],
+  "cadet": [
+    {"id": "hwangbo_c1", "name": "황보호(皇甫豪)", "age": 43, "position": "방계", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "hwangbo_c2", "name": "황보장(皇甫壯)", "age": 40, "position": "방계", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "hwangbo_c3", "name": "황보맹(皇甫猛)", "age": 36, "position": "방계", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "officers": [
+    {"id": "hwangbo_g1", "name": "조무(趙武) 호위대장", "age": 48, "position": "호위대장", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "hwangbo_g2", "name": "최강(崔剛) 사범", "age": 42, "position": "권법 사범", "realm": "ilryu_geuk", "notes": ""}
+  ],
+  "young": [
+    {"id": "hwangbo_y1", "name": "황보일(皇甫一)", "age": 14, "position": "방계 자제", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "hwangbo_y2", "name": "황보이(皇甫二)", "age": 12, "position": "방계 자제", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

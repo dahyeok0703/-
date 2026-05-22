@@ -1,0 +1,30 @@
+{
+  "sect_id": "moyong",
+  "description": "모용세가. 강남 고소. 야망의 가문.",
+  "leadership": [
+    {"id": "moyong_gaju", "ref": "junmowang", "note": "팔왕 준모왕 모용복 — 가주"}
+  ],
+  "family_elders": [
+    {"id": "moyong_e1", "name": "모용박(慕容博)", "age": 65, "position": "태상가주", "realm": "chojeoljeong_geuk", "personality": "전대 가주, 음험.", "notes": "표면적으로 은퇴. 실은 가문의 모든 일을 안다."},
+    {"id": "moyong_e2", "name": "모용단(慕容斷)", "age": 55, "position": "장로", "realm": "chojeoljeong_chuip", "notes": "가주의 동생."},
+    {"id": "moyong_e3", "name": "모용수(慕容秀)", "age": 52, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "moyong_e4", "name": "모용진(慕容眞)", "age": 50, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "main_line": [
+    {"id": "moyong_daughter", "ref": "yuhwa", "name": "모용유(慕容柔)", "age": 21, "position": "장녀", "personality": "중원사화. 가문의 카드.", "notes": ""},
+    {"id": "moyong_soga", "name": "모용규(慕容珪)", "age": 24, "position": "소가주(장남)", "realm": "jeoljeong_chuip", "personality": "냉정·계산적. 부친을 닮음.", "notes": "후기지수."},
+    {"id": "moyong_2son", "name": "모용걸(慕容傑)", "age": 19, "position": "차남", "realm": "ilryu_wansuk", "personality": "야심.", "notes": ""},
+    {"id": "moyong_daughter2", "name": "모용연(慕容姸)", "age": 17, "position": "차녀", "realm": "ilryu_chuip", "personality": "언니를 닮은 미인.", "notes": ""}
+  ],
+  "cadet": [
+    {"id": "moyong_c1", "name": "모용평(慕容平)", "age": 44, "position": "방계", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "moyong_c2", "name": "모용극(慕容戟)", "age": 41, "position": "방계", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "moyong_c3", "name": "모용천(慕容川)", "age": 38, "position": "방계", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "agents": [
+    {"id": "moyong_a1", "name": "왕광(王光)", "age": 38, "position": "비밀 호위", "realm": "jeoljeong_chuip", "notes": "가주 직속 첩보·호위."},
+    {"id": "moyong_a2", "name": "이암(李暗)", "age": 35, "position": "비밀 첩보", "realm": "ilryu_geuk", "notes": "외부 정보 수집."},
+    {"id": "moyong_a3", "name": "조검(趙劍)", "age": 33, "position": "사검사(私劍士)", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "secret_note": "모용세가는 표면적으로 정파이나 가주와 태상가주가 '대연(大燕) 부흥'이라는 옛 야망을 품고 있다는 풍문. 외부에 알려지지 않음."
+}

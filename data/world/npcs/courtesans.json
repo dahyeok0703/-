@@ -1,0 +1,162 @@
+{
+  "description": "기방과 기루의 여인들. 일부는 절세 미녀, 일부는 정보원, 일부는 강호인의 정인.",
+  "houses": [
+    {
+      "id": "cheonhyanggak",
+      "name": "천향각(天香閣)",
+      "location": "낙양",
+      "description": "천하제일 기루. 주인은 무화 화옥(중원사화).",
+      "ranking": "최상위. 한 잔의 차에 은자 한 냥."
+    },
+    {
+      "id": "okbongru",
+      "name": "옥봉루(玉鳳樓)",
+      "location": "항주",
+      "description": "강남 최고. 시(詩)와 가야금이 일품."
+    },
+    {
+      "id": "baekhwawon",
+      "name": "백화원(百花園)",
+      "location": "성도",
+      "description": "사천 일대. 당가와 가까워 미인이 많다."
+    },
+    {
+      "id": "unyeong",
+      "name": "운영각(雲影閣)",
+      "location": "장안",
+      "description": "옛 황도의 풍치. 시·서·화에 능한 여인들."
+    }
+  ],
+  "famous_courtesans": [
+    {
+      "id": "court_hwaok",
+      "ref": "muhwa",
+      "name": "화옥(花玉)",
+      "house": "cheonhyanggak",
+      "age": 42,
+      "note": "중원사화 무화. 천향각 주인."
+    },
+    {
+      "id": "court_okwol",
+      "name": "옥월(玉月)",
+      "house": "cheonhyanggak",
+      "age": 28,
+      "appearance": "고운 살결, 슬픈 듯한 눈매.",
+      "specialty": "거문고·가야금.",
+      "personality": "조용하고 정이 깊다.",
+      "secret": "하오문 정보원."
+    },
+    {
+      "id": "court_hwawol",
+      "name": "화월(花月)",
+      "house": "okbongru",
+      "age": 26,
+      "appearance": "강남 미녀.",
+      "specialty": "춤·시.",
+      "personality": "활달.",
+      "secret": "하오문 정보원."
+    },
+    {
+      "id": "court_seolryeon",
+      "name": "설련(雪蓮)",
+      "house": "cheonhyanggak",
+      "age": 24,
+      "appearance": "청초.",
+      "specialty": "노래.",
+      "personality": "수줍음 많음."
+    },
+    {
+      "id": "court_yuyeon",
+      "name": "유연(柳姸)",
+      "house": "okbongru",
+      "age": 25,
+      "appearance": "버드나무처럼 가녀린.",
+      "specialty": "가야금."
+    },
+    {
+      "id": "court_jihwa",
+      "name": "지화(芷花)",
+      "house": "baekhwawon",
+      "age": 23,
+      "appearance": "사천 미녀.",
+      "specialty": "춤."
+    },
+    {
+      "id": "court_haewol",
+      "name": "해월(海月)",
+      "house": "okbongru",
+      "age": 27,
+      "appearance": "이지적인 미녀.",
+      "specialty": "시·서.",
+      "personality": "차분.",
+      "history": "양반 가문 출신이 몰락하여 기루로."
+    },
+    {
+      "id": "court_unhyang",
+      "name": "운향(雲香)",
+      "house": "unyeong",
+      "age": 26,
+      "appearance": "장안의 명기.",
+      "specialty": "회화.",
+      "personality": "오만하다."
+    },
+    {
+      "id": "court_baekhwa",
+      "name": "백화(百華)",
+      "house": "baekhwawon",
+      "age": 25,
+      "appearance": "백 가지 꽃이 한 사람에게.",
+      "specialty": "춤·연주."
+    },
+    {
+      "id": "court_chochan",
+      "name": "초찬(楚簒)",
+      "house": "cheonhyanggak",
+      "age": 30,
+      "appearance": "농염한 미인.",
+      "specialty": "노래·정담.",
+      "secret": "젊을 때 어떤 강호 고수의 정인이었다는 풍문. 그 고수는 죽었다."
+    },
+    {
+      "id": "court_seoyang",
+      "name": "서양(西陽)",
+      "house": "unyeong",
+      "age": 24,
+      "appearance": "고고하다.",
+      "specialty": "거문고."
+    },
+    {
+      "id": "court_milhwa",
+      "name": "밀화(蜜花)",
+      "house": "baekhwawon",
+      "age": 22,
+      "appearance": "꿀처럼 달다.",
+      "specialty": "춤."
+    },
+    {
+      "id": "court_yangchun",
+      "name": "양춘(楊春)",
+      "house": "okbongru",
+      "age": 21,
+      "appearance": "봄꽃 같다.",
+      "specialty": "노래."
+    },
+    {
+      "id": "court_dochun",
+      "name": "도춘(桃春)",
+      "house": "cheonhyanggak",
+      "age": 20,
+      "appearance": "복숭아 꽃.",
+      "specialty": "춤·연주."
+    },
+    {
+      "id": "court_baekran",
+      "name": "백란(白蘭)",
+      "house": "unyeong",
+      "age": 22,
+      "appearance": "백란화 같은 청초미.",
+      "specialty": "시·서·서법."
+    }
+  ],
+  "interaction_notes": "기루는 단순 술집이 아니다. 강호 정보의 노드. 강호인이 상위 기녀 곁에 앉으려면 명성 또는 거금이 필요. 면천(免賤)시켜 정인으로 들이는 것은 한 시대의 인연으로 남는다."
+}

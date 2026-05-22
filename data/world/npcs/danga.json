@@ -1,0 +1,36 @@
+{
+  "sect_id": "danga",
+  "description": "사천당가. 독·암기. 가족주의·폐쇄적.",
+  "leadership": [
+    {"id": "danga_gaju", "ref": "dokje", "note": "오황 독제 당철 — 가주"}
+  ],
+  "family_elders": [
+    {"id": "danga_e1", "name": "당가공(唐家公) 당림(唐林)", "age": 70, "position": "태상장로", "realm": "chojeoljeong_geuk", "notes": "전대 가주, 가주의 부친."},
+    {"id": "danga_e2", "name": "당정(唐靜)", "age": 60, "position": "장로(가주 숙부)", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "danga_e3", "name": "당철호(唐鐵浩)", "age": 55, "position": "장로", "realm": "jeoljeong_geuk", "notes": "암기 사범."},
+    {"id": "danga_e4", "name": "당독수(唐毒手)", "age": 52, "position": "장로", "realm": "jeoljeong_geuk", "notes": "독공 사범."},
+    {"id": "danga_e5", "name": "당원(唐遠)", "age": 50, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "main_line": [
+    {"id": "danga_soga", "name": "당광(唐光)", "age": 28, "position": "소가주(장남)", "realm": "jeoljeong_chuip", "personality": "엄정·후계자.", "notes": "차세대 가주. 후기지수."},
+    {"id": "danga_2son", "name": "당철생(唐鐵生)", "age": 25, "position": "차남", "realm": "ilryu_geuk", "personality": "조용.", "notes": ""},
+    {"id": "danga_daughter1", "name": "당옥(唐玉)", "age": 23, "position": "장녀", "realm": "ilryu_wansuk", "personality": "차분한 독공 천재.", "notes": ""},
+    {"id": "danga_daughter2", "ref": "okhwa", "name": "당령(唐鈴)", "age": 19, "position": "차녀(중원사화 옥화)", "realm": "ilryu_chuip", "personality": "사화. 활달.", "notes": ""}
+  ],
+  "cadet": [
+    {"id": "danga_c1", "name": "당비(唐飛)", "age": 45, "position": "방계", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "danga_c2", "name": "당암(唐暗)", "age": 42, "position": "방계", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "danga_c3", "name": "당수(唐秀)", "age": 38, "position": "방계", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "danga_c4", "name": "당화(唐華)", "age": 35, "position": "방계(여)", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "specialists": [
+    {"id": "danga_s1", "name": "당련(唐鍊) 단약사", "age": 60, "position": "단약 총책", "realm": "ilryu_geuk", "notes": "당가의 약·독 제조."},
+    {"id": "danga_s2", "name": "당기(唐器) 암기사", "age": 55, "position": "암기 제작 총책", "realm": "ilryu_wansuk", "notes": "암기 제작."},
+    {"id": "danga_s3", "name": "당정(唐鼎) 의원", "age": 50, "position": "가문 의원", "realm": "iryu_geuk", "notes": "외상 치료."}
+  ],
+  "young": [
+    {"id": "danga_y1", "name": "당홍(唐紅)", "age": 15, "position": "방계 자제", "realm": "samryu_geuk", "notes": ""},
+    {"id": "danga_y2", "name": "당청(唐淸)", "age": 13, "position": "방계 자제", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "danga_y3", "name": "당록(唐祿)", "age": 11, "position": "방계 자제", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

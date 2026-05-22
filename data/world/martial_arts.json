@@ -1,198 +1,190 @@
 {
-  "description": "강호에 전해지는 무공들. 등급은 weapon 계열과 grade로 표현.",
-  "grade_scale": {
-    "삼류": "마을 무관에서 가르치는 수준",
-    "이류": "중급 표국·소문파 비전",
-    "일류": "큰 문파의 외문 무공",
-    "절정": "구파일방·세가의 자랑할 만한 절기",
-    "초절정": "한 문파에 하나 있을까 말까 한 비전",
-    "신공(神功)": "전대 신화급. 한 시대에 하나 정도. 화경 이상의 깨달음 동반"
+  "description": "강호에 전해지는 무공 종합. 약 140종.",
+  "grade_scale": ["삼류", "이류", "일류", "절정", "초절정", "신공"],
+  "field_definition": {
+    "id": "고유 식별자",
+    "name": "무공명",
+    "sect": "소속 문파 id (또는 null)",
+    "grade": "삼류~신공",
+    "type": "내공심법·권법·장법·검법·도법·창법·봉법·암기·보법·기공·환술·약·진법 등",
+    "weapon": "맨손·검·도·창·봉·암기·기타",
+    "description": "한 줄 묘사",
+    "side_effects": "있을 시"
   },
   "internal_arts": [
-    {
-      "id": "yeokgeungyeong",
-      "name": "역근경(易筋經)",
-      "sect": "shaolin",
-      "grade": "신공",
-      "type": "내공심법",
-      "description": "달마조사가 남긴 불문 최고의 심법. 근골을 다시 빚는다.",
-      "side_effects": "없음. 정심(正心) 필수.",
-      "training_difficulty": "극상"
-    },
-    {
-      "id": "sunyangmugeukkong",
-      "name": "순양무극공(純陽無極功)",
-      "sect": "wudang",
-      "grade": "신공",
-      "type": "내공심법(도가)",
-      "description": "양(陽)의 기운으로 천하무극(無極)을 이룬다.",
-      "training_difficulty": "극상"
-    },
-    {
-      "id": "jahasinkong",
-      "name": "자하신공(紫霞神功)",
-      "sect": "huashan",
-      "grade": "초절정",
-      "type": "내공심법",
-      "description": "자색의 노을 같은 기운. 검과 함께 발현."
-    },
-    {
-      "id": "hyeolma",
-      "name": "혈마대법(血魔大法)",
-      "sect": "cheonma",
-      "grade": "신공",
-      "type": "마공(흡공)",
-      "description": "타인의 피와 내력을 흡수한다. 강해질수록 광기에 잠식된다.",
-      "side_effects": "주화입마 위험 극대. 인성 변질."
-    },
-    {
-      "id": "heupseongdaebeop",
-      "name": "흡성대법(吸星大法)",
-      "sect": "cheonma",
-      "grade": "초절정",
-      "type": "마공(흡공)",
-      "description": "타인의 내공을 흡수한다.",
-      "side_effects": "흡수한 내력 간 충돌. 결함 있음."
-    }
+    {"id": "yeokgeungyeong", "name": "역근경(易筋經)", "sect": "shaolin", "grade": "신공", "type": "내공심법", "weapon": "무관", "description": "달마조사가 남긴 불문 최고의 심법. 근골을 다시 빚는다.", "side_effects": "정심 필수."},
+    {"id": "sesugyeong", "name": "세수경(洗髓經)", "sect": "shaolin", "grade": "신공", "type": "내공심법", "weapon": "무관", "description": "골수를 씻는 비전. 역근경과 한 쌍."},
+    {"id": "banyaseongong", "name": "반야선공(般若禪功)", "sect": "shaolin", "grade": "초절정", "type": "내공심법", "weapon": "무관", "description": "선(禪)의 깊은 내공. 마음과 함께 강해진다."},
+    {"id": "sunyangmugeukkong", "name": "순양무극공(純陽無極功)", "sect": "wudang", "grade": "신공", "type": "내공심법(도가)", "weapon": "무관", "description": "양(陽)의 정점."},
+    {"id": "yangui_sinkong", "name": "양의신공(兩儀神功)", "sect": "wudang", "grade": "초절정", "type": "내공심법", "weapon": "무관", "description": "음양 양의를 다룬다."},
+    {"id": "jahasinkong", "name": "자하신공(紫霞神功)", "sect": "huashan", "grade": "초절정", "type": "내공심법", "weapon": "검", "description": "자색 노을의 기운."},
+    {"id": "amigooyang", "name": "아미구양공(峨眉九陽功)", "sect": "emei", "grade": "초절정", "type": "내공심법(양)", "weapon": "무관", "description": "구양진경의 단편으로 만든 아미 비전."},
+    {"id": "yangueisinkong_emei", "name": "양의심공(兩儀心功)", "sect": "kunlun", "grade": "절정", "type": "내공심법", "weapon": "무관", "description": "곤륜 도가 내공."},
+    {"id": "honwon", "name": "혼원일기공(混元一氣功)", "sect": "kongdong", "grade": "초절정", "type": "내공심법", "weapon": "무관", "description": "공동의 혼원. 외공과 결합."},
+    {"id": "hyeolma", "name": "혈마대법(血魔大法)", "sect": "cheonma", "grade": "신공", "type": "마공(흡공)", "weapon": "무관", "description": "타인의 피·내력을 흡수.", "side_effects": "광기 잠식."},
+    {"id": "heupseongdaebeop", "name": "흡성대법(吸星大法)", "sect": "cheonma", "grade": "초절정", "type": "마공(흡공)", "weapon": "무관", "description": "타인 내공 흡수.", "side_effects": "내력 충돌."},
+    {"id": "cheonmasinkong", "name": "천마신공(天魔神功)", "sect": "cheonma", "grade": "신공", "type": "마공 심법", "weapon": "무관", "description": "천마에게만 전수. 마교 최강."},
+    {"id": "gwanghyeolgong", "name": "광혈공(狂血功)", "sect": "cheonma", "grade": "초절정", "type": "마공", "weapon": "무관", "description": "광기로 폭발적 내공.", "side_effects": "수명 단축."},
+    {"id": "hyeolyogong", "name": "혈요공(血妖功)", "sect": "cheonma", "grade": "초절정", "type": "마공(여)", "weapon": "무관", "description": "여 마인 전용. 매혹과 결합."},
+    {"id": "guyumjingyeong", "name": "구음진경(九陰眞經)", "sect": null, "grade": "신공", "type": "내공심법(음)", "weapon": "무관", "description": "행방불명. 정으로 익히면 신경, 사로 익히면 마.", "side_effects": "사도 수련시 광기."},
+    {"id": "guyangjingyeong", "name": "구양진경(九陽眞經)", "sect": null, "grade": "신공", "type": "내공심법(양)", "weapon": "무관", "description": "구음의 짝. 행방불명."},
+    {"id": "seoncheon", "name": "선천기경(先天氣經)", "sect": null, "grade": "신공", "type": "내공심법", "weapon": "무관", "description": "태어날 때부터의 기. 전설."},
+    {"id": "dongjagong", "name": "동자공(童子功)", "sect": "shaolin", "grade": "절정", "type": "내공심법", "weapon": "무관", "description": "동정의 몸으로만 수련.", "side_effects": "여색 금기."},
+    {"id": "jiseonsimbeop", "name": "지선심법(止旋心法)", "sect": null, "grade": "절정", "type": "내공심법", "weapon": "무관", "description": "잡학. 일반 무관 비전."},
+    {"id": "tonggwagong", "name": "통경공(通經功)", "sect": null, "grade": "일류", "type": "내공", "weapon": "무관", "description": "기경 타통 보조."}
   ],
-  "external_arts": [
-    {
-      "id": "baekbosinkwon",
-      "name": "백보신권(百步神拳)",
-      "sect": "shaolin",
-      "grade": "절정",
-      "type": "권법",
-      "description": "백 보 밖에서도 적을 친다는 권강.",
-      "weapon": "맨주먹"
-    },
-    {
-      "id": "nahankwon",
-      "name": "나한권(羅漢拳)",
-      "sect": "shaolin",
-      "grade": "일류",
-      "type": "권법",
-      "description": "소림 입문 권법. 외문 제자도 익힌다."
-    },
-    {
-      "id": "taegeukkwon",
-      "name": "태극권(太極拳)",
-      "sect": "wudang",
-      "grade": "절정",
-      "type": "권법(내가)",
-      "description": "느리나 모든 힘을 흘려 보낸다. 사강(四兩)으로 천근(千斤)을 친다."
-    },
-    {
-      "id": "hangryongsipfaljang",
-      "name": "항룡십팔장(降龍十八掌)",
-      "sect": "gaebang",
-      "grade": "초절정",
-      "type": "장법",
-      "description": "용을 굴복시키는 장. 개방 방주의 비전."
-    },
-    {
-      "id": "chilsangkwon",
-      "name": "칠상권(七傷拳)",
-      "sect": "kongdong",
-      "grade": "절정",
-      "type": "권법",
-      "description": "남도 상하나 자신도 상하는 권법.",
-      "side_effects": "수련자의 오장육부 손상"
-    }
+  "shaolin_external": [
+    {"id": "baekbosinkwon", "name": "백보신권(百步神拳)", "sect": "shaolin", "grade": "절정", "type": "권법", "weapon": "맨주먹", "description": "백 보 밖에서 적을 친다."},
+    {"id": "nahankwon", "name": "나한권(羅漢拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "소림 입문 권법."},
+    {"id": "geumgangbulgoe", "name": "금강불괴(金剛不壞)", "sect": "shaolin", "grade": "초절정", "type": "외공/방어", "weapon": "무관", "description": "몸이 금강처럼 강해짐.", "side_effects": "장기 수련 필요."},
+    {"id": "dalmageom", "name": "달마검법(達磨劍法)", "sect": "shaolin", "grade": "초절정", "type": "검법(불문)", "weapon": "검", "description": "달마조사의 검."},
+    {"id": "witasipfalbeop", "name": "위타십팔법(韋陀十八法)", "sect": "shaolin", "grade": "일류", "type": "외공", "weapon": "무관", "description": "외문 단련법."},
+    {"id": "geumgangkwon", "name": "금강권(金剛拳)", "sect": "shaolin", "grade": "절정", "type": "권법", "weapon": "맨주먹", "description": "금강의 권."},
+    {"id": "yiljijian", "name": "일지선(一指禪)", "sect": "shaolin", "grade": "초절정", "type": "지법", "weapon": "손가락", "description": "한 손가락으로 사람을 죽인다."},
+    {"id": "bonghyeong", "name": "복호장(伏虎掌)", "sect": "shaolin", "grade": "절정", "type": "장법", "weapon": "맨손", "description": "호랑이를 굴복시킨다."},
+    {"id": "yongkwon", "name": "용권(龍拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "용의 형."},
+    {"id": "hokkwon", "name": "호권(虎拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "호의 형."},
+    {"id": "hakkwon", "name": "학권(鶴拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "학의 형."},
+    {"id": "saykwon", "name": "사권(蛇拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "사의 형."},
+    {"id": "pyokwon", "name": "표권(豹拳)", "sect": "shaolin", "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "표의 형."}
   ],
-  "sword_arts": [
-    {
-      "id": "taegeukgeom",
-      "name": "태극검(太極劍)",
-      "sect": "wudang",
-      "grade": "절정",
-      "type": "검법",
-      "description": "원(圓)으로 모든 공격을 흘리고 되돌린다."
-    },
-    {
-      "id": "maehwagombeop",
-      "name": "이십사수매화검법(二十四手梅花劍法)",
-      "sect": "huashan",
-      "grade": "절정",
-      "type": "검법",
-      "description": "매화 24송이가 피어나듯 화려하고 매서운 검."
-    },
-    {
-      "id": "jewanggeomhyeong",
-      "name": "제왕검형(帝王劍形)",
-      "sect": "namgung",
-      "grade": "초절정",
-      "type": "검법",
-      "description": "남궁세가의 가전. 위풍당당한 제왕의 검."
-    },
-    {
-      "id": "sailgeombeop",
-      "name": "사일검법(射日劍法)",
-      "sect": "jeomchang",
-      "grade": "초절정",
-      "type": "쾌검",
-      "description": "해를 쏘아 떨어뜨릴 만큼 빠른 검. 점창의 자랑."
-    },
-    {
-      "id": "maragujeolgeom",
-      "name": "마라구절검(魔羅九絶劍)",
-      "sect": "cheonma",
-      "grade": "초절정",
-      "type": "마검",
-      "description": "마라의 9가지 절초. 천마신교 호교법왕의 검."
-    }
+  "wudang_arts": [
+    {"id": "taegeukkwon", "name": "태극권(太極拳)", "sect": "wudang", "grade": "절정", "type": "권법(내가)", "weapon": "맨손", "description": "유능제강."},
+    {"id": "taegeukgeom", "name": "태극검(太極劍)", "sect": "wudang", "grade": "절정", "type": "검법", "weapon": "검", "description": "원으로 흘리고 되돌린다."},
+    {"id": "yangeuigeom", "name": "양의검법(兩儀劍法)", "sect": "wudang", "grade": "초절정", "type": "검법", "weapon": "검", "description": "음양 양의의 검."},
+    {"id": "hyeonheodobeop", "name": "현허도법(玄虛道法)", "sect": "wudang", "grade": "초절정", "type": "도법(도가)", "weapon": "도", "description": "현허지경의 도."},
+    {"id": "musangsim", "name": "무상심법(無相心法)", "sect": "wudang", "grade": "일류", "type": "내공", "weapon": "무관", "description": "무상."},
+    {"id": "songpungkeom", "name": "송풍검법(松風劍法)", "sect": "wudang", "grade": "일류", "type": "검법", "weapon": "검", "description": "소나무에 부는 바람."},
+    {"id": "cheongsuingong", "name": "청수인공(淸水印功)", "sect": "wudang", "grade": "절정", "type": "장법", "weapon": "맨손", "description": "맑은 물의 장."}
   ],
-  "weapon_arts": [
-    {
-      "id": "tagubongbeop",
-      "name": "타구봉법(打狗棒法)",
-      "sect": "gaebang",
-      "grade": "초절정",
-      "type": "봉법",
-      "description": "개방 방주만이 익힌다. 한 자루 죽봉(竹棒)으로 천하를 다스린다."
-    },
-    {
-      "id": "mancheonhwau",
-      "name": "만천화우(滿天花雨)",
-      "sect": "danga",
-      "grade": "초절정",
-      "type": "암기",
-      "description": "하늘 가득 꽃비처럼 쏟아지는 암기. 피할 길이 없다."
-    },
-    {
-      "id": "suryongchang",
-      "name": "수룡창법(水龍槍法)",
-      "sect": "jangang",
-      "grade": "절정",
-      "type": "창법",
-      "description": "물에 사는 용의 움직임을 본뜬 창."
-    }
+  "huashan_arts": [
+    {"id": "maehwagombeop", "name": "이십사수매화검법(二十四手梅花劍法)", "sect": "huashan", "grade": "절정", "type": "검법", "weapon": "검", "description": "매화 24송이."},
+    {"id": "huashangeom", "name": "화산검결(華山劍訣)", "sect": "huashan", "grade": "일류", "type": "검법", "weapon": "검", "description": "화산 외문 표준 검결."},
+    {"id": "nakyoung", "name": "낙영검법(落英劍法)", "sect": "huashan", "grade": "일류", "type": "검법", "weapon": "검", "description": "꽃잎 떨어지는 검."},
+    {"id": "huashan_gigum", "name": "화산기검(華山氣劍)", "sect": "huashan", "grade": "초절정", "type": "검법(기)", "weapon": "검", "description": "기검파 비전."},
+    {"id": "huashan_geomgi", "name": "화산검기(華山劍氣)", "sect": "huashan", "grade": "초절정", "type": "검법(형)", "weapon": "검", "description": "검기파 비전."},
+    {"id": "jameunjam", "name": "자운잠형검(紫雲潛形劍)", "sect": "huashan", "grade": "절정", "type": "검법", "weapon": "검", "description": "자운에 검이 숨는다."}
   ],
-  "movement_arts": [
-    {
-      "id": "ungryongdaepalsik",
-      "name": "운룡대팔식(雲龍大八式)",
-      "sect": "kunlun",
-      "grade": "절정",
-      "type": "보법",
-      "description": "구름과 용처럼 종횡하는 곤륜 최고의 보법."
-    },
-    {
-      "id": "chwipalseonbo",
-      "name": "취팔선보(醉八仙步)",
-      "sect": "gaebang",
-      "grade": "절정",
-      "type": "보법",
-      "description": "팔선이 취해 비틀거리는 듯한 보법. 예측이 안 된다."
-    }
+  "jongnam_arts": [
+    {"id": "samsiprokjkeom", "name": "천하삼십육검(天下三十六劍)", "sect": "jongnam", "grade": "초절정", "type": "검법", "weapon": "검", "description": "천하의 검 36식을 집대성."},
+    {"id": "jongnamgeom", "name": "종남검법(終南劍法)", "sect": "jongnam", "grade": "일류", "type": "검법", "weapon": "검", "description": "정통 검도."},
+    {"id": "jongnamkwon", "name": "종남권(終南拳)", "sect": "jongnam", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "종남 외문."},
+    {"id": "jeonjingeom", "name": "전진검법(全眞劍法)", "sect": "jongnam", "grade": "절정", "type": "검법", "weapon": "검", "description": "잔존 비전."}
   ],
-  "stealth_arts": [
-    {
-      "id": "talhonsu",
-      "name": "탈혼수(奪魂手)",
-      "sect": "salmun",
-      "grade": "초절정",
-      "type": "암살수법",
-      "description": "혼을 빼앗는다는 살문의 절기. 소리 없이 죽인다."
-    }
+  "emei_arts": [
+    {"id": "bokhojang", "name": "복호장(伏虎掌)", "sect": "emei", "grade": "절정", "type": "장법", "weapon": "맨손", "description": "아미 비전 (소림과 동명)."},
+    {"id": "geumjeongmyeon", "name": "금정면불검(金頂面佛劍)", "sect": "emei", "grade": "절정", "type": "검법", "weapon": "검", "description": "아미 검."},
+    {"id": "amisipsamsik", "name": "아미십삼식(峨眉十三式)", "sect": "emei", "grade": "일류", "type": "검법", "weapon": "검", "description": "아미 외문."},
+    {"id": "yeoseonjang", "name": "여선장(女仙掌)", "sect": "emei", "grade": "절정", "type": "장법(여)", "weapon": "맨손", "description": "여 무인 전용."},
+    {"id": "jukyepio", "name": "죽엽표(竹葉鏢)", "sect": "emei", "grade": "일류", "type": "암기", "weapon": "암기", "description": "댓잎 모양 표창."}
+  ],
+  "qingcheng_arts": [
+    {"id": "cheongpung", "name": "청풍검법(靑風劍法)", "sect": "qingcheng", "grade": "절정", "type": "쾌검", "weapon": "검", "description": "푸른 바람 같은 검."},
+    {"id": "guggungbo", "name": "구궁신행보(九宮神行步)", "sect": "qingcheng", "grade": "절정", "type": "보법", "weapon": "무관", "description": "구궁 보법."},
+    {"id": "qingcheng_quaedo", "name": "청성쾌도(靑城快刀)", "sect": "qingcheng", "grade": "절정", "type": "쾌도", "weapon": "도", "description": "쾌도법."},
+    {"id": "cheongseong_simbeop", "name": "청성심법(靑城心法)", "sect": "qingcheng", "grade": "일류", "type": "내공", "weapon": "무관", "description": "청성 입문."}
+  ],
+  "kunlun_arts": [
+    {"id": "ungryongdaepalsik", "name": "운룡대팔식(雲龍大八式)", "sect": "kunlun", "grade": "초절정", "type": "보법", "weapon": "무관", "description": "구름과 용."},
+    {"id": "kunlungeombeop", "name": "곤륜검법(崑崙劍法)", "sect": "kunlun", "grade": "절정", "type": "검법", "weapon": "검", "description": "광활한 서역의 검."},
+    {"id": "seoryeokjang", "name": "서역장(西域掌)", "sect": "kunlun", "grade": "일류", "type": "장법", "weapon": "맨손", "description": "서역 비전."},
+    {"id": "han_cheonsimbeop", "name": "한천심법(寒天心法)", "sect": "kunlun", "grade": "절정", "type": "내공(한)", "weapon": "무관", "description": "차가운 기운."}
+  ],
+  "jeomchang_arts": [
+    {"id": "sailgeombeop", "name": "사일검법(射日劍法)", "sect": "jeomchang", "grade": "초절정", "type": "쾌검", "weapon": "검", "description": "해를 쏘아 떨어뜨린다."},
+    {"id": "jeomchang_quaegeom", "name": "점창쾌검(點蒼快劍)", "sect": "jeomchang", "grade": "절정", "type": "쾌검", "weapon": "검", "description": "점창 쾌검."},
+    {"id": "jeomchang_isipsa", "name": "점창이십사검(點蒼二十四劍)", "sect": "jeomchang", "grade": "일류", "type": "검법", "weapon": "검", "description": "외문 표준."}
+  ],
+  "kongdong_arts": [
+    {"id": "chilsangkwon", "name": "칠상권(七傷拳)", "sect": "kongdong", "grade": "절정", "type": "권법", "weapon": "맨손", "description": "남도 상하나 자신도.", "side_effects": "오장 손상."},
+    {"id": "bokmajang", "name": "복마장(伏魔掌)", "sect": "kongdong", "grade": "절정", "type": "장법", "weapon": "맨손", "description": "마를 굴복시키는 장."},
+    {"id": "kongdong_oeoongon", "name": "공동오공곤(崆峒五公棍)", "sect": "kongdong", "grade": "일류", "type": "곤법", "weapon": "곤", "description": "외문."},
+    {"id": "kongdong_kwon", "name": "공동권(崆峒拳)", "sect": "kongdong", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "공동 표준."}
+  ],
+  "gaebang_arts": [
+    {"id": "hangryongsipfaljang", "name": "항룡십팔장(降龍十八掌)", "sect": "gaebang", "grade": "초절정", "type": "장법", "weapon": "맨손", "description": "용을 굴복시키는 장."},
+    {"id": "tagubongbeop", "name": "타구봉법(打狗棒法)", "sect": "gaebang", "grade": "초절정", "type": "봉법", "weapon": "봉(죽)", "description": "방주만 전수."},
+    {"id": "chwipalseonbo", "name": "취팔선보(醉八仙步)", "sect": "gaebang", "grade": "절정", "type": "보법", "weapon": "무관", "description": "취해서 비틀거리는 보법."},
+    {"id": "chwikwon", "name": "취권(醉拳)", "sect": "gaebang", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "취한 척하는 권."},
+    {"id": "gomokin", "name": "고목공(枯木功)", "sect": "gaebang", "grade": "일류", "type": "내공", "weapon": "무관", "description": "거지의 인내."}
+  ],
+  "namgung_arts": [
+    {"id": "jewanggeomhyeong", "name": "제왕검형(帝王劍形)", "sect": "namgung", "grade": "초절정", "type": "검법", "weapon": "검", "description": "위풍당당한 제왕의 검."},
+    {"id": "changunggeom", "name": "창궁검법(蒼穹劍法)", "sect": "namgung", "grade": "절정", "type": "검법", "weapon": "검", "description": "푸른 하늘 같은 검."},
+    {"id": "namgung_geomgyeol", "name": "남궁검결(南宮劍訣)", "sect": "namgung", "grade": "일류", "type": "검법", "weapon": "검", "description": "외문."},
+    {"id": "namgung_kwon", "name": "남궁권(南宮拳)", "sect": "namgung", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "외문."}
+  ],
+  "hwangbo_arts": [
+    {"id": "hwangbokwon", "name": "황보권(皇甫拳)", "sect": "hwangbo", "grade": "절정", "type": "권법", "weapon": "맨손", "description": "강맹한 권."},
+    {"id": "paewangdobeop", "name": "패왕도법(覇王刀法)", "sect": "hwangbo", "grade": "초절정", "type": "도법(중)", "weapon": "도", "description": "패왕의 도."},
+    {"id": "cheolhyeolkwon", "name": "철혈권(鐵血拳)", "sect": "hwangbo", "grade": "절정", "type": "권법", "weapon": "맨손", "description": "철과 피의 권."},
+    {"id": "hwangbo_jung_geom", "name": "황보중검(皇甫重劍)", "sect": "hwangbo", "grade": "절정", "type": "검법(중)", "weapon": "중검", "description": "무거운 검."}
+  ],
+  "moyong_arts": [
+    {"id": "chamhabji", "name": "참합지(參合指)", "sect": "moyong", "grade": "초절정", "type": "지법", "weapon": "손가락", "description": "참합지의 절기."},
+    {"id": "dujeonseongi", "name": "두전성이(斗轉星移)", "sect": "moyong", "grade": "신공", "type": "환술/반사", "weapon": "무관", "description": "남의 무공을 돌려준다."},
+    {"id": "moyonggom", "name": "모용검법(慕容劍法)", "sect": "moyong", "grade": "절정", "type": "검법", "weapon": "검", "description": "정밀한 검."},
+    {"id": "moyong_kwon", "name": "모용권(慕容拳)", "sect": "moyong", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "외문."}
+  ],
+  "danga_arts": [
+    {"id": "mancheonhwau", "name": "만천화우(滿天花雨)", "sect": "danga", "grade": "초절정", "type": "암기", "weapon": "암기 다수", "description": "하늘 가득 꽃비."},
+    {"id": "dangmun_dokgong", "name": "당문 비전 독공", "sect": "danga", "grade": "신공", "type": "독공", "weapon": "독", "description": "당가 최비전."},
+    {"id": "chuhontalbaeksu", "name": "추혼탈백수(追魂奪魄手)", "sect": "danga", "grade": "절정", "type": "독수", "weapon": "맨손", "description": "혼과 백을 탈취."},
+    {"id": "danga_amgi_jeolgi", "name": "당가 암기 절기", "sect": "danga", "grade": "절정", "type": "암기", "weapon": "암기", "description": "표창·비도·은침의 화술."},
+    {"id": "godokjeolgi", "name": "고독절기(蠱毒絶技)", "sect": "danga", "grade": "절정", "type": "고독", "weapon": "독충", "description": "남만 고독 활용."},
+    {"id": "danga_simbeop", "name": "당가심법(唐家心法)", "sect": "danga", "grade": "일류", "type": "내공", "weapon": "무관", "description": "독 면역."},
+    {"id": "danga_geom", "name": "당가검법(唐家劍法)", "sect": "danga", "grade": "일류", "type": "검법(독)", "weapon": "검(독)", "description": "독을 머금은 검."}
+  ],
+  "jegal_arts": [
+    {"id": "paljindo", "name": "팔진도(八陣圖)", "sect": "jegal", "grade": "신공", "type": "진법", "weapon": "무관", "description": "여덟 진법의 정점."},
+    {"id": "waryongjin", "name": "와룡진(臥龍陣)", "sect": "jegal", "grade": "초절정", "type": "진법", "weapon": "무관", "description": "용이 누운 진."},
+    {"id": "gongmyeong", "name": "공명신기(孔明神機)", "sect": "jegal", "grade": "신공", "type": "기관술", "weapon": "기관", "description": "기관의 정점."},
+    {"id": "jegal_geom", "name": "제갈검결(諸葛劍訣)", "sect": "jegal", "grade": "일류", "type": "검법", "weapon": "검", "description": "외문."},
+    {"id": "byeongbeop", "name": "병법(兵法)", "sect": "jegal", "grade": "절정", "type": "전술", "weapon": "무관", "description": "다수 전투 지휘."}
+  ],
+  "noklim_arts": [
+    {"id": "noklim_dobeop", "name": "녹림도법(綠林刀法)", "sect": "noklim", "grade": "일류", "type": "도법", "weapon": "도", "description": "녹림 표준."},
+    {"id": "byeokryeokdo", "name": "벽력도(霹靂刀)", "sect": "noklim", "grade": "절정", "type": "도법(중)", "weapon": "도", "description": "벼락 같은 도."},
+    {"id": "sanjeongigong", "name": "산전기공(山戰氣功)", "sect": "noklim", "grade": "일류", "type": "내공", "weapon": "무관", "description": "산전 적응."},
+    {"id": "noklim_kwon", "name": "녹림권(綠林拳)", "sect": "noklim", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "거친 권."},
+    {"id": "noklim_gungbeop", "name": "녹림궁법(綠林弓法)", "sect": "noklim", "grade": "일류", "type": "궁술", "weapon": "활", "description": "산적 궁술."}
+  ],
+  "jangang_arts": [
+    {"id": "suryongchang", "name": "수룡창법(水龍槍法)", "sect": "jangang", "grade": "절정", "type": "창법(수)", "weapon": "창", "description": "물에 사는 용의 창."},
+    {"id": "parangdo", "name": "파랑도법(波浪刀法)", "sect": "jangang", "grade": "절정", "type": "도법(수)", "weapon": "도", "description": "파도의 도."},
+    {"id": "jamryong", "name": "잠룡수공(潛龍水功)", "sect": "jangang", "grade": "절정", "type": "내공(수)", "weapon": "무관", "description": "물 속에서도 가능."},
+    {"id": "jangang_kwon", "name": "장강권(長江拳)", "sect": "jangang", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "외문."}
+  ],
+  "salmun_arts": [
+    {"id": "talhonsu", "name": "탈혼수(奪魂手)", "sect": "salmun", "grade": "초절정", "type": "암살수법", "weapon": "맨손", "description": "혼을 탈취."},
+    {"id": "shadowbo", "name": "그림자보법", "sect": "salmun", "grade": "절정", "type": "보법", "weapon": "무관", "description": "소리 없이."},
+    {"id": "dokbi", "name": "독비도(毒匕刀)", "sect": "salmun", "grade": "절정", "type": "독비도", "weapon": "비도", "description": "살문 살수의 비도."},
+    {"id": "salmun_amgi", "name": "살문 암기술", "sect": "salmun", "grade": "절정", "type": "암기", "weapon": "암기", "description": "은신과 결합."},
+    {"id": "salmun_simbeop", "name": "살문심법(殺門心法)", "sect": "salmun", "grade": "일류", "type": "내공", "weapon": "무관", "description": "감정 통제."}
+  ],
+  "haomun_arts": [
+    {"id": "haomun_chimsul", "name": "하오문침술(下汚門針術)", "sect": "haomun", "grade": "일류", "type": "암기/의술", "weapon": "침", "description": "마비·치료."},
+    {"id": "haomun_jeongbo", "name": "하오문정보술", "sect": "haomun", "grade": "일류", "type": "지능/외교", "weapon": "무관", "description": "정보 수집."},
+    {"id": "haomun_kwon", "name": "하오문권(下汚門拳)", "sect": "haomun", "grade": "일류", "type": "권법", "weapon": "맨손", "description": "거리의 권."}
+  ],
+  "demonic_arts": [
+    {"id": "maragujeolgeom", "name": "마라구절검(魔羅九絶劍)", "sect": "cheonma", "grade": "신공", "type": "마검", "weapon": "검", "description": "호교법왕의 검."},
+    {"id": "maggung", "name": "마궁신공(魔弓神功)", "sect": "cheonma", "grade": "초절정", "type": "궁술(마)", "weapon": "활", "description": "마궁법왕의 활."},
+    {"id": "madobeop", "name": "마도법(魔刀法)", "sect": "cheonma", "grade": "초절정", "type": "도법(마)", "weapon": "도", "description": "마도법왕의 도."},
+    {"id": "machang", "name": "마창법(魔槍法)", "sect": "cheonma", "grade": "초절정", "type": "창법(마)", "weapon": "창", "description": "마창법왕의 창."},
+    {"id": "hyeolyojang", "name": "혈요장(血妖掌)", "sect": "cheonma", "grade": "절정", "type": "장법(마)", "weapon": "맨손", "description": "혈요의 장."},
+    {"id": "magongbeop", "name": "마공보법(魔功步法)", "sect": "cheonma", "grade": "절정", "type": "보법", "weapon": "무관", "description": "마공 보법."}
+  ],
+  "miscellaneous": [
+    {"id": "rang_geom", "name": "낭인검법(浪人劍法)", "sect": null, "grade": "일류", "type": "검법", "weapon": "검", "description": "낭인들 사이 전해지는 자유검."},
+    {"id": "pyo_kwon", "name": "표국권법(鏢局拳法)", "sect": null, "grade": "이류", "type": "권법", "weapon": "맨손", "description": "표국 표준."},
+    {"id": "geuhang_dobeop", "name": "거항도법(巨港刀法)", "sect": null, "grade": "이류", "type": "도법", "weapon": "도", "description": "항구 도시 무인."},
+    {"id": "biha_chimsul", "name": "비하침술(秘下針術)", "sect": null, "grade": "일류", "type": "암기/의술", "weapon": "침", "description": "은밀한 침술."},
+    {"id": "milgyo", "name": "밀교(密敎) 무공", "sect": null, "grade": "절정", "type": "기공", "weapon": "무관", "description": "서장 밀교 비전. 환술 일부."},
+    {"id": "namman_jusul", "name": "남만주술(南蠻呪術)", "sect": null, "grade": "절정", "type": "주술", "weapon": "무관", "description": "남만 무사의 주술. 진위 모호."},
+    {"id": "hwangkungmusa_geom", "name": "황궁검법(皇宮劍法)", "sect": null, "grade": "절정", "type": "검법", "weapon": "검", "description": "황궁 무사의 비전. 외부 유출 거의 없음."},
+    {"id": "haechunggi", "name": "해충기(海蟲技)", "sect": null, "grade": "일류", "type": "특수", "weapon": "독충", "description": "해안 흑도의 곤충 활용."},
+    {"id": "jami_simbeop", "name": "자미심법(紫微心法)", "sect": null, "grade": "절정", "type": "내공", "weapon": "무관", "description": "은거기인이 전한 잡학."},
+    {"id": "muming_geom", "name": "무명검결(無名劍訣)", "sect": null, "grade": "절정", "type": "검법", "weapon": "검", "description": "이름 없는 노검객의 비결."}
   ]
 }

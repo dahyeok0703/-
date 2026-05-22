@@ -1,0 +1,42 @@
+{
+  "description": "일반인 NPC 샘플. 마을·도시·객잔에서 만나는 사람들. 무공을 익히지 않은 자가 다수. AI는 이 패턴을 참고해 새 일반인을 즉석에서 생성한다.",
+  "_generation_hint": "이름·나이·직업·성격·한 줄 사연을 즉석에서 생성해도 좋다. 단, 핵심 인물은 이 파일에 등재.",
+  "merchants": [
+    {"id": "civ_m1", "name": "왕대인(王大人)", "age": 55, "occupation": "낙양 거상", "wealth": "큰 부", "personality": "셈에 밝고 약간 음흉. 표국 후원자.", "location": "낙양"},
+    {"id": "civ_m2", "name": "장만호(張萬戶)", "age": 48, "occupation": "장안 거상", "wealth": "큰 부", "personality": "호방하고 강호인을 좋아함.", "location": "장안"},
+    {"id": "civ_m3", "name": "이청(李靑)", "age": 42, "occupation": "약방 주인", "wealth": "중간", "personality": "조용·정직. 약초에 박식.", "location": "성도"},
+    {"id": "civ_m4", "name": "주씨(朱氏)", "age": 38, "occupation": "비단 상인", "wealth": "중간", "personality": "수다스럽고 정 많음.", "location": "항주"},
+    {"id": "civ_m5", "name": "조노인(趙老人)", "age": 60, "occupation": "객잔 주인", "wealth": "중간", "personality": "노련. 강호인을 많이 봐서 눈치가 빠르다.", "location": "낙양"}
+  ],
+  "craftsmen": [
+    {"id": "civ_cr1", "name": "검장 야로(冶老)", "age": 65, "occupation": "대장장이(검 명장)", "wealth": "보통", "personality": "고집·자존심. 그가 만든 검은 비싸다.", "location": "양양", "skill": "검 제작 명장. 일류 검을 만들 수 있음."},
+    {"id": "civ_cr2", "name": "도공 장기(張器)", "age": 58, "occupation": "도자기 명장", "wealth": "보통", "personality": "온화.", "location": "경덕진"},
+    {"id": "civ_cr3", "name": "직조사 한씨(韓氏)", "age": 50, "occupation": "비단 직조 명장", "wealth": "보통", "personality": "꼼꼼.", "location": "소주"},
+    {"id": "civ_cr4", "name": "약사 우의(于醫)", "age": 70, "occupation": "의원(천하 명의)", "wealth": "보통", "personality": "엄정. 비록 의술이지만 무림인을 가리지 않고 치료.", "location": "성도", "skill": "내상·외상 치료 명의. 비밀스럽게 강호인 치료."},
+    {"id": "civ_cr5", "name": "지공 우저(于著)", "age": 55, "occupation": "종이 장인", "wealth": "낮음-중간", "personality": "조용.", "location": "안휘"}
+  ],
+  "farmers": [
+    {"id": "civ_f1", "name": "왕농(王農)", "age": 45, "occupation": "농민", "wealth": "가난", "personality": "순박.", "location": "산서 마을"},
+    {"id": "civ_f2", "name": "이대(李大)", "age": 50, "occupation": "농민", "wealth": "가난", "personality": "성실.", "location": "하북 마을"},
+    {"id": "civ_f3", "name": "장이(張二)", "age": 35, "occupation": "농민", "wealth": "가난", "personality": "고된 삶에 지친 얼굴.", "location": "안휘 마을"}
+  ],
+  "innkeepers_and_workers": [
+    {"id": "civ_w1", "name": "소이(小二) 점소이", "age": 22, "occupation": "객잔 점소이", "wealth": "가난", "personality": "수다·익살. 강호인의 사정을 다 듣는다.", "location": "낙양"},
+    {"id": "civ_w2", "name": "노삼(老三) 마부", "age": 50, "occupation": "마부", "wealth": "가난", "personality": "꼿꼿.", "location": "장안"},
+    {"id": "civ_w3", "name": "사공 우수(于水)", "age": 45, "occupation": "뱃사공", "wealth": "가난", "personality": "물 같은 사람.", "location": "장강 일대"}
+  ],
+  "officials": [
+    {"id": "civ_o1", "name": "현령 조대인(趙大人)", "age": 50, "occupation": "낙양 현령", "wealth": "관록", "personality": "정치적이나 무림 일에는 불개입.", "location": "낙양"},
+    {"id": "civ_o2", "name": "포두 양호(楊豪)", "age": 45, "occupation": "포두(捕頭)", "realm": "ilryu_chuip", "personality": "강직.", "location": "장안", "notes": "관에 속하나 무공이 있다. 무림 일에는 거리를 둠."},
+    {"id": "civ_o3", "name": "황궁무사 곽우(郭羽)", "age": 38, "occupation": "황궁 호위", "realm": "jeoljeong_chuip", "personality": "충성·과묵.", "location": "북경", "notes": "황실 직속. 강호와 분리."}
+  ],
+  "monks_and_taoists_civil": [
+    {"id": "civ_mt1", "name": "도해(道海)", "age": 55, "occupation": "마을 도사", "wealth": "보통", "personality": "정심수도.", "location": "마을 도관", "notes": "무공 없음."},
+    {"id": "civ_mt2", "name": "법공(法空)", "age": 60, "occupation": "마을 승려", "wealth": "탁발", "personality": "자비.", "location": "마을 사찰", "notes": "무공 없음."}
+  ],
+  "wanderers": [
+    {"id": "civ_wa1", "name": "유랑시인 백낙천(白樂天)", "age": 40, "occupation": "유랑시인", "wealth": "없음", "personality": "낭만적.", "notes": "강호 이야기를 시로 짓는다."},
+    {"id": "civ_wa2", "name": "유랑화가 진묵(陳墨)", "age": 35, "occupation": "유랑 화가", "wealth": "없음", "personality": "고독.", "notes": "객잔에서 그림 그려주고 밥값."}
+  ],
+  "interaction_summary": "일반인은 강호 사건의 배경이자 풍경이며, 동시에 정보·물자·자녀·연인·원수 등 모든 가능성의 씨앗이 된다."
+}

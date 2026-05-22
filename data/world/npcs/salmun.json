@@ -1,0 +1,45 @@
+{
+  "sect_id": "salmun",
+  "description": "살문. 청부 살인 조직. 사도련 산하.",
+  "ranks": ["살수(殺手)", "흑살(黑殺)", "적살(赤殺)", "사대살왕(四大殺王)"],
+  "leadership": [
+    {"id": "salmun_supreme", "ref": "ammasalwang", "note": "팔왕 암마왕 적살왕 수좌 — 살문 통수"}
+  ],
+  "four_kings": [
+    {"id": "salmun_k1", "name": "적살왕 — (암마왕)", "position": "사대살왕 1좌", "realm": "chojeoljeong_geuk", "notes": "이름 미상."},
+    {"id": "salmun_k2", "name": "백살왕(白殺王)", "age": 50, "position": "사대살왕 2좌", "realm": "chojeoljeong_chuip", "personality": "차가운 백색 의복. 노련.", "notes": ""},
+    {"id": "salmun_k3", "name": "청살왕(靑殺王)", "age": 46, "position": "사대살왕 3좌", "realm": "chojeoljeong_chuip", "personality": "독을 주력으로 함.", "notes": ""},
+    {"id": "salmun_k4", "name": "흑살왕(黑殺王)", "age": 44, "position": "사대살왕 4좌", "realm": "chojeoljeong_chuip", "personality": "한 번도 임무 실패 없음.", "notes": ""}
+  ],
+  "red_assassins": [
+    {"id": "salmun_r1", "name": "적살(赤殺) 일호", "age": 40, "position": "적살", "realm": "jeoljeong_geuk", "notes": "정체 미상."},
+    {"id": "salmun_r2", "name": "적살 이호", "age": 38, "position": "적살", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "salmun_r3", "name": "적살 삼호", "age": 36, "position": "적살", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "salmun_r4", "name": "적살 사호", "age": 35, "position": "적살", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "salmun_r5", "name": "적살 오호", "age": 33, "position": "적살", "realm": "jeoljeong_chuip", "notes": ""}
+  ],
+  "black_assassins": [
+    {"id": "salmun_b1", "name": "흑살 일호", "age": 32, "position": "흑살", "realm": "jeoljeong_wansuk", "notes": ""},
+    {"id": "salmun_b2", "name": "흑살 이호", "age": 30, "position": "흑살", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "salmun_b3", "name": "흑살 삼호", "age": 29, "position": "흑살", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "salmun_b4", "name": "흑살 사호", "age": 28, "position": "흑살", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "salmun_b5", "name": "흑살 오호", "age": 27, "position": "흑살", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "salmun_b6", "name": "흑살 육호", "age": 26, "position": "흑살", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "salmun_b7", "name": "흑살 칠호(여)", "age": 25, "position": "흑살", "realm": "ilryu_wansuk", "notes": "여 살수."},
+    {"id": "salmun_b8", "name": "흑살 팔호", "age": 24, "position": "흑살", "realm": "ilryu_wansuk", "notes": ""}
+  ],
+  "regular": [
+    {"id": "salmun_o1", "name": "살수 일", "age": 22, "position": "살수", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "salmun_o2", "name": "살수 이", "age": 20, "position": "살수", "realm": "iryu_geuk", "notes": ""},
+    {"id": "salmun_o3", "name": "살수 삼", "age": 19, "position": "살수", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "salmun_o4", "name": "살수 사", "age": 18, "position": "살수", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "salmun_o5", "name": "살수 오", "age": 17, "position": "살수", "realm": "iryu_chuip", "notes": ""},
+    {"id": "salmun_o6", "name": "살수 육", "age": 16, "position": "살수", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "trainees": [
+    {"id": "salmun_t1", "name": "예비살수 일", "age": 14, "position": "예비", "realm": "samryu_wansuk", "notes": "어릴 적부터 훈련."},
+    {"id": "salmun_t2", "name": "예비살수 이", "age": 12, "position": "예비", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "salmun_t3", "name": "예비살수 삼", "age": 10, "position": "예비", "realm": "samryu_chuip", "notes": ""}
+  ],
+  "secret": "살문의 실제 위치는 외부에 알려지지 않음. 살수는 본명이 없다. 들어오면 나갈 수 없다는 풍문."
+}

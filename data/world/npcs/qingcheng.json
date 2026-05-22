@@ -1,0 +1,29 @@
+{
+  "sect_id": "qingcheng",
+  "description": "청성파. 쾌검·도법의 명문.",
+  "leadership": [
+    {"id": "qingcheng_jangmun", "name": "청풍자(靑風子) 여형(余炯)", "age": 64, "position": "장문인", "realm": "chojeoljeong_geuk", "personality": "쾌활하나 검은 빠르다.", "notes": "청성쾌검의 화신."}
+  ],
+  "elders": [
+    {"id": "qingcheng_e1", "name": "송풍자(松風子)", "age": 62, "position": "수석장로", "realm": "chojeoljeong_chuip", "personality": "엄정.", "notes": ""},
+    {"id": "qingcheng_e2", "name": "취풍자(翠風子)", "age": 60, "position": "장로", "realm": "jeoljeong_geuk", "personality": "재기.", "notes": ""},
+    {"id": "qingcheng_e3", "name": "월풍자(月風子)", "age": 58, "position": "장로", "realm": "jeoljeong_geuk", "personality": "차분.", "notes": ""},
+    {"id": "qingcheng_e4", "name": "벽풍자(碧風子)", "age": 56, "position": "장로", "realm": "jeoljeong_wansuk", "personality": "강건.", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "qingcheng_d1", "name": "여청(余靑)", "age": 34, "position": "대제자", "realm": "jeoljeong_chuip", "personality": "차세대 장문 후보. 장문의 자식.", "notes": ""},
+    {"id": "qingcheng_d2", "name": "송청(松靑)", "age": 32, "position": "이제자", "realm": "ilryu_geuk", "personality": "쾌검의 천재.", "notes": "후기지수 후보."},
+    {"id": "qingcheng_d3", "name": "취청(翠靑)", "age": 30, "position": "삼제자", "realm": "ilryu_wansuk", "personality": "재기.", "notes": ""},
+    {"id": "qingcheng_d4", "name": "월청(月靑)", "age": 28, "position": "사제자", "realm": "ilryu_chuip", "personality": "차분.", "notes": ""},
+    {"id": "qingcheng_dr1", "name": "벽우(碧雨)", "age": 26, "position": "내문", "realm": "iryu_geuk", "notes": ""},
+    {"id": "qingcheng_dr2", "name": "벽운(碧雲)", "age": 24, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "qingcheng_dr3", "name": "벽월(碧月)", "age": 22, "position": "내문", "realm": "iryu_chuip", "notes": ""},
+    {"id": "qingcheng_dr4", "name": "벽천(碧川)", "age": 21, "position": "내문", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "outer": [
+    {"id": "qingcheng_o1", "name": "소산(小山)", "age": 17, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "qingcheng_o2", "name": "소천(小川)", "age": 15, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "qingcheng_o3", "name": "소림(小林)", "age": 13, "position": "외문", "realm": "samryu_chuip", "notes": ""},
+    {"id": "qingcheng_o4", "name": "소석(小石)", "age": 11, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

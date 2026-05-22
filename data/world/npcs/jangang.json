@@ -1,0 +1,37 @@
+{
+  "sect_id": "jangang",
+  "description": "장강수로채. 장강의 수적 연합. 사도련 산하.",
+  "leadership": [
+    {"id": "jangang_chaeju", "ref": "subuwang", "note": "팔왕 수부왕 진랑 — 채주"}
+  ],
+  "vice_chiefs": [
+    {"id": "jangang_v1", "name": "부채주 마룡(馬龍)", "age": 47, "position": "부채주", "realm": "jeoljeong_geuk", "notes": "진랑의 의형제."},
+    {"id": "jangang_v2", "name": "부채주 우파(于波)", "age": 45, "position": "부채주", "realm": "jeoljeong_chuip", "notes": ""},
+    {"id": "jangang_v3", "name": "부채주 곽수(郭水)", "age": 43, "position": "부채주", "realm": "jeoljeong_chuip", "notes": ""}
+  ],
+  "captains": [
+    {"id": "jangang_c1", "name": "수룡선장 진호(陳浩)", "age": 40, "position": "주선(主船) 선장", "realm": "jeoljeong_wansuk", "notes": "기함 책임."},
+    {"id": "jangang_c2", "name": "비룡선장 마걸(馬傑)", "age": 38, "position": "선장", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "jangang_c3", "name": "흑풍선장 우산(于山)", "age": 37, "position": "선장", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "jangang_c4", "name": "녹수선장 조랑(趙浪)", "age": 35, "position": "선장", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jangang_c5", "name": "백수선장 한수(韓水)", "age": 34, "position": "선장", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jangang_c6", "name": "청수선장 정파(鄭波)", "age": 32, "position": "선장", "realm": "ilryu_chuip", "notes": ""}
+  ],
+  "officers": [
+    {"id": "jangang_o1", "name": "수호위장 림산(林山)", "age": 36, "position": "호위장", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "jangang_o2", "name": "정찰장 사빠른(史快)", "age": 30, "position": "정찰장", "realm": "ilryu_chuip", "notes": "수색·매복 책임."},
+    {"id": "jangang_o3", "name": "외교사 양수(楊秀)", "age": 38, "position": "외교", "realm": "iryu_geuk", "notes": "사도련 본부와 연락."}
+  ],
+  "navigators": [
+    {"id": "jangang_n1", "name": "노사(老師) 곽노(郭老)", "age": 65, "position": "장강 도사(導師)", "realm": "iryu_wansuk", "notes": "장강 모든 물길을 안다."},
+    {"id": "jangang_n2", "name": "수로사 진로(陳路)", "age": 50, "position": "수로 책임", "realm": "iryu_geuk", "notes": ""}
+  ],
+  "warriors": [
+    {"id": "jangang_w1", "name": "수병 마쾌(馬快)", "age": 28, "position": "수병", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "jangang_w2", "name": "수병 호빠른(胡快)", "age": 26, "position": "수병", "realm": "iryu_chuip", "notes": ""},
+    {"id": "jangang_w3", "name": "수병 정파(鄭波)", "age": 24, "position": "수병", "realm": "iryu_chuip", "notes": ""},
+    {"id": "jangang_w4", "name": "수병 우수(于水)", "age": 22, "position": "수병", "realm": "iryu_chuip", "notes": ""},
+    {"id": "jangang_w5", "name": "수병 노일(盧一)", "age": 20, "position": "수병", "realm": "samryu_geuk", "notes": ""},
+    {"id": "jangang_w6", "name": "수병 노이(盧二)", "age": 18, "position": "수병", "realm": "samryu_wansuk", "notes": ""}
+  ]
+}

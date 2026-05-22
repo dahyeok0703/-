@@ -1,0 +1,29 @@
+{
+  "sect_id": "kongdong",
+  "description": "공동파. 권법·기공의 최상위.",
+  "leadership": [
+    {"id": "kongdong_jangmun", "name": "혼원자(混元子) 위겸(韋謙)", "age": 65, "position": "장문인", "realm": "chojeoljeong_geuk", "personality": "강건·우직.", "notes": "혼원일기공의 대성자."}
+  ],
+  "elders": [
+    {"id": "kongdong_e1", "name": "철원자(鐵元子)", "age": 63, "position": "수석장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "kongdong_e2", "name": "동원자(銅元子)", "age": 60, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "kongdong_e3", "name": "금원자(金元子)", "age": 57, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "kongdong_e4", "name": "옥원자(玉元子)", "age": 55, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "kongdong_d1", "name": "위철(韋鐵)", "age": 34, "position": "대제자", "realm": "jeoljeong_chuip", "personality": "장문의 아들.", "notes": "차세대 장문."},
+    {"id": "kongdong_d2", "name": "위강(韋剛)", "age": 31, "position": "이제자", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "kongdong_d3", "name": "위호(韋豪)", "age": 29, "position": "삼제자", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "kongdong_d4", "name": "위맹(韋猛)", "age": 27, "position": "사제자", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "kongdong_dr1", "name": "동수(銅秀)", "age": 25, "position": "내문", "realm": "iryu_geuk", "notes": ""},
+    {"id": "kongdong_dr2", "name": "동림(銅林)", "age": 23, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "kongdong_dr3", "name": "동산(銅山)", "age": 22, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "kongdong_dr4", "name": "동천(銅川)", "age": 20, "position": "내문", "realm": "iryu_chuip", "notes": ""}
+  ],
+  "outer": [
+    {"id": "kongdong_o1", "name": "철수(鐵秀)", "age": 18, "position": "외문", "realm": "samryu_geuk", "notes": ""},
+    {"id": "kongdong_o2", "name": "철휘(鐵輝)", "age": 16, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "kongdong_o3", "name": "철산(鐵山)", "age": 14, "position": "외문", "realm": "samryu_chuip", "notes": ""},
+    {"id": "kongdong_o4", "name": "철림(鐵林)", "age": 12, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ]
+}

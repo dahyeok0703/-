@@ -9,12 +9,16 @@
     "family_background": "",
     "appearance": ""
   },
+  "civilian_or_martial": "civilian",
+  "_civilian_or_martial_note": "civilian | martial. 어린 시절엔 civilian으로 시작. 무공 입문 후 martial.",
   "realm": {
-    "current": "samryu",
-    "internal_energy": 0,
-    "internal_energy_cap": 30,
+    "current_realm": "samryu",
+    "current_stage": "samryu_chuip",
     "tier": 1,
-    "next_realm_progress_pct": 0
+    "internal_energy": 0,
+    "internal_energy_cap": 10,
+    "stage_progress_pct": 0,
+    "next_stage_id": "samryu_wansuk"
   },
   "stats": {
     "strength": 5,
@@ -23,6 +27,7 @@
     "perception": 5,
     "intellect": 5,
     "willpower": 5,
+    "charisma": 5,
     "luck": 5
   },
   "vitals": {
@@ -30,12 +35,16 @@
     "hp_max": 30,
     "internal_injury": 0,
     "external_injury": 0,
+    "mental_state": "normal",
     "status_effects": []
   },
   "martial_arts_known": [],
+  "_martial_arts_format": "[{\"art_id\":\"...\",\"mastery_pct\":0-100}]",
   "weapons_owned": [],
+  "armor_worn": null,
   "inventory": {
     "silver_taels": 0,
+    "gold_taels": 0,
     "items": []
   },
   "affiliation": {
@@ -49,7 +58,16 @@
     "in_orthodox": 0,
     "in_unorthodox": 0,
     "in_demonic": 0,
+    "in_commoners": 0,
     "titles": []
+  },
+  "family_status": {
+    "father_alive": true,
+    "mother_alive": true,
+    "siblings": [],
+    "spouse": null,
+    "concubines": [],
+    "children": []
   },
   "biography_summary": "",
   "current_location_id": null,

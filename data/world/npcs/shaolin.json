@@ -1,0 +1,52 @@
+{
+  "sect_id": "shaolin",
+  "description": "소림사 인물. 방장·수좌호법은 supreme_ranks 참조.",
+  "leadership": [
+    {"id": "shaolin_bangjang", "ref": "buldocheon", "note": "육천(六天) 불도천 원공대사 — 방장"},
+    {"id": "shaolin_suho", "ref": "buljiwang", "note": "팔왕(八王) 불지왕 혜원 — 수좌호법"}
+  ],
+  "elders": [
+    {"id": "shaolin_e_hyemyeong", "name": "혜명대사(慧明)", "age": 70, "position": "장경각주", "realm": "hwagyeong_chuip", "personality": "박학·과묵. 천하의 무공서를 모두 안다.", "notes": "장경각 출입을 통제."},
+    {"id": "shaolin_e_hyegak", "name": "혜각대사(慧覺)", "age": 68, "position": "달마원주", "realm": "chojeoljeong_geuk", "personality": "엄격·정통. 달마검법 최고수.", "notes": "검 수련을 담당."},
+    {"id": "shaolin_e_hyeyong", "name": "혜용대사(慧勇)", "age": 66, "position": "나한당주", "realm": "chojeoljeong_geuk", "personality": "강건·실전형. 나한권의 화신.", "notes": "나한진(羅漢陣)을 지휘."},
+    {"id": "shaolin_e_hyeji", "name": "혜지대사(慧智)", "age": 71, "position": "계율원주", "realm": "chojeoljeong_wansuk", "personality": "원칙주의. 사문의 법을 어긴 자에 가차없다.", "notes": "내부 기강 담당."},
+    {"id": "shaolin_e_hyeun", "name": "혜운대사(慧雲)", "age": 64, "position": "보국당주", "realm": "chojeoljeong_wansuk", "personality": "포용·자비. 외부 손님을 응대.", "notes": "외사 담당."},
+    {"id": "shaolin_e_hyeryeok", "name": "혜력대사(慧力)", "age": 63, "position": "외문장로", "realm": "chojeoljeong_chuip", "personality": "강맹. 외공의 정점.", "notes": "백보신권 전수."},
+    {"id": "shaolin_e_hyeil", "name": "혜일대사(慧日)", "age": 67, "position": "약왕당주", "realm": "jeoljeong_geuk", "personality": "의술 깊다.", "notes": "소림 의방 담당."},
+    {"id": "shaolin_e_hyebak", "name": "혜박대사(慧朴)", "age": 65, "position": "장로", "realm": "chojeoljeong_chuip", "personality": "소박·검소.", "notes": "후학 양성에 헌신."}
+  ],
+  "head_disciples": [
+    {"id": "shaolin_d_jeongyeon", "name": "정연(正然)", "age": 42, "position": "수석 1제자", "realm": "jeoljeong_geuk", "personality": "준엄. 차세대 방장 후보 1순위.", "notes": "혜원의 직제자."},
+    {"id": "shaolin_d_jeongmu", "name": "정무(正武)", "age": 40, "position": "수석 2제자", "realm": "jeoljeong_wansuk", "personality": "용맹·우직.", "notes": "나한권의 대성자."},
+    {"id": "shaolin_d_jeonghye", "name": "정혜(正慧)", "age": 39, "position": "수석 3제자", "realm": "jeoljeong_wansuk", "personality": "지혜로움.", "notes": "장경각 부재."},
+    {"id": "shaolin_d_jeongil", "name": "정일(正一)", "age": 38, "position": "수석 4제자", "realm": "jeoljeong_chuip", "personality": "유연·도가적 성향.", "notes": "역근경 빠른 진척."},
+    {"id": "shaolin_d_jeonggwang", "name": "정광(正光)", "age": 37, "position": "수석 5제자", "realm": "jeoljeong_chuip", "personality": "성실.", "notes": "달마검법 후계자 후보."}
+  ],
+  "regular_monks": [
+    {"id": "shaolin_m_simyeon", "name": "심연(心淵)", "age": 35, "position": "내문 제자", "realm": "ilryu_geuk", "personality": "조용·내향형.", "notes": "선(禪) 수행에 더 가깝다."},
+    {"id": "shaolin_m_simhae", "name": "심해(心海)", "age": 33, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "광활한 마음.", "notes": "유망주."},
+    {"id": "shaolin_m_simhwa", "name": "심화(心華)", "age": 31, "position": "내문 제자", "realm": "ilryu_wansuk", "personality": "활달.", "notes": "권법 특화."},
+    {"id": "shaolin_m_sim_un", "name": "심운(心雲)", "age": 30, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "유연.", "notes": "보법 특화."},
+    {"id": "shaolin_m_simak", "name": "심악(心岳)", "age": 29, "position": "내문 제자", "realm": "ilryu_chuip", "personality": "무게감.", "notes": "외공형."},
+    {"id": "shaolin_m_simbok", "name": "심복(心福)", "age": 28, "position": "내문 제자", "realm": "iryu_geuk", "personality": "온유.", "notes": "약방 담당."},
+    {"id": "shaolin_m_simjeong", "name": "심정(心淨)", "age": 27, "position": "내문 제자", "realm": "iryu_geuk", "personality": "고요.", "notes": "선당."},
+    {"id": "shaolin_m_simyeong", "name": "심영(心永)", "age": 26, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "끈기.", "notes": "외공 단련."},
+    {"id": "shaolin_m_simil", "name": "심일(心一)", "age": 25, "position": "내문 제자", "realm": "iryu_wansuk", "personality": "성실.", "notes": ""},
+    {"id": "shaolin_m_simjin", "name": "심진(心眞)", "age": 24, "position": "내문 제자", "realm": "iryu_chuip", "personality": "진실됨.", "notes": ""},
+    {"id": "shaolin_m_simhwi", "name": "심휘(心輝)", "age": 23, "position": "내문 제자", "realm": "iryu_chuip", "personality": "재기.", "notes": "후기지수 후보."},
+    {"id": "shaolin_m_simryeong", "name": "심령(心靈)", "age": 22, "position": "내문 제자", "realm": "iryu_chuip", "personality": "감수성.", "notes": ""}
+  ],
+  "outer_disciples": [
+    {"id": "shaolin_o_bonghae", "name": "봉해(奉海)", "age": 20, "position": "외문 제자", "realm": "samryu_geuk", "personality": "야심.", "notes": "내문 입실을 노린다."},
+    {"id": "shaolin_o_bongmoo", "name": "봉무(奉武)", "age": 18, "position": "외문 제자", "realm": "samryu_geuk", "personality": "거칠다.", "notes": ""},
+    {"id": "shaolin_o_bongmyeong", "name": "봉명(奉明)", "age": 17, "position": "외문 제자", "realm": "samryu_wansuk", "personality": "총명.", "notes": "재능 인정받음."},
+    {"id": "shaolin_o_bongchun", "name": "봉춘(奉春)", "age": 15, "position": "외문 제자", "realm": "samryu_wansuk", "personality": "활달.", "notes": ""},
+    {"id": "shaolin_o_bongmul", "name": "봉물(奉物)", "age": 14, "position": "외문 제자", "realm": "samryu_chuip", "personality": "순박.", "notes": ""},
+    {"id": "shaolin_o_bongsu", "name": "봉수(奉守)", "age": 12, "position": "외문 제자", "realm": "samryu_chuip", "personality": "어린 사미.", "notes": ""}
+  ],
+  "lay_disciples_speak": [
+    {"id": "shaolin_sok_jang", "name": "장철(張鐵)", "age": 38, "position": "속가제자(俗家弟子)", "realm": "ilryu_chuip", "personality": "정직. 표국 경영.", "notes": "낙양에서 표국 운영."},
+    {"id": "shaolin_sok_yi", "name": "이산(李山)", "age": 45, "position": "속가제자", "realm": "ilryu_wansuk", "personality": "호방.", "notes": "지방 무관 운영."},
+    {"id": "shaolin_sok_park", "name": "박운(朴雲)", "age": 32, "position": "속가제자", "realm": "ilryu_chuip", "personality": "차분.", "notes": "정파 단체에서 활동."}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "sect_id": "kunlun",
+  "description": "곤륜파. 서역의 신비.",
+  "leadership": [
+    {"id": "kunlun_jangmun", "ref": "geomgwangseong", "note": "칠성 검광성 곽소 — 장문"}
+  ],
+  "elders": [
+    {"id": "kunlun_e1", "name": "운장(雲長)도장", "age": 63, "position": "수석장로", "realm": "chojeoljeong_chuip", "notes": ""},
+    {"id": "kunlun_e2", "name": "설중(雪中)도장", "age": 60, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "kunlun_e3", "name": "한천(寒天)도장", "age": 58, "position": "장로", "realm": "jeoljeong_geuk", "notes": ""},
+    {"id": "kunlun_e4", "name": "빙설(氷雪)도장", "age": 55, "position": "장로", "realm": "jeoljeong_wansuk", "notes": ""}
+  ],
+  "disciples": [
+    {"id": "kunlun_d1", "name": "곽운(郭雲)", "age": 33, "position": "대제자", "realm": "jeoljeong_chuip", "personality": "장문의 조카. 차세대 장문 후보.", "notes": ""},
+    {"id": "kunlun_d2", "name": "곽설(郭雪)", "age": 30, "position": "이제자", "realm": "ilryu_geuk", "notes": ""},
+    {"id": "kunlun_d3", "name": "곽풍(郭風)", "age": 28, "position": "삼제자", "realm": "ilryu_wansuk", "notes": ""},
+    {"id": "kunlun_d4", "name": "곽천(郭天)", "age": 26, "position": "사제자", "realm": "ilryu_chuip", "notes": ""},
+    {"id": "kunlun_dr1", "name": "설운(雪雲)", "age": 24, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "kunlun_dr2", "name": "설호(雪浩)", "age": 22, "position": "내문", "realm": "iryu_wansuk", "notes": ""},
+    {"id": "kunlun_dr3", "name": "설월(雪月)", "age": 21, "position": "내문", "realm": "iryu_chuip", "notes": ""},
+    {"id": "kunlun_dr4", "name": "설화(雪華)", "age": 20, "position": "내문(여)", "realm": "iryu_chuip", "notes": "여도사."}
+  ],
+  "outer": [
+    {"id": "kunlun_o1", "name": "서린(西燐)", "age": 18, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "kunlun_o2", "name": "서경(西景)", "age": 16, "position": "외문", "realm": "samryu_wansuk", "notes": ""},
+    {"id": "kunlun_o3", "name": "서량(西凉)", "age": 14, "position": "외문", "realm": "samryu_chuip", "notes": ""},
+    {"id": "kunlun_o4", "name": "서막(西漠)", "age": 12, "position": "외문", "realm": "samryu_chuip", "notes": ""}
+  ]
+}
