@@ -1,0 +1,15 @@
+{
+  "_description": "관계도. NPC id별로 호감도·관계 종류·마지막 만남을 기록.",
+  "_schema": {
+    "npc_id": {
+      "name": "표시용 이름",
+      "type": "사부 | 동문 | 친우 | 연인 | 가족 | 원수 | 은인 | 정적 | 라이벌",
+      "affinity": "-100 ~ +100",
+      "trust": "-100 ~ +100",
+      "last_met_age": "마지막 만남 당시 내 나이",
+      "key_events": ["이 사람과 얽힌 핵심 사건들"],
+      "status": "alive | dead | missing"
+    }
+  },
+  "relationships": {}
+}

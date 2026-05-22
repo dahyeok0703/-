@@ -1,0 +1,11 @@
+{
+  "_description": "내 행동으로 변한 세계의 상태. world/*.json의 정적 데이터를 덮어쓴다.",
+  "current_in_world_year": 0,
+  "npc_overrides": {
+    "_schema": "npc_id: { alive, realm, sect, notes }"
+  },
+  "sect_overrides": {
+    "_schema": "sect_id: { status, leader, notes }"
+  },
+  "global_events_caused_by_player": []
+}

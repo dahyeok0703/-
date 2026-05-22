@@ -1,0 +1,58 @@
+{
+  "_description": "캐릭터 상태 템플릿. 새 환생 시작 시 복사해서 사용.",
+  "identity": {
+    "name": "",
+    "gender": "",
+    "age": 5,
+    "birth_year": "강호력 ???년",
+    "birthplace": "",
+    "family_background": "",
+    "appearance": ""
+  },
+  "realm": {
+    "current": "samryu",
+    "internal_energy": 0,
+    "internal_energy_cap": 30,
+    "tier": 1,
+    "next_realm_progress_pct": 0
+  },
+  "stats": {
+    "strength": 5,
+    "agility": 5,
+    "endurance": 5,
+    "perception": 5,
+    "intellect": 5,
+    "willpower": 5,
+    "luck": 5
+  },
+  "vitals": {
+    "hp_current": 30,
+    "hp_max": 30,
+    "internal_injury": 0,
+    "external_injury": 0,
+    "status_effects": []
+  },
+  "martial_arts_known": [],
+  "weapons_owned": [],
+  "inventory": {
+    "silver_taels": 0,
+    "items": []
+  },
+  "affiliation": {
+    "sect_id": null,
+    "rank": null,
+    "joined_at_age": null,
+    "standing": 0
+  },
+  "reputation": {
+    "in_jianghu": 0,
+    "in_orthodox": 0,
+    "in_unorthodox": 0,
+    "in_demonic": 0,
+    "titles": []
+  },
+  "biography_summary": "",
+  "current_location_id": null,
+  "alive": true,
+  "death_record": null
+}

@@ -1,0 +1,107 @@
+{
+  "description": "중원과 그 변방의 지리. 강호의 무대.",
+  "central_plain_summary": "중원(中原)은 황하·장강 사이의 광활한 평원. 강호의 중심.",
+  "regions": [
+    {
+      "id": "bukbang",
+      "name": "북방(北方)",
+      "scope": "황하 이북, 산서·하북·산동 일대",
+      "climate": "한랭. 겨울이 길고 혹독.",
+      "atmosphere": "강건하고 호방한 무인들이 많다. 외공·중검 계열이 흥성.",
+      "major_cities": ["북경", "낙양", "정주", "제남"],
+      "key_sects_here": ["shaolin", "hwangbo"],
+      "notable_features": [
+        "낙양 — 천하의 중심. 무림맹의 영향이 강하다.",
+        "정주 — 무림맹 총단 소재지.",
+        "숭산 — 소림사."
+      ]
+    },
+    {
+      "id": "jungwon_west",
+      "name": "관중·서북(關中·西北)",
+      "scope": "섬서·감숙·청해",
+      "climate": "건조. 황토 고원.",
+      "atmosphere": "검문(劍門)의 본고장.",
+      "major_cities": ["장안", "함양", "난주"],
+      "key_sects_here": ["huashan", "jongnam", "kongdong"],
+      "notable_features": [
+        "장안 — 옛 황도. 학문과 무가 어우러진다.",
+        "화산·종남산·공동산이 인접."
+      ]
+    },
+    {
+      "id": "gangnam",
+      "name": "강남(江南)",
+      "scope": "장강 이남, 강소·절강·안휘·강서",
+      "climate": "온화·습윤. 물의 도시.",
+      "atmosphere": "풍요롭고 우아하다. 세가의 본거지.",
+      "major_cities": ["남경", "소주", "항주", "합비"],
+      "key_sects_here": ["namgung", "moyong"],
+      "notable_features": [
+        "고소(소주) — 모용세가.",
+        "합비 — 남궁세가.",
+        "장강수로채의 활동 영역."
+      ]
+    },
+    {
+      "id": "seonam",
+      "name": "서남(西南)",
+      "scope": "사천·운남·귀주",
+      "climate": "분지·고원. 안개가 짙다.",
+      "atmosphere": "험준한 지형. 독·암기·기문(奇門)이 발달.",
+      "major_cities": ["성도", "중경", "곤명"],
+      "key_sects_here": ["emei", "qingcheng", "danga", "jeomchang"],
+      "notable_features": [
+        "성도 — 사천당가, 사도련 비밀 총단.",
+        "아미산·청성산·점창산.",
+        "남만(南蠻) 이족(異族)과 접경 — 고독(蠱毒)의 땅."
+      ]
+    },
+    {
+      "id": "seoyeok",
+      "name": "서역(西域)",
+      "scope": "신강·곤륜·천산",
+      "climate": "사막과 만년설.",
+      "atmosphere": "이방의 신비. 중원의 손길이 닿지 않는 곳.",
+      "major_cities": ["돈황", "오장", "이리"],
+      "key_sects_here": ["kunlun", "cheonma"],
+      "notable_features": [
+        "곤륜산 — 곤륜파.",
+        "천산 — 천마신궁. 중원인의 발길이 닿기 어렵다.",
+        "실크로드 — 상단·낭인이 오가는 길."
+      ]
+    },
+    {
+      "id": "junjuk",
+      "name": "중원 중부 (호북·하남 일대)",
+      "scope": "장강 중류·호북·하남",
+      "climate": "사계 뚜렷.",
+      "atmosphere": "각 세력이 교차하는 요충지. 무림의 분쟁이 가장 잦다.",
+      "major_cities": ["양양", "무한", "개봉"],
+      "key_sects_here": ["wudang", "jegal", "gaebang"],
+      "notable_features": [
+        "무당산 — 무당파.",
+        "양양 — 제갈세가. 군사 요충지.",
+        "개봉 — 개방 본단."
+      ]
+    }
+  ],
+  "key_routes": [
+    {
+      "name": "장강(長江)",
+      "description": "천하의 대동맥. 장강수로채의 영역. 배 없이는 강남과 사천을 오갈 수 없다."
+    },
+    {
+      "name": "황하(黃河)",
+      "description": "북방의 젖줄. 자주 범람하여 재난이 잦다."
+    },
+    {
+      "name": "관도(官道)",
+      "description": "관부가 관리하는 주요 도로. 표국의 길. 그러나 산악 구간은 녹림의 영역."
+    },
+    {
+      "name": "실크로드",
+      "description": "서역으로 가는 길. 낭인·상단·이단 무공이 오간다."
+    }
+  ]
+}

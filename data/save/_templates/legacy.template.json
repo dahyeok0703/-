@@ -1,0 +1,17 @@
+{
+  "_description": "역대 환생자 누적 기록. 죽으면 여기로 옮겨진다. 다음 회차에서 전설·유물·NPC로 등장 가능.",
+  "_schema": {
+    "incarnation_no": "n번째 환생",
+    "name": "",
+    "lived": "출생-사망 (강호력 기준)",
+    "died_age": 0,
+    "highest_realm": "",
+    "sect": "",
+    "cause_of_death": "",
+    "legacy_artifacts": ["남긴 비급·신병"],
+    "legendary_status": "0-10. 6 이상이면 후세에 전설로 회자됨",
+    "key_relationships_alive": ["사망 시점에 살아있던 주요 인연"],
+    "biography_summary": "한 단락의 일대기"
+  },
+  "incarnations": []
+}

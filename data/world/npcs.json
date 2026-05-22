@@ -1,0 +1,183 @@
+{
+  "description": "현 시점 강호에 살아있는 주요 무림인들. 모든 캐릭터는 환생자의 행동으로 죽거나 부각될 수 있다.",
+  "note_for_ai": "여기 등재된 인물은 '현존'한다. 플레이어 행동에 따라 만남·갈등·사제 관계 등이 발생할 수 있다.",
+  "top_ten_masters": {
+    "title": "천하십대고수(天下十大高手)",
+    "description": "현 강호의 최강자 10인. 모두 화경 이상.",
+    "members": [
+      {
+        "id": "murimmaeng_ju",
+        "name": "검성(劍聖) 한천(韓川)",
+        "title": "무림맹주",
+        "age": 68,
+        "realm": "hwagyeong",
+        "sect": "huashan",
+        "personality": "고결, 명분에 살고 명분에 죽음. 노쇠해가나 위엄은 여전.",
+        "signature": "이십사수매화검법 + 자하신공의 화경 경지",
+        "status": "현 무림맹주. 11년차."
+      },
+      {
+        "id": "shaolin_bangjang",
+        "name": "원공대사(圓空大師)",
+        "title": "소림 방장",
+        "age": 75,
+        "realm": "hwagyeong",
+        "sect": "shaolin",
+        "personality": "자비롭고 묵묵하나 결단은 단호.",
+        "signature": "역근경 + 백보신권의 화경",
+        "status": "재임 30년."
+      },
+      {
+        "id": "wudang_jangmun",
+        "name": "현허진인(玄虛眞人)",
+        "title": "무당 장문인",
+        "age": 71,
+        "realm": "hwagyeong",
+        "sect": "wudang",
+        "personality": "무위(無爲). 말이 적고 행동도 적으나 한번 움직이면 끝낸다.",
+        "signature": "태극검·순양무극공 화경"
+      },
+      {
+        "id": "sadoryeon_ju",
+        "name": "독안마군(獨眼魔君) 갈우(葛牛)",
+        "title": "사도련주",
+        "age": 54,
+        "realm": "hwagyeong",
+        "sect": "noklim",
+        "personality": "냉혹하고 야망이 크나 부하에게는 의리가 두텁다. 외눈.",
+        "signature": "녹림 출신. 흑도 출신 최초의 화경 도달자.",
+        "status": "사도련 통합 후 7년차."
+      },
+      {
+        "id": "cheonma_current",
+        "name": "천마(天魔) — 본명 불명",
+        "title": "천마신교 교주",
+        "age": "불명(50대로 추정)",
+        "realm": "hyeongyeong",
+        "sect": "cheonma",
+        "personality": "신비. 중원에 모습을 거의 드러내지 않음.",
+        "signature": "천마신공의 현경.",
+        "status": "60년 전 정마대전 이후 침묵. 현재 천마가 누구인지 외부에 알려지지 않음."
+      },
+      {
+        "id": "gaebang_bang_ju",
+        "name": "취개(醉丐) 호삼(胡三)",
+        "title": "개방 방주",
+        "age": 62,
+        "realm": "hwagyeong",
+        "sect": "gaebang",
+        "personality": "늘 술에 취해 있다. 그러나 천하의 모든 정보가 그를 거친다.",
+        "signature": "항룡십팔장·취팔선보"
+      },
+      {
+        "id": "namgung_gaju",
+        "name": "검왕(劍王) 남궁천(南宮天)",
+        "title": "남궁세가 가주",
+        "age": 58,
+        "realm": "chojeoljeong",
+        "sect": "namgung",
+        "personality": "오만하나 실력은 진짜. 검 하나로 가문을 지킨다.",
+        "signature": "제왕검형의 극."
+      },
+      {
+        "id": "danga_gaju",
+        "name": "독제(毒帝) 당철(唐鐵)",
+        "title": "당가 가주",
+        "age": 64,
+        "realm": "hwagyeong",
+        "sect": "danga",
+        "personality": "음험하고 가족주의적. 외인에 절대 마음을 열지 않음.",
+        "signature": "만천화우의 신경(神境)"
+      },
+      {
+        "id": "eunja",
+        "name": "은거기인 — 도림노옹(陶林老翁)",
+        "title": "은거기인",
+        "age": "약 90세 추정",
+        "realm": "hyeongyeong",
+        "sect": null,
+        "personality": "어느 문파에도 속하지 않음. 강호와 거리를 둠.",
+        "signature": "현경에 이르렀다는 전설.",
+        "status": "사천 깊은 산 어딘가에 산다고 한다. 만난 자가 거의 없다."
+      },
+      {
+        "id": "moyong_gaju",
+        "name": "참합공자(參合公子) 모용복(慕容覆)",
+        "title": "모용세가 가주",
+        "age": 49,
+        "realm": "chojeoljeong",
+        "sect": "moyong",
+        "personality": "온화한 얼굴 뒤에 야망이 숨겨져 있다. 강호 통일을 꿈꾼다는 풍문.",
+        "signature": "두전성이의 절기."
+      }
+    ]
+  },
+  "notable_others": [
+    {
+      "id": "emei_jangmun",
+      "name": "혜정사태(慧靜師太)",
+      "title": "아미파 장문",
+      "age": 60,
+      "realm": "chojeoljeong",
+      "sect": "emei",
+      "personality": "단호하고 청정함."
+    },
+    {
+      "id": "salwang_jeok",
+      "name": "적살왕(赤殺王) — 본명 미상",
+      "title": "살문 사대살왕 수좌",
+      "age": "약 45 추정",
+      "realm": "chojeoljeong",
+      "sect": "salmun",
+      "personality": "표정 없음. 임무가 정해지면 천 리도 쫓아간다.",
+      "status": "현 강호에서 가장 두려운 살수."
+    },
+    {
+      "id": "namgung_soga",
+      "name": "남궁소가(南宮笑歌)",
+      "title": "남궁세가 소가주",
+      "age": 26,
+      "realm": "jeoljeong",
+      "sect": "namgung",
+      "personality": "준수하고 자존심 강함. 차세대 검의 정점 후보.",
+      "status": "남궁천의 장남."
+    },
+    {
+      "id": "danga_yeo",
+      "name": "당령(唐鈴)",
+      "title": "당가 차녀",
+      "age": 19,
+      "realm": "ilryu",
+      "sect": "danga",
+      "personality": "활달하고 거침없음. 당가에 드문 외향형.",
+      "status": "독·암기 천재."
+    },
+    {
+      "id": "haomun_ju",
+      "name": "여리(余離)",
+      "title": "하오문주",
+      "age": 44,
+      "realm": "jeoljeong",
+      "sect": "haomun",
+      "personality": "교활하고 인맥이 천하제일. 무공보다 정보가 무기.",
+      "status": "사도련주의 정보원."
+    }
+  ],
+  "legendary_dead": {
+    "description": "이미 죽었으나 강호에 그 그림자가 남은 자들. 그들의 비급·유물·원한이 살아있다.",
+    "members": [
+      {
+        "id": "former_cheonma",
+        "name": "전대 천마 — 혈룡(血龍)",
+        "died": "60년 전 정마대전 종결시",
+        "legacy": "혈마대법 완성자. 무림맹 일곱 절정고수와 동귀어진. 그의 비급은 행방불명."
+      },
+      {
+        "id": "former_geomseong",
+        "name": "검선(劍仙) 이백우(李白雨)",
+        "died": "120년 전",
+        "legacy": "현경의 검도. 그가 남긴 검결(劍訣)은 화산·점창·종남 등에 단편적으로 전해진다."
+      }
+    ]
+  }
+}

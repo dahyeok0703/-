@@ -1,0 +1,144 @@
+{
+  "description": "강호의 영약·신병이기·비급. 무림인의 인생을 바꿀 수 있는 물건들.",
+  "rarity_scale": ["흔함", "귀함", "진귀", "신물(神物)", "전설(傳說)"],
+  "elixirs": [
+    {
+      "id": "sosamhwandan",
+      "name": "소삼환단(小三丸丹)",
+      "rarity": "흔함",
+      "effect": "경상 회복, 미량의 기력 보충",
+      "where": "약방·표국. 은자 몇 냥."
+    },
+    {
+      "id": "geumchangbak",
+      "name": "금창약(金瘡藥)",
+      "rarity": "흔함",
+      "effect": "외상·자상 즉시 응급 처치.",
+      "where": "약방"
+    },
+    {
+      "id": "daehwandan",
+      "name": "대환단(大還丹)",
+      "rarity": "진귀",
+      "effect": "10년분의 내공을 보충한다. 단, 흡수에 1년 폐관 필요.",
+      "source": "소림 비전. 외부 유출 거의 없음."
+    },
+    {
+      "id": "seoljamcho",
+      "name": "설잠초(雪蠶草)",
+      "rarity": "진귀",
+      "effect": "한기(寒氣) 계열 내공 증진. 음(陰) 계열에 효험.",
+      "where": "천산 만년설 위. 채취 극난."
+    },
+    {
+      "id": "manaeyongdam",
+      "name": "만년영지(萬年靈芝)",
+      "rarity": "신물",
+      "effect": "20년 내공. 광기·내상 치유. 수명 연장.",
+      "where": "오래된 명산 깊은 곳. 영물(靈物)이 지킨다는 전설."
+    },
+    {
+      "id": "guryongnaedan",
+      "name": "구룡내단(九龍內丹)",
+      "rarity": "전설",
+      "effect": "용(龍)의 내단. 한 알에 50년 내공. 한 알이면 화경의 문이 열린다.",
+      "history": "지난 천 년간 두 개가 세상에 나왔다고 한다."
+    },
+    {
+      "id": "godok",
+      "name": "고독(蠱毒)",
+      "rarity": "귀함",
+      "effect": "남만에서 키운 독충. 다양한 효과(즉사·환각·서서히 내공 빨림 등).",
+      "where": "남만의 무사(巫師)들. 사천당가."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "moonjeolgeom",
+      "name": "묵철검(墨鐵劍)",
+      "rarity": "흔함",
+      "type": "검",
+      "description": "튼튼한 보통의 강철검. 일반 무사의 표준."
+    },
+    {
+      "id": "chunhwa",
+      "name": "춘화검(春華劍)",
+      "rarity": "귀함",
+      "type": "검",
+      "description": "유명 장인 작품. 가볍고 날카롭다."
+    },
+    {
+      "id": "haengmyeong",
+      "name": "행명검(行命劍)",
+      "rarity": "진귀",
+      "type": "검",
+      "description": "강호 일류 고수의 애병. 검명(劍鳴)이 울린다."
+    },
+    {
+      "id": "yongchun",
+      "name": "용천검(龍泉劍)",
+      "rarity": "신물",
+      "type": "검",
+      "description": "용천의 옛 명검. 한 자루로 만 자루를 베어도 이가 빠지지 않는다."
+    },
+    {
+      "id": "cheonma_jeolgeom",
+      "name": "천마혈검(天魔血劍)",
+      "rarity": "전설",
+      "type": "검",
+      "description": "천마(天魔)의 애병. 검신에 죽은 자들의 원념이 깃들었다.",
+      "history": "현 천마가 소지. 행방 모름."
+    }
+  ],
+  "manuals": [
+    {
+      "id": "yeokgeungyeong_manual",
+      "name": "역근경 비급",
+      "art": "yeokgeungyeong",
+      "rarity": "신물",
+      "description": "소림 장경각 최상단. 함부로 보면 죽음.",
+      "where": "shaolin"
+    },
+    {
+      "id": "guyumjingyeong",
+      "name": "구음진경(九陰眞經)",
+      "art": null,
+      "rarity": "전설",
+      "description": "음(陰)의 극을 다룬 신공의 비급. 정종으로 익히면 화경, 사도로 익히면 마(魔)에 빠진다.",
+      "where": "행방 묘연. 강호의 모든 자가 찾는다.",
+      "history": "강호에서 사라진 지 오래. 그 그림자를 본 자는 모두 죽었다."
+    },
+    {
+      "id": "guyangjingyeong",
+      "name": "구양진경(九陽眞經)",
+      "art": null,
+      "rarity": "전설",
+      "description": "양(陽)의 극. 구음진경과 한 쌍.",
+      "where": "행방 묘연."
+    },
+    {
+      "id": "guyebibon",
+      "name": "낡은 비전(秘傳)",
+      "art": null,
+      "rarity": "귀함",
+      "description": "이름 없는 군소문파의 비전. 일류급 무공이 적힌 낡은 책. 시장에서 가끔 나돈다."
+    }
+  ],
+  "miscellaneous": [
+    {
+      "id": "geumpyo",
+      "name": "금표(金票)",
+      "description": "전장(錢莊) 발행 어음. 은자 백 냥짜리부터. 거상·강호인이 들고 다닌다."
+    },
+    {
+      "id": "yeongpae",
+      "name": "영패(令牌)",
+      "description": "문파·세력의 신표. 무림맹 영패, 사도련 영패, 천마신교 마패 등."
+    },
+    {
+      "id": "byeokhwa_jido",
+      "name": "보물지도",
+      "description": "전대 고수의 동굴, 비급의 위치 등. 진위 불명. 강호의 미끼."
+    }
+  ]
+}

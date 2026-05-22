@@ -1,0 +1,198 @@
+{
+  "description": "강호에 전해지는 무공들. 등급은 weapon 계열과 grade로 표현.",
+  "grade_scale": {
+    "삼류": "마을 무관에서 가르치는 수준",
+    "이류": "중급 표국·소문파 비전",
+    "일류": "큰 문파의 외문 무공",
+    "절정": "구파일방·세가의 자랑할 만한 절기",
+    "초절정": "한 문파에 하나 있을까 말까 한 비전",
+    "신공(神功)": "전대 신화급. 한 시대에 하나 정도. 화경 이상의 깨달음 동반"
+  },
+  "internal_arts": [
+    {
+      "id": "yeokgeungyeong",
+      "name": "역근경(易筋經)",
+      "sect": "shaolin",
+      "grade": "신공",
+      "type": "내공심법",
+      "description": "달마조사가 남긴 불문 최고의 심법. 근골을 다시 빚는다.",
+      "side_effects": "없음. 정심(正心) 필수.",
+      "training_difficulty": "극상"
+    },
+    {
+      "id": "sunyangmugeukkong",
+      "name": "순양무극공(純陽無極功)",
+      "sect": "wudang",
+      "grade": "신공",
+      "type": "내공심법(도가)",
+      "description": "양(陽)의 기운으로 천하무극(無極)을 이룬다.",
+      "training_difficulty": "극상"
+    },
+    {
+      "id": "jahasinkong",
+      "name": "자하신공(紫霞神功)",
+      "sect": "huashan",
+      "grade": "초절정",
+      "type": "내공심법",
+      "description": "자색의 노을 같은 기운. 검과 함께 발현."
+    },
+    {
+      "id": "hyeolma",
+      "name": "혈마대법(血魔大法)",
+      "sect": "cheonma",
+      "grade": "신공",
+      "type": "마공(흡공)",
+      "description": "타인의 피와 내력을 흡수한다. 강해질수록 광기에 잠식된다.",
+      "side_effects": "주화입마 위험 극대. 인성 변질."
+    },
+    {
+      "id": "heupseongdaebeop",
+      "name": "흡성대법(吸星大法)",
+      "sect": "cheonma",
+      "grade": "초절정",
+      "type": "마공(흡공)",
+      "description": "타인의 내공을 흡수한다.",
+      "side_effects": "흡수한 내력 간 충돌. 결함 있음."
+    }
+  ],
+  "external_arts": [
+    {
+      "id": "baekbosinkwon",
+      "name": "백보신권(百步神拳)",
+      "sect": "shaolin",
+      "grade": "절정",
+      "type": "권법",
+      "description": "백 보 밖에서도 적을 친다는 권강.",
+      "weapon": "맨주먹"
+    },
+    {
+      "id": "nahankwon",
+      "name": "나한권(羅漢拳)",
+      "sect": "shaolin",
+      "grade": "일류",
+      "type": "권법",
+      "description": "소림 입문 권법. 외문 제자도 익힌다."
+    },
+    {
+      "id": "taegeukkwon",
+      "name": "태극권(太極拳)",
+      "sect": "wudang",
+      "grade": "절정",
+      "type": "권법(내가)",
+      "description": "느리나 모든 힘을 흘려 보낸다. 사강(四兩)으로 천근(千斤)을 친다."
+    },
+    {
+      "id": "hangryongsipfaljang",
+      "name": "항룡십팔장(降龍十八掌)",
+      "sect": "gaebang",
+      "grade": "초절정",
+      "type": "장법",
+      "description": "용을 굴복시키는 장. 개방 방주의 비전."
+    },
+    {
+      "id": "chilsangkwon",
+      "name": "칠상권(七傷拳)",
+      "sect": "kongdong",
+      "grade": "절정",
+      "type": "권법",
+      "description": "남도 상하나 자신도 상하는 권법.",
+      "side_effects": "수련자의 오장육부 손상"
+    }
+  ],
+  "sword_arts": [
+    {
+      "id": "taegeukgeom",
+      "name": "태극검(太極劍)",
+      "sect": "wudang",
+      "grade": "절정",
+      "type": "검법",
+      "description": "원(圓)으로 모든 공격을 흘리고 되돌린다."
+    },
+    {
+      "id": "maehwagombeop",
+      "name": "이십사수매화검법(二十四手梅花劍法)",
+      "sect": "huashan",
+      "grade": "절정",
+      "type": "검법",
+      "description": "매화 24송이가 피어나듯 화려하고 매서운 검."
+    },
+    {
+      "id": "jewanggeomhyeong",
+      "name": "제왕검형(帝王劍形)",
+      "sect": "namgung",
+      "grade": "초절정",
+      "type": "검법",
+      "description": "남궁세가의 가전. 위풍당당한 제왕의 검."
+    },
+    {
+      "id": "sailgeombeop",
+      "name": "사일검법(射日劍法)",
+      "sect": "jeomchang",
+      "grade": "초절정",
+      "type": "쾌검",
+      "description": "해를 쏘아 떨어뜨릴 만큼 빠른 검. 점창의 자랑."
+    },
+    {
+      "id": "maragujeolgeom",
+      "name": "마라구절검(魔羅九絶劍)",
+      "sect": "cheonma",
+      "grade": "초절정",
+      "type": "마검",
+      "description": "마라의 9가지 절초. 천마신교 호교법왕의 검."
+    }
+  ],
+  "weapon_arts": [
+    {
+      "id": "tagubongbeop",
+      "name": "타구봉법(打狗棒法)",
+      "sect": "gaebang",
+      "grade": "초절정",
+      "type": "봉법",
+      "description": "개방 방주만이 익힌다. 한 자루 죽봉(竹棒)으로 천하를 다스린다."
+    },
+    {
+      "id": "mancheonhwau",
+      "name": "만천화우(滿天花雨)",
+      "sect": "danga",
+      "grade": "초절정",
+      "type": "암기",
+      "description": "하늘 가득 꽃비처럼 쏟아지는 암기. 피할 길이 없다."
+    },
+    {
+      "id": "suryongchang",
+      "name": "수룡창법(水龍槍法)",
+      "sect": "jangang",
+      "grade": "절정",
+      "type": "창법",
+      "description": "물에 사는 용의 움직임을 본뜬 창."
+    }
+  ],
+  "movement_arts": [
+    {
+      "id": "ungryongdaepalsik",
+      "name": "운룡대팔식(雲龍大八式)",
+      "sect": "kunlun",
+      "grade": "절정",
+      "type": "보법",
+      "description": "구름과 용처럼 종횡하는 곤륜 최고의 보법."
+    },
+    {
+      "id": "chwipalseonbo",
+      "name": "취팔선보(醉八仙步)",
+      "sect": "gaebang",
+      "grade": "절정",
+      "type": "보법",
+      "description": "팔선이 취해 비틀거리는 듯한 보법. 예측이 안 된다."
+    }
+  ],
+  "stealth_arts": [
+    {
+      "id": "talhonsu",
+      "name": "탈혼수(奪魂手)",
+      "sect": "salmun",
+      "grade": "초절정",
+      "type": "암살수법",
+      "description": "혼을 빼앗는다는 살문의 절기. 소리 없이 죽인다."
+    }
+  ]
+}

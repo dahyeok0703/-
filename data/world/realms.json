@@ -1,0 +1,96 @@
+{
+  "description": "무림인의 무공 경지 체계. 모든 캐릭터·NPC의 강함은 이 등급으로 표현된다.",
+  "realms": [
+    {
+      "id": "samryu",
+      "tier": 1,
+      "name": "삼류(三流)",
+      "summary": "기초 권각·검술을 익힌 수준. 마을 양아치, 표국의 말단 표사.",
+      "internal_energy_range": [0, 30],
+      "world_population_pct": 70,
+      "typical_age_to_reach": "15세 전후",
+      "notes": "정식 무림인으로 쳐주지 않는다. 일반인보다 조금 강한 정도."
+    },
+    {
+      "id": "iryu",
+      "tier": 2,
+      "name": "이류(二流)",
+      "summary": "문파의 외문 제자, 중급 표사. 한 마을의 강자.",
+      "internal_energy_range": [30, 80],
+      "world_population_pct": 20,
+      "typical_age_to_reach": "20-25세",
+      "notes": "기본 내공심법 입문. 무림인이라 부를 수 있는 최저선."
+    },
+    {
+      "id": "ilryu",
+      "tier": 3,
+      "name": "일류(一流)",
+      "summary": "문파 내문 제자, 강호의 명숙. 한 지방에서 이름이 알려짐.",
+      "internal_energy_range": [80, 200],
+      "world_population_pct": 7,
+      "typical_age_to_reach": "30-40세",
+      "notes": "독립된 절기 한둘을 대성. 일반 무사 열 명을 상대할 수 있다."
+    },
+    {
+      "id": "jeoljeong",
+      "tier": 4,
+      "name": "절정(絶頂)",
+      "summary": "구파의 장로급, 세가의 가주급. 천하에 이름이 알려진다.",
+      "internal_energy_range": [200, 500],
+      "world_population_pct": 2,
+      "typical_age_to_reach": "40-50세",
+      "notes": "검기(劍氣)를 발현할 수 있다. 일류 고수 수십을 상대한다. 한 문파의 기둥."
+    },
+    {
+      "id": "chojeoljeong",
+      "tier": 5,
+      "name": "초절정(超絶頂)",
+      "summary": "문파의 최고수. 천하 십대고수에 거론될 수 있는 경지.",
+      "internal_energy_range": [500, 1200],
+      "world_population_pct": 0.5,
+      "typical_age_to_reach": "50-60세",
+      "notes": "검강(劍罡)을 일으킨다. 한 사람의 무력이 곧 한 문파의 무력."
+    },
+    {
+      "id": "hwagyeong",
+      "tier": 6,
+      "name": "화경(化境)",
+      "summary": "인간의 무공이 닿을 수 있는 한계. 천하에 손꼽힌다.",
+      "internal_energy_range": [1200, 3000],
+      "world_population_pct": 0.05,
+      "typical_age_to_reach": "60-80세",
+      "notes": "허공섭물·이형환위 자유자재. 한 세대에 십수 명. 무림맹주·천마급."
+    },
+    {
+      "id": "hyeongyeong",
+      "tier": 7,
+      "name": "현경(玄境)",
+      "summary": "자연과 동화한다. 한 시대에 한두 명.",
+      "internal_energy_range": [3000, 9000],
+      "world_population_pct": 0.001,
+      "typical_age_to_reach": "80세 이상",
+      "notes": "검의(劍意)를 형(形)에서 해방시킨다. 산을 가르고 강을 막는다는 표현이 비유가 아니다."
+    },
+    {
+      "id": "saengsagyeong",
+      "tier": 8,
+      "name": "생사경(生死境)",
+      "summary": "전설. 한 시대에 있을지 없을지.",
+      "internal_energy_range": [9000, 99999],
+      "world_population_pct": 0.0,
+      "typical_age_to_reach": "수명을 초월",
+      "notes": "생사를 넘었다고 한다. 천 년에 한둘. 대부분 환상으로 여겨진다."
+    }
+  ],
+  "promotion_rules": {
+    "guidelines": "경지 상승은 단순 내공 누적이 아니라 '깨달음(悟)'이 필요하다. 사부의 가르침, 강자와의 사투, 죽음의 문턱, 자연의 관조 등이 계기가 된다.",
+    "average_years_per_realm": {
+      "samryu_to_iryu": 3,
+      "iryu_to_ilryu": 5,
+      "ilryu_to_jeoljeong": 10,
+      "jeoljeong_to_chojeoljeong": 15,
+      "chojeoljeong_to_hwagyeong": 20,
+      "hwagyeong_to_hyeongyeong": "30년+ 또는 평생"
+    }
+  }
+}

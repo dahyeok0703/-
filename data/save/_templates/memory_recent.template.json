@@ -1,0 +1,5 @@
+{
+  "_description": "최근 10턴의 행동·결과 로그. 11턴째가 들어오면 가장 오래된 항목은 memory_long으로 요약 이관.",
+  "max_entries": 10,
+  "entries": []
+}
