@@ -1,47 +1,47 @@
 // 모든 세계관 JSON을 정적 import로 모으는 모듈.
 // 클라이언트 번들에 포함된다(개인용·로컬·StackBlitz 가정).
-// 원본 data/world/*.json은 절대 변경되지 않는다 — import만 한다.
+// 원본 데이터는 src/data/world/, src/data/save/_templates/ 에서 import.
 
-import factions from "../../data/world/factions.json";
-import realms from "../../data/world/realms.json";
-import regions from "../../data/world/regions.json";
-import lore from "../../data/world/lore.json";
-import society from "../../data/world/society.json";
-import sects from "../../data/world/sects.json";
-import supreme from "../../data/world/supreme_ranks.json";
-import beauties from "../../data/world/four_beauties.json";
-import arts from "../../data/world/martial_arts.json";
-import manuals from "../../data/world/manuals.json";
-import elixirs from "../../data/world/elixirs.json";
-import weapons from "../../data/world/weapons.json";
+import factions from "./world/factions.json";
+import realms from "./world/realms.json";
+import regions from "./world/regions.json";
+import lore from "./world/lore.json";
+import society from "./world/society.json";
+import sects from "./world/sects.json";
+import supreme from "./world/supreme_ranks.json";
+import beauties from "./world/four_beauties.json";
+import arts from "./world/martial_arts.json";
+import manuals from "./world/manuals.json";
+import elixirs from "./world/elixirs.json";
+import weapons from "./world/weapons.json";
 
 // 문파별 NPC
-import shaolin from "../../data/world/npcs/shaolin.json";
-import wudang from "../../data/world/npcs/wudang.json";
-import huashan from "../../data/world/npcs/huashan.json";
-import jongnam from "../../data/world/npcs/jongnam.json";
-import emei from "../../data/world/npcs/emei.json";
-import qingcheng from "../../data/world/npcs/qingcheng.json";
-import kunlun from "../../data/world/npcs/kunlun.json";
-import jeomchang from "../../data/world/npcs/jeomchang.json";
-import kongdong from "../../data/world/npcs/kongdong.json";
-import gaebang from "../../data/world/npcs/gaebang.json";
-import namgung from "../../data/world/npcs/namgung.json";
-import hwangbo from "../../data/world/npcs/hwangbo.json";
-import moyong from "../../data/world/npcs/moyong.json";
-import danga from "../../data/world/npcs/danga.json";
-import jegal from "../../data/world/npcs/jegal.json";
-import noklim from "../../data/world/npcs/noklim.json";
-import jangang from "../../data/world/npcs/jangang.json";
-import salmun from "../../data/world/npcs/salmun.json";
-import haomun from "../../data/world/npcs/haomun.json";
-import cheonma from "../../data/world/npcs/cheonma.json";
-import nextGen from "../../data/world/npcs/next_generation.json";
-import courtesans from "../../data/world/npcs/courtesans.json";
-import commoners from "../../data/world/npcs/commoners.json";
-import legendary from "../../data/world/npcs/legendary_dead.json";
+import shaolin from "./world/npcs/shaolin.json";
+import wudang from "./world/npcs/wudang.json";
+import huashan from "./world/npcs/huashan.json";
+import jongnam from "./world/npcs/jongnam.json";
+import emei from "./world/npcs/emei.json";
+import qingcheng from "./world/npcs/qingcheng.json";
+import kunlun from "./world/npcs/kunlun.json";
+import jeomchang from "./world/npcs/jeomchang.json";
+import kongdong from "./world/npcs/kongdong.json";
+import gaebang from "./world/npcs/gaebang.json";
+import namgung from "./world/npcs/namgung.json";
+import hwangbo from "./world/npcs/hwangbo.json";
+import moyong from "./world/npcs/moyong.json";
+import danga from "./world/npcs/danga.json";
+import jegal from "./world/npcs/jegal.json";
+import noklim from "./world/npcs/noklim.json";
+import jangang from "./world/npcs/jangang.json";
+import salmun from "./world/npcs/salmun.json";
+import haomun from "./world/npcs/haomun.json";
+import cheonma from "./world/npcs/cheonma.json";
+import nextGen from "./world/npcs/next_generation.json";
+import courtesans from "./world/npcs/courtesans.json";
+import commoners from "./world/npcs/commoners.json";
+import legendary from "./world/npcs/legendary_dead.json";
 
-import characterTemplate from "../../data/save/_templates/character.template.json";
+import characterTemplate from "./save/_templates/character.template.json";
 
 export const WORLD = {
   factions: factions as any,
