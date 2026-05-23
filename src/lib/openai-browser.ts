@@ -1,5 +1,6 @@
 // 브라우저에서 직접 OpenAI 호출 (dangerouslyAllowBrowser).
 // 개인용·로컬 전용. 링크/배포를 하지 않는다는 전제.
+// Chat Completions API 사용 — 모든 SDK 버전·모든 모델에서 호환.
 
 import OpenAI from "openai";
 
@@ -23,7 +24,7 @@ export interface CallResult {
   model: string;
 }
 
-export async function callResponses(args: {
+export async function callChat(args: {
   apiKey: string;
   model: string;
   instructions: string;
@@ -31,48 +32,37 @@ export async function callResponses(args: {
   maxOutputTokens: number;
 }): Promise<CallResult> {
   const client = getClient(args.apiKey);
-  const response: any = await client.responses.create({
+
+  // instructions를 첫 system 메시지로 합침
+  const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
+    { role: "system", content: args.instructions },
+    ...args.input.map((m) => ({
+      role: m.role as "system" | "user" | "assistant",
+      content: m.content,
+    })),
+  ];
+
+  const response: any = await client.chat.completions.create({
     model: args.model,
-    instructions: args.instructions,
-    input: args.input as any,
-    max_output_tokens: args.maxOutputTokens,
+    messages: messages as any,
+    max_tokens: args.maxOutputTokens,
   });
 
-  const text = response.output_text ?? extractText(response);
-  const usage = response.usage || {};
+  const text = response?.choices?.[0]?.message?.content || "";
+  const usage = response?.usage || {};
   return {
-    text: text || "",
+    text,
     usage: {
-      input_tokens: usage.input_tokens || 0,
-      output_tokens: usage.output_tokens || 0,
+      input_tokens: usage.prompt_tokens || 0,
+      output_tokens: usage.completion_tokens || 0,
       total_tokens: usage.total_tokens || 0,
     },
     model: args.model,
   };
 }
 
-function extractText(response: any): string {
-  try {
-    const out = response.output;
-    if (Array.isArray(out)) {
-      const parts: string[] = [];
-      for (const item of out) {
-        if (Array.isArray(item?.content)) {
-          for (const c of item.content) {
-            if (typeof c === "string") parts.push(c);
-            else if (c?.text) parts.push(c.text);
-          }
-        } else if (typeof item?.content === "string") {
-          parts.push(item.content);
-        }
-      }
-      return parts.join("");
-    }
-  } catch {
-    /* ignore */
-  }
-  return "";
-}
+// 하위 호환: 기존 callResponses 이름도 export
+export const callResponses = callChat;
 
 export function classifyError(err: unknown): { kind: string; userMessage: string } {
   const e = err as any;
