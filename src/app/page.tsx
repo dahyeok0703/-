@@ -127,7 +127,8 @@ export default function Page() {
   }
 
   function doLoadSlot(slotId: string) {
-    if (!confirm("현재 진행 중인 게임은 덮어써집니다. 불러올까요?")) return;
+    const cur = getSave();
+    if (cur && !confirm("현재 진행 중인 게임은 덮어써집니다. 불러올까요?")) return;
     const ok = loadBackupSlot(slotId);
     if (!ok) {
       setError("슬롯을 찾지 못했어요.");
@@ -319,17 +320,20 @@ export default function Page() {
               {mode}
             </span>
             {save && (
-              <>
-                <button onClick={doSaveSlot} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
-                  💾 저장
-                </button>
-                <button onClick={() => { setBackups(listBackupSlots()); setShowLoadDialog(true); }} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
-                  📂 불러오기 ({backups.length})
-                </button>
-                <button onClick={doRestart} className="px-2 py-1 rounded bg-ink-700 hover:bg-yellow-900 hover:text-yellow-100">
-                  🔁 다시하기
-                </button>
-              </>
+              <button onClick={doSaveSlot} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
+                💾 저장
+              </button>
+            )}
+            <button
+              onClick={() => { setBackups(listBackupSlots()); setShowLoadDialog(true); }}
+              className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900"
+            >
+              📂 불러오기 ({backups.length})
+            </button>
+            {save && (
+              <button onClick={doRestart} className="px-2 py-1 rounded bg-ink-700 hover:bg-yellow-900 hover:text-yellow-100">
+                🔁 다시하기
+              </button>
             )}
             <button onClick={() => setSettingsOpen((v) => !v)} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
               ⚙ 설정
@@ -471,10 +475,58 @@ export default function Page() {
 
         {/* 새 게임 폼 */}
         {!save && (
-          <div className="flex-1 overflow-y-auto scroll-area flex items-start justify-center p-4">
+          <div className="flex-1 overflow-y-auto scroll-area flex flex-col items-center p-4 gap-4">
+            {backups.length > 0 && (
+              <div className="bg-ink-700/40 border border-ink-500/40 p-4 rounded-lg w-full max-w-2xl mt-6 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold">이어하기</h2>
+                  <span className="text-xs text-ink-300">저장된 회차 {backups.length}개</span>
+                </div>
+                <p className="text-xs text-ink-300">
+                  새로고침해도 저장된 회차는 남아 있어요. 골라서 이어가세요.
+                </p>
+                <ul className="space-y-1 max-h-64 overflow-y-auto scroll-area">
+                  {backups.slice(0, 8).map((s) => (
+                    <li
+                      key={s.id}
+                      className="flex items-center justify-between gap-2 bg-ink-900/60 border border-ink-500/30 rounded p-2 text-sm"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold truncate">{s.label}</div>
+                        <div className="text-xs text-ink-300">
+                          {s.characterName} · {s.characterAge}세 · 턴 {s.turn} ·{" "}
+                          {new Date(s.createdAt).toLocaleString("ko-KR")}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => doLoadSlot(s.id)}
+                        className="px-3 py-1 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold"
+                      >
+                        이어하기
+                      </button>
+                      <button
+                        onClick={() => doDeleteSlot(s.id)}
+                        className="px-2 py-1 bg-red-900/60 hover:bg-red-800 text-red-100 rounded text-xs"
+                      >
+                        삭제
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                {backups.length > 8 && (
+                  <button
+                    onClick={() => { setBackups(listBackupSlots()); setShowLoadDialog(true); }}
+                    className="text-xs text-ink-300 hover:text-ink-100 underline"
+                  >
+                    전체 {backups.length}개 보기 →
+                  </button>
+                )}
+              </div>
+            )}
+
             <form
               onSubmit={onCreate}
-              className="bg-ink-700/40 border border-ink-500/40 p-6 rounded-lg w-full max-w-2xl space-y-4 my-6"
+              className="bg-ink-700/40 border border-ink-500/40 p-6 rounded-lg w-full max-w-2xl space-y-4 mb-6"
             >
               <h2 className="text-2xl font-bold">새 캐릭터 만들기</h2>
               <p className="text-sm text-ink-300">현재 모드: <span className="font-mono">{mode}</span></p>
