@@ -1,119 +1,118 @@
 # 무협 챗 게임
 
-개인 로컬용 무협 RPG 챗 게임. Next.js + OpenAI Responses API. 어린 시절부터 죽음(혹은 환생)까지 한 무림인의 일대기를 플레이.
+**개인용·브라우저 단독 실행**. StackBlitz 또는 로컬에서 혼자 플레이. 서버 환경변수 없이 API 키는 UI에서 직접 입력 → localStorage 보관.
 
-## 빠른 시작
+## 실행
 
+### StackBlitz
+1. 저장소를 StackBlitz로 열기 (https://stackblitz.com/github/dahyeok0703/-)
+2. WebContainer가 자동으로 `npm install && npm run dev` 실행
+3. 우상단 **⚙ 설정** 클릭 → API 키 입력 → 저장
+4. 새 게임 시작 → 플레이
+
+### 로컬
 ```bash
-# 1) 의존성 설치
 npm install
-
-# 2) 환경 변수
-cp .env.example .env
-# .env 파일을 열어 OPENAI_API_KEY 입력 (없으면 더미 모드로 동작)
-
-# 3) 개발 서버
 npm run dev
 # → http://localhost:3000
 ```
 
-`OPENAI_API_KEY`가 비어있으면 **MOCK 모드**로 동작 — UI와 흐름을 실 API 호출 없이 테스트할 수 있다.
+## API 키 입력 위치
+
+화면 우상단 **⚙ 설정** 버튼 클릭 → "OpenAI API Key" 입력칸에 `sk-...` 붙여넣기 → **저장**.
+
+- 저장된 키는 브라우저 `localStorage`에만 있음 (`wuxia:openai_api_key`).
+- 새로고침 후에도 자동 로드됨.
+- **삭제** 버튼으로 즉시 제거 가능.
+- 코드/저장소/`.env`에는 키가 절대 들어가지 않음.
+
+## Mock Mode
+
+API 키가 비어있으면 자동으로 **Mock Mode**. 실제 OpenAI를 호출하지 않고 더미 응답을 출력 — UI와 흐름을 시험해볼 수 있음. 좌상단 배지가 `Mock Mode`로 표시됨.
+
+## 모델 설정
+
+설정 패널에서:
+- **기본 진행 모델** — 프리셋(`gpt-5.4-mini`, `gpt-5-mini`) 또는 직접 입력
+- **상태 추출/요약 모델** — 비우면 진행 모델과 동일
+
+모델명을 자유롭게 변경할 수 있음. 단, 존재하지 않는 모델명을 입력하면 호출 시 404 에러가 뜸.
+
+## 저장 데이터 초기화
+
+설정 패널 하단:
+- **게임 진행만 초기화** — 세이브·대화·기억·비용 기록 삭제. API 키와 모델 설정은 보존.
+- **API 키 포함 전체 초기화** — 모든 localStorage 데이터 삭제.
+
+둘 다 `confirm` 창을 거침.
+
+## 실제 OpenAI 테스트 방법
+
+1. https://platform.openai.com/api-keys 에서 키 발급 (`sk-...`)
+2. 게임 우상단 ⚙ 설정 → 키 입력 → 저장
+3. 모드 배지가 `OpenAI API Mode` 로 바뀜
+4. 새 게임 시작 → 첫 행동 입력 ("주변을 둘러본다." 등)
+5. 응답이 오면 우측 패널에 토큰·비용·디버그 정보 표시됨
+
+비용은 우측 "비용 (개발자 패널)"에서 실시간 누적 확인.
 
 ## 디렉토리 구조
 
 ```
-data/
-├── world/              # 세계관 원본 (절대 자동 변경되지 않음)
-│   ├── factions.json, sects.json, regions.json, ...
-│   └── npcs/           # 문파별 NPC 약 400명
-└── save/
-    ├── _templates/     # 새 게임 시작용 템플릿 (읽기 전용)
-    └── slot1/          # 실제 플레이 세이브 (자동 생성)
-        ├── game.json
-        ├── messages.json
-        ├── memories.json
-        └── usage_log.json
+data/                              # 세계관 원본 (자동 변경 안 됨)
+├── world/                         # 약 45개 JSON. 문파·NPC·무공·영약·비급
+└── save/_templates/               # 캐릭터 템플릿 (읽기 전용)
 
 src/
+├── data/world-data.ts             # JSON 정적 import 모음
 ├── app/
-│   ├── page.tsx        # 채팅 UI
+│   ├── page.tsx                   # 메인 UI (클라이언트 컴포넌트)
 │   ├── layout.tsx
-│   ├── globals.css
-│   └── api/
-│       ├── chat/route.ts   # 턴 처리
-│       └── save/route.ts   # 세이브 조회/생성/초기화
+│   └── globals.css
 └── lib/
-    ├── engine.ts       # 메인 게임 엔진
-    ├── openai-client.ts
-    ├── prompts/
-    │   ├── system.ts   # 게임 마스터 시스템 프롬프트 (편집 가능)
-    │   └── builder.ts  # 프롬프트 조립
-    ├── world.ts        # 세계관 로더 + RAG 검색
-    ├── memory.ts       # 장기기억 검색·저장
-    ├── save.ts         # 파일 기반 세이브 I/O
-    ├── cost.ts         # 모델 단가
-    ├── mock.ts         # API 없을 때 더미
-    ├── tokens.ts       # 거친 토큰 추정
-    └── types.ts        # 핵심 타입
+    ├── storage.ts                 # localStorage 래퍼
+    ├── openai-browser.ts          # 브라우저 OpenAI 호출 (dangerouslyAllowBrowser)
+    ├── mock.ts                    # MOCK 응답
+    ├── world.ts                   # 세계관 RAG
+    ├── memory.ts                  # 장기기억
+    ├── prompt-builder.ts          # 프롬프트 조립
+    ├── engine.ts                  # 메인 게임 엔진
+    ├── prompts/system.ts          # 게임 마스터 시스템 프롬프트 (편집 가능)
+    ├── cost.ts                    # 모델 단가
+    ├── tokens.ts                  # 토큰 추정
+    └── types.ts
 ```
 
 ## 흐름
 
 ```
 유저 입력
- → 세이브·최근 18턴 로드
- → 입력에 등장한 NPC/문파/지역을 data/world/에서 검색 (RAG)
- → 관련 장기기억 5~10개 선별
- → 시스템 프롬프트 + 동적 컨텍스트 + 최근 대화 + 입력 조립
- → OpenAI Responses API 호출 (MAX_OUTPUT_TOKENS 제한)
- → 응답 표시 + 저장
- → 별도 추출 호출로 상태 변화 JSON 받아 save/* 갱신
- → 비용 기록
+ → localStorage에서 세이브·최근 18개 메시지·기억 로드
+ → 입력에 등장한 NPC/문파/지역을 src/data/world-data.ts에서 키워드 검색
+ → 관련 장기기억 최대 10개 선별
+ → 시스템 프롬프트(고정) + 동적 컨텍스트 + 최근 대화 + 유저 입력 조립
+ → 브라우저에서 OpenAI Responses API 직접 호출
+ → 응답 표시 + localStorage에 메시지/사용량 저장
+ → 별도 추출 호출로 상태 변화 JSON 받아 세이브 갱신
 ```
 
-토큰 한도 초과 시 오래된 대화부터 자른다. 매 턴마다 세계관 DB 전체를 보내지 않는다.
+토큰이 한도(8000)를 넘으면 오래된 대화부터 자동으로 자름. 매 턴 세계관 전체를 보내지 않음.
 
 ## 비용 제한
 
-`.env`의 `MONTHLY_BUDGET_USD`. 한도를 넘으면 UI에 경고 배지가 뜬다 (강제 차단은 안 함 — 개인 사용 기준).
+월간 예산 한도는 `src/lib/engine.ts`의 `processTurn(input, { monthlyBudgetUSD: 50 })` 기본값 50달러. 한도 도달 시 UI에 경고. 강제 차단은 안 함 (개인용).
 
-모델별 단가는 `src/lib/cost.ts`에서 직접 편집.
-
-## 주요 명령
-
-```bash
-npm run dev        # 개발 서버
-npm run typecheck  # TypeScript 검사
-npm run build      # 프로덕션 빌드
-npm start          # 프로덕션 실행 (로컬이라 보통 dev로 충분)
-```
-
-## 게임 플레이
-
-1. 첫 진입 → 캐릭터 생성 폼 (이름·성별·출신 배경)
-2. 5세부터 시작. 첫 입력은 "방을 둘러본다" "어머니께 묻는다" 같은 평범한 행동도 됨
-3. 우측 패널에서 캐릭터 상태·관계·비용을 실시간 확인
-4. **Ctrl/⌘+Enter** 로 전송
-5. **초기화** 버튼은 확인창 거쳐서 동작
-
-특수 입력:
-- "상태창" / "인물" / "세력" / "기억" / "로그" — 저장된 데이터 요약
-
-## 안전 장치
-
-- API 키는 서버(`/api/*`)에서만 사용 — 브라우저로 절대 안 새어 나감
-- 세계관 원본 데이터(`data/world/*`)는 자동 갱신되지 않음 — 변경 시 별도 커밋
-- 세이브 폴더(`data/save/slot1/`)는 `.gitignore`로 제외 (개인 플레이 기록)
-- 상태 추출 실패해도 게임 진행은 막지 않음 (응답은 표시·저장)
-
-## 미완성·주의사항
-
-- **단일 슬롯**만 지원. 멀티 세이브가 필요하면 `slot` 쿼리/파라미터로 분리 가능.
-- **스트리밍 미지원**. 안정성 우선. 응답이 다 끝난 후 한꺼번에 표시됨.
-- **상태 추출 정확도**는 모델 성능에 의존. 가끔 누락 가능 — 그 경우 다음 턴 입력에서 직접 짚어주면 보정됨.
-- **RAG 검색**은 단순 키워드 매칭. 동의어/표기 차이는 못 잡는 경우 있음 (예: "한천" vs "검천"). 필요 시 `src/lib/world.ts`의 `searchWorld`를 개선.
-- **토큰 추정**은 보수적 추정. 정확한 OpenAI tiktoken은 쓰지 않음.
+모델 단가는 `src/lib/cost.ts`의 `MODEL_PRICING`에서 직접 수정.
 
 ## 시스템 프롬프트 편집
 
-게임 톤을 바꾸고 싶으면 `src/lib/prompts/system.ts`의 `SYSTEM_RULES` 문자열을 직접 수정. 재시작하면 즉시 반영.
+게임 톤·규칙을 바꾸려면 `src/lib/prompts/system.ts`의 `SYSTEM_RULES` 직접 수정.
+
+## 주의사항
+
+- **이 앱은 개인용**. API 키가 브라우저에서 직접 OpenAI로 나감 (`dangerouslyAllowBrowser: true`).
+- StackBlitz 링크/배포 페이지를 **남에게 공유하지 마세요** — 키가 같이 노출됩니다.
+- `.env`는 사용하지 않음. GitHub에 키가 올라갈 위험 없음.
+- 단일 슬롯만 지원 (localStorage 키 하나).
+- 스트리밍 미지원. 응답은 한꺼번에 표시.
+- RAG는 단순 키워드 매칭 (별호·동의어는 못 잡을 수 있음).

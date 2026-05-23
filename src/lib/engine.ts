@@ -1,40 +1,79 @@
-// 메인 게임 엔진: 입력 → 컨텍스트 조립 → AI 호출 → 저장 → 상태 추출.
+// 클라이언트 사이드 게임 엔진. 모든 저장은 localStorage.
 
+import { ChatMessage, ExtractedUpdates, SaveData, UsageRecord, CharacterState } from "./types";
 import {
-  appendMessages,
-  appendUsage,
-  getRecentMessages,
-  loadSave,
-  loadUsage,
-  saveSave,
-} from "./save";
-import { ChatMessage, ExtractedUpdates, SaveData, UsageRecord } from "./types";
-import {
-  callResponses,
-  classifyOpenAIError,
-  hasApiKey,
-  modelChat,
-  modelSummary,
-  OpenAIResult,
-} from "./openai-client";
-import { mockChatResponse, mockExtractResponse } from "./mock";
-import { buildPrompt } from "./prompts/builder";
+  loadSave, saveSave, loadMessages, saveMessages,
+  loadUsage, saveUsage, getApiKey, getModelChat, getModelSummary,
+} from "./storage";
+import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemories } from "./memory";
+import { buildPrompt } from "./prompt-builder";
 import { EXTRACTOR_RULES } from "./prompts/system";
-import {
-  appendMemory,
-  createMemory,
-  recentTextFromMessages,
-  retrieveRelevantMemories,
-} from "./memory";
+import { callResponses, classifyError, CallResult } from "./openai-browser";
+import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
+import { CHARACTER_TEMPLATE } from "../data/world-data";
 
-const MAX_RECENT = parseInt(process.env.MAX_RECENT_MESSAGES || "18", 10);
-const MAX_CTX_TOK = parseInt(process.env.MAX_CONTEXT_TOKENS || "8000", 10);
-const MAX_OUT_TOK = parseInt(process.env.MAX_OUTPUT_TOKENS || "1500", 10);
-const MONTHLY_BUDGET = parseFloat(process.env.MONTHLY_BUDGET_USD || "50");
+const MAX_RECENT = 18;
+const MAX_CTX_TOK = 8000;
+const MAX_OUT_TOK = 1500;
 
 function newMsgId(): string {
   return "msg_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+}
+
+export function hasSave(): boolean {
+  const s = loadSave<SaveData | null>(null);
+  return !!s && !!s.character?.identity;
+}
+
+export function getSave(): SaveData | null {
+  return loadSave<SaveData | null>(null);
+}
+
+export function getMessages(): ChatMessage[] {
+  return loadMessages<ChatMessage[]>([]);
+}
+
+export function getUsage(): UsageRecord[] {
+  return loadUsage<UsageRecord[]>([]);
+}
+
+export function buildInitialCharacter(overrides: { name?: string; gender?: string; family_background?: string }): CharacterState {
+  // 템플릿 깊은 복제 (메타 필드 제거)
+  const tpl = JSON.parse(JSON.stringify(CHARACTER_TEMPLATE));
+  delete tpl._description;
+  delete tpl._martial_arts_format;
+  delete tpl._civilian_or_martial_note;
+  tpl.identity = {
+    ...tpl.identity,
+    name: overrides.name || "이름없음",
+    gender: overrides.gender || "남",
+    family_background: overrides.family_background || tpl.identity.family_background || "",
+  };
+  return tpl as CharacterState;
+}
+
+export function startNewGame(opts: { name?: string; gender?: string; family_background?: string }): SaveData {
+  const now = new Date().toISOString();
+  const character = buildInitialCharacter(opts);
+  const save: SaveData = {
+    slot: "local",
+    createdAt: now,
+    updatedAt: now,
+    turn: 0,
+    character,
+    relationships: {},
+    worldStateOverrides: {
+      npc_overrides: {},
+      sect_overrides: {},
+      global_events_caused_by_player: [],
+      current_in_world_year: 0,
+    },
+  };
+  saveSave(save);
+  saveMessages([]);
+  // memories·usage는 보존(이전 회차 기록 유지) — 환생 컨셉
+  return save;
 }
 
 export interface TurnResult {
@@ -42,94 +81,85 @@ export interface TurnResult {
   reply?: string;
   error?: string;
   errorKind?: string;
-  usageThisTurn?: UsageRecord[];
   saveErrorWarning?: string;
   debug?: {
     model: string;
     recentMessageCount: number;
     memoryCount: number;
+    worldHitsCount: number;
     estimatedInputTokens: number;
+    actualInputTokens?: number;
+    actualOutputTokens?: number;
     costEstimateUSD: number;
     monthlyTotalUSD: number;
     dailyTotalUSD: number;
+    mock: boolean;
   };
   budgetWarning?: string;
 }
 
-export async function processTurn(userInput: string, slot?: string): Promise<TurnResult> {
+export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?: number }): Promise<TurnResult> {
   if (!userInput.trim()) return { ok: false, error: "입력이 비어있어요." };
 
-  const save = await loadSave(slot);
-  if (!save) {
-    return { ok: false, error: "세이브가 없습니다. 새 게임을 먼저 시작하세요." };
-  }
+  const save = getSave();
+  if (!save) return { ok: false, error: "세이브가 없어요. 먼저 새 게임을 시작하세요." };
 
-  const recent = await getRecentMessages(MAX_RECENT, slot);
+  const apiKey = getApiKey();
+  const useMock = !apiKey;
+
+  const allMessages = getMessages();
+  const recent = allMessages.slice(-MAX_RECENT);
+
   const memCtx = {
     userInput,
     recentText: recentTextFromMessages(recent, 6),
     currentLocationId: save.character.current_location_id,
-    presentCharacters: collectRelatedCharacters(save, recent),
+    presentCharacters: Object.values(save.relationships).map((r) => r.name),
     presentFactions: [save.character.affiliation.sect_id].filter(Boolean) as string[],
   };
-  const memories = await retrieveRelevantMemories(memCtx, 10, slot);
+  const memories = retrieveRelevantMemories(memCtx, 10);
 
-  // 예산 확인
-  const usage = await loadUsage(slot);
-  const monthlyTotal = sumMonthly(usage);
-  const dailyTotal = sumDaily(usage);
-  const budgetWarn =
-    monthlyTotal >= MONTHLY_BUDGET
-      ? `이번 달 누적 비용 $${monthlyTotal.toFixed(4)} 가 한도 $${MONTHLY_BUDGET}를 넘었습니다.`
-      : monthlyTotal >= MONTHLY_BUDGET * 0.8
-      ? `주의: 이번 달 누적 $${monthlyTotal.toFixed(4)} (한도 $${MONTHLY_BUDGET}의 80% 도달).`
-      : undefined;
-
-  // 프롬프트 조립
-  const built = await buildPrompt({
-    save,
-    recentMessages: recent,
-    relevantMemories: memories,
-    userInput,
-    maxContextTokens: MAX_CTX_TOK,
+  const built = buildPrompt({
+    save, recentMessages: recent, relevantMemories: memories,
+    userInput, maxContextTokens: MAX_CTX_TOK,
   });
 
-  // AI 호출
-  let chatResult: OpenAIResult;
-  const useMock = !hasApiKey();
+  // 예산
+  const allUsage = getUsage();
+  const monthlyTotal = sumMonthly(allUsage);
+  const dailyTotal = sumDaily(allUsage);
+  const budget = opts?.monthlyBudgetUSD ?? 50;
+  const budgetWarn = monthlyTotal >= budget
+    ? `이번 달 누적 $${monthlyTotal.toFixed(4)} 가 한도 $${budget}를 넘었어요.`
+    : monthlyTotal >= budget * 0.8
+    ? `주의: 이번 달 $${monthlyTotal.toFixed(4)} (한도 $${budget}의 80%).`
+    : undefined;
+
+  // 메인 호출
+  let chatResult: CallResult;
   try {
     if (useMock) {
-      chatResult = mockChatResponse(userInput);
+      chatResult = mockChat(userInput);
     } else {
       chatResult = await callResponses({
-        model: modelChat(),
+        apiKey,
+        model: getModelChat(),
         instructions: built.instructions,
         input: built.input,
         maxOutputTokens: MAX_OUT_TOK,
       });
     }
   } catch (err) {
-    const info = classifyOpenAIError(err);
+    const info = classifyError(err);
     console.error("[OpenAI 호출 실패]", info.kind, err);
     return { ok: false, error: info.userMessage, errorKind: info.kind };
   }
 
-  const userMsg: ChatMessage = {
-    id: newMsgId(),
-    role: "user",
-    content: userInput,
-    createdAt: new Date().toISOString(),
-  };
-  const aiMsg: ChatMessage = {
-    id: newMsgId(),
-    role: "assistant",
-    content: chatResult.text,
-    createdAt: new Date().toISOString(),
-  };
+  const userMsg: ChatMessage = { id: newMsgId(), role: "user", content: userInput, createdAt: new Date().toISOString() };
+  const aiMsg: ChatMessage = { id: newMsgId(), role: "assistant", content: chatResult.text, createdAt: new Date().toISOString() };
 
-  // 비용 기록 (메인 응답)
   const chatCost = estimateCostUSD(chatResult.model, chatResult.usage.input_tokens, chatResult.usage.output_tokens);
-  const chatUsageRec: UsageRecord = {
+  const chatUsage: UsageRecord = {
     id: "u_" + Date.now().toString(36),
     createdAt: new Date().toISOString(),
     requestType: "chat",
@@ -140,52 +170,59 @@ export async function processTurn(userInput: string, slot?: string): Promise<Tur
     estimated_cost_usd: chatCost,
   };
 
-  // 저장 (메시지·턴 증가·사용량)
   let saveErr: string | undefined;
   try {
-    await appendMessages([userMsg, aiMsg], slot);
+    const allMsgs = [...allMessages, userMsg, aiMsg];
+    saveMessages(allMsgs);
     save.turn += 1;
-    await saveSave(save, slot);
-    await appendUsage(chatUsageRec, slot);
+    save.updatedAt = new Date().toISOString();
+    saveSave(save);
+    saveUsage([...allUsage, chatUsage]);
   } catch (e) {
     console.error("[저장 실패]", e);
-    saveErr = "메시지/세이브 저장에 실패했어요 (응답은 표시됨).";
+    saveErr = "메시지 저장 실패 (응답은 표시됨)";
   }
 
-  // 상태 추출 (별도 호출). 실패해도 게임은 진행.
-  let summaryUsageRec: UsageRecord | undefined;
+  // 상태 추출 (별도 호출)
+  let summaryUsage: UsageRecord | undefined;
   try {
     const extractor = useMock
-      ? mockExtractResponse()
+      ? mockExtract()
       : await callResponses({
-          model: modelSummary(),
+          apiKey,
+          model: getModelSummary(),
           instructions: EXTRACTOR_RULES,
-          input: [
-            {
-              role: "user",
-              content: `유저 입력:\n${userInput}\n\n게임 마스터 응답:\n${chatResult.text}`,
-            },
-          ],
+          input: [{ role: "user", content: `유저 입력:\n${userInput}\n\n게임 마스터 응답:\n${chatResult.text}` }],
           maxOutputTokens: 600,
         });
-    summaryUsageRec = recordExtraction(extractor);
-    await applyExtraction(extractor.text, save, slot);
-    await appendUsage(summaryUsageRec, slot);
+    summaryUsage = {
+      id: "u_" + Date.now().toString(36) + "_s",
+      createdAt: new Date().toISOString(),
+      requestType: "summary",
+      model: extractor.model,
+      input_tokens: extractor.usage.input_tokens,
+      output_tokens: extractor.usage.output_tokens,
+      total_tokens: extractor.usage.total_tokens,
+      estimated_cost_usd: estimateCostUSD(extractor.model, extractor.usage.input_tokens, extractor.usage.output_tokens),
+    };
+    applyExtraction(extractor.text, save);
+    saveSave(save);
+    saveUsage([...getUsage(), summaryUsage]);
   } catch (e) {
     console.error("[상태 추출 실패]", e);
-    saveErr = (saveErr ? saveErr + " · " : "") + "상태 추출 실패 (게임 데이터엔 영향 없음).";
+    saveErr = (saveErr ? saveErr + " · " : "") + "상태 추출 실패";
   }
 
-  const totalUsage = [chatUsageRec, ...(summaryUsageRec ? [summaryUsageRec] : [])];
-  const turnCost = totalUsage.reduce((s, u) => s + u.estimated_cost_usd, 0);
+  const turnCost = chatCost + (summaryUsage?.estimated_cost_usd || 0);
   const newMonthly = monthlyTotal + turnCost;
   const newDaily = dailyTotal + turnCost;
 
-  // 콘솔 로그 (민감정보 제외)
   console.log("[엔진]", {
+    mock: useMock,
     model: chatResult.model,
     recentMessageCount: built.debug.recentMessageCount,
     memoryCount: memories.length,
+    worldHitsCount: built.debug.worldHitsCount,
     estimatedInputTokens: built.debug.estimatedInputTokens,
     actualInputTokens: chatResult.usage.input_tokens,
     actualOutputTokens: chatResult.usage.output_tokens,
@@ -196,14 +233,17 @@ export async function processTurn(userInput: string, slot?: string): Promise<Tur
   return {
     ok: true,
     reply: chatResult.text,
-    usageThisTurn: totalUsage,
     saveErrorWarning: saveErr,
     budgetWarning: budgetWarn,
     debug: {
+      mock: useMock,
       model: chatResult.model,
       recentMessageCount: built.debug.recentMessageCount,
       memoryCount: memories.length,
+      worldHitsCount: built.debug.worldHitsCount,
       estimatedInputTokens: built.debug.estimatedInputTokens,
+      actualInputTokens: chatResult.usage.input_tokens,
+      actualOutputTokens: chatResult.usage.output_tokens,
       costEstimateUSD: turnCost,
       monthlyTotalUSD: newMonthly,
       dailyTotalUSD: newDaily,
@@ -211,32 +251,17 @@ export async function processTurn(userInput: string, slot?: string): Promise<Tur
   };
 }
 
-function recordExtraction(result: OpenAIResult): UsageRecord {
-  const cost = estimateCostUSD(result.model, result.usage.input_tokens, result.usage.output_tokens);
-  return {
-    id: "u_" + Date.now().toString(36) + "_s",
-    createdAt: new Date().toISOString(),
-    requestType: "summary",
-    model: result.model,
-    input_tokens: result.usage.input_tokens,
-    output_tokens: result.usage.output_tokens,
-    total_tokens: result.usage.total_tokens,
-    estimated_cost_usd: cost,
-  };
-}
-
-async function applyExtraction(rawText: string, save: SaveData, slot?: string) {
+function applyExtraction(rawText: string, save: SaveData) {
   let parsed: ExtractedUpdates | null = null;
   try {
     const cleaned = stripCodeFences(rawText);
     parsed = JSON.parse(cleaned);
   } catch {
-    console.warn("[상태 추출 JSON 파싱 실패]", rawText.slice(0, 300));
+    console.warn("[상태 추출 JSON 파싱 실패]", rawText.slice(0, 200));
     return;
   }
   if (!parsed) return;
 
-  // NPC 관계 업데이트
   for (const u of parsed.npcUpdates || []) {
     const id = u.npc_id || u.name || "unknown";
     const existing = save.relationships[id] || {
@@ -256,73 +281,43 @@ async function applyExtraction(rawText: string, save: SaveData, slot?: string) {
     save.relationships[id] = existing;
   }
 
-  // 인벤토리
   for (const inv of parsed.inventoryUpdates || []) {
-    if (inv.action === "add") {
-      save.character.inventory.items.push(inv.item);
-    } else if (inv.action === "remove") {
+    if (inv.action === "add") save.character.inventory.items.push(inv.item);
+    else if (inv.action === "remove") {
       save.character.inventory.items = save.character.inventory.items.filter((x) => x !== inv.item);
     }
   }
 
-  // 플레이어 필드 (안전한 화이트리스트만)
   for (const p of parsed.playerUpdates || []) {
     applyPlayerField(save, p.field, p.value);
   }
 
-  // 일대기 요약 갱신
   if (parsed.summary) {
     save.character.biography_summary =
-      (save.character.biography_summary ? save.character.biography_summary + " | " : "") +
-      parsed.summary;
-    // 너무 길어지면 꼬리만 유지
+      (save.character.biography_summary ? save.character.biography_summary + " | " : "") + parsed.summary;
     if (save.character.biography_summary.length > 2000) {
       save.character.biography_summary = "…" + save.character.biography_summary.slice(-1800);
     }
   }
 
-  // 이벤트 로그 → 장기기억
   for (const ev of parsed.eventLogs || []) {
-    await appendMemory(
-      createMemory("event_log", ev.title, ev.content, {
-        importance: ev.importance || 5,
-        relatedCharacters: [],
-        relatedFactions: [],
-        relatedLocations: save.character.current_location_id ? [save.character.current_location_id] : [],
-      }),
-      slot
-    );
+    addMemory(createMemory("event_log", ev.title, ev.content, {
+      importance: ev.importance || 5,
+      relatedLocations: save.character.current_location_id ? [save.character.current_location_id] : [],
+    }));
   }
   for (const t of parsed.unresolvedThreads || []) {
-    await appendMemory(
-      createMemory("unresolved_threads", t.title, t.content, { importance: t.importance || 6 }),
-      slot
-    );
+    addMemory(createMemory("unresolved_threads", t.title, t.content, { importance: t.importance || 6 }));
   }
   for (const f of parsed.factionUpdates || []) {
-    await appendMemory(
-      createMemory("faction_memory", f.faction_id, f.note, {
-        importance: 5,
-        relatedFactions: [f.faction_id],
-      }),
-      slot
-    );
+    addMemory(createMemory("faction_memory", f.faction_id, f.note, { importance: 5, relatedFactions: [f.faction_id] }));
   }
   for (const l of parsed.locationUpdates || []) {
-    await appendMemory(
-      createMemory("location_memory", l.location_id, l.note, {
-        importance: 5,
-        relatedLocations: [l.location_id],
-      }),
-      slot
-    );
+    addMemory(createMemory("location_memory", l.location_id, l.note, { importance: 5, relatedLocations: [l.location_id] }));
   }
-
-  await saveSave(save, slot);
 }
 
 function applyPlayerField(save: SaveData, field: string, value: unknown) {
-  // 안전한 필드만 허용
   const allowed: Record<string, (v: any) => void> = {
     "identity.name": (v) => (save.character.identity.name = String(v)),
     "identity.age": (v) => (save.character.identity.age = Number(v)),
@@ -330,8 +325,7 @@ function applyPlayerField(save: SaveData, field: string, value: unknown) {
     "current_location_id": (v) => (save.character.current_location_id = String(v)),
     "affiliation.sect_id": (v) => (save.character.affiliation.sect_id = v ? String(v) : null),
     "affiliation.rank": (v) => (save.character.affiliation.rank = v ? String(v) : null),
-    "civilian_or_martial": (v) =>
-      (save.character.civilian_or_martial = v === "martial" ? "martial" : "civilian"),
+    "civilian_or_martial": (v) => (save.character.civilian_or_martial = v === "martial" ? "martial" : "civilian"),
     "realm.current_realm": (v) => (save.character.realm.current_realm = String(v)),
     "realm.current_stage": (v) => (save.character.realm.current_stage = String(v)),
     "realm.internal_energy": (v) => (save.character.realm.internal_energy = Number(v)),
@@ -341,43 +335,24 @@ function applyPlayerField(save: SaveData, field: string, value: unknown) {
     "inventory.silver_taels": (v) => (save.character.inventory.silver_taels = Number(v)),
   };
   const fn = allowed[field];
-  if (fn) {
-    try {
-      fn(value);
-    } catch {
-      // ignore
-    }
-  }
+  if (fn) try { fn(value); } catch { /* ignore */ }
 }
 
 function stripCodeFences(text: string): string {
   const t = text.trim();
-  if (t.startsWith("```")) {
-    return t.replace(/^```[a-z]*\s*/i, "").replace(/```\s*$/, "");
-  }
+  if (t.startsWith("```")) return t.replace(/^```[a-z]*\s*/i, "").replace(/```\s*$/, "");
   return t;
-}
-
-function collectRelatedCharacters(save: SaveData, recent: ChatMessage[]): string[] {
-  const names = new Set<string>();
-  for (const r of Object.values(save.relationships)) {
-    names.add(r.name);
-  }
-  return Array.from(names);
 }
 
 function sumMonthly(records: UsageRecord[]): number {
   const now = new Date();
-  return records
-    .filter((r) => {
-      const d = new Date(r.createdAt);
-      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-    })
-    .reduce((s, r) => s + r.estimated_cost_usd, 0);
+  return records.filter((r) => {
+    const d = new Date(r.createdAt);
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  }).reduce((s, r) => s + r.estimated_cost_usd, 0);
 }
 function sumDaily(records: UsageRecord[]): number {
   const today = new Date().toDateString();
-  return records
-    .filter((r) => new Date(r.createdAt).toDateString() === today)
+  return records.filter((r) => new Date(r.createdAt).toDateString() === today)
     .reduce((s, r) => s + r.estimated_cost_usd, 0);
 }
