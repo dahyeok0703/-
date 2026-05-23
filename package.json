@@ -4,25 +4,25 @@
   "private": true,
   "description": "개인용 로컬 무협 챗 게임 (OpenAI API 연동)",
   "scripts": {
-    "dev": "next dev --webpack -H 0.0.0.0 -p 3000",
-    "start": "next dev --webpack -H 0.0.0.0 -p 3000",
-    "build": "next build --webpack",
+    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "start": "next dev -H 0.0.0.0 -p 3000",
+    "build": "next build",
     "prod": "next start -H 0.0.0.0 -p 3000",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^16.2.6",
-    "openai": "^4.73.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "next": "14.2.18",
+    "openai": "4.73.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.2.15",
-    "@types/react-dom": "^19.2.3",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15",
-    "typescript": "^5.7.2"
+    "@types/node": "22.10.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.15",
+    "typescript": "5.7.2"
   }
 }
