@@ -84,6 +84,13 @@ export interface CharacterState {
   biography_summary: string;
 }
 
+export interface GameTime {
+  year: number;     // 강호력 N년
+  month: number;    // 1-12
+  day: number;      // 1-30
+  sichen: string;   // 자/축/인/묘/진/사/오/미/신/유/술/해
+}
+
 export interface SaveData {
   slot: string;
   createdAt: string;
@@ -91,6 +98,7 @@ export interface SaveData {
   turn: number;
   character: CharacterState;
   relationships: Record<string, RelationshipEntry>;
+  gameTime: GameTime;
   worldStateOverrides: {
     npc_overrides: Record<string, unknown>;
     sect_overrides: Record<string, unknown>;

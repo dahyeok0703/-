@@ -2,6 +2,7 @@ import { ChatMessage, LongTermMemory, SaveData } from "./types";
 import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
+import { formatGameTime, sichenPhase } from "../data/world-data";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -69,6 +70,12 @@ function buildDynamicContext(
 ): string {
   const c = save.character;
   const L: string[] = [];
+
+  if (save.gameTime) {
+    L.push("[현재 시각]");
+    L.push(`${formatGameTime(save.gameTime)} (${sichenPhase(save.gameTime.sichen)})`);
+    L.push("");
+  }
 
   L.push("[플레이어 상태]");
   L.push(`이름 ${c.identity.name || "(미정)"} · ${c.identity.gender || "?"} · ${c.identity.age}세`);

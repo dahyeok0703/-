@@ -217,6 +217,15 @@ export function sectNameKR(sectId: string | null | undefined): string {
 
 export function artNameKR(artId: string | null | undefined): string {
   if (!artId) return "";
+  if (artId.startsWith("custom_")) {
+    // 형식: custom_<base64-name>
+    try {
+      const decoded = decodeURIComponent(escape(atob(artId.slice(7))));
+      return decoded;
+    } catch {
+      return artId;
+    }
+  }
   for (const list of Object.values(WORLD.arts || {})) {
     if (Array.isArray(list)) {
       for (const a of list as any[]) {
@@ -225,5 +234,81 @@ export function artNameKR(artId: string | null | undefined): string {
     }
   }
   return artId;
+}
+
+// ---------- 무공 옵션 ----------
+
+export interface ArtOption {
+  id: string;
+  name: string;
+  sect: string | null;
+  grade: string;
+  type: string;
+  weapon: string;
+  description: string;
+  category: string; // martial_arts.json 안의 키 (internal_arts, shaolin_external, ...)
+}
+
+export function getAllArtOptions(): ArtOption[] {
+  const out: ArtOption[] = [];
+  for (const [category, list] of Object.entries(WORLD.arts || {})) {
+    if (!Array.isArray(list)) continue;
+    for (const a of list as any[]) {
+      if (!a?.id || !a?.name) continue;
+      out.push({
+        id: a.id,
+        name: a.name,
+        sect: a.sect ?? null,
+        grade: a.grade || "",
+        type: a.type || "",
+        weapon: a.weapon || "",
+        description: a.description || "",
+        category,
+      });
+    }
+  }
+  return out;
+}
+
+export function makeCustomArtId(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return "";
+  try {
+    const b64 = btoa(unescape(encodeURIComponent(trimmed)));
+    return "custom_" + b64;
+  } catch {
+    return "custom_" + encodeURIComponent(trimmed);
+  }
+}
+
+// ---------- 게임 시진(時辰) ----------
+
+export const SICHEN_LIST = [
+  { id: "자", name: "자시(子時)", hours: "23–01시", phase: "한밤" },
+  { id: "축", name: "축시(丑時)", hours: "01–03시", phase: "새벽" },
+  { id: "인", name: "인시(寅時)", hours: "03–05시", phase: "이른 새벽" },
+  { id: "묘", name: "묘시(卯時)", hours: "05–07시", phase: "동틀녘" },
+  { id: "진", name: "진시(辰時)", hours: "07–09시", phase: "아침" },
+  { id: "사", name: "사시(巳時)", hours: "09–11시", phase: "늦은 아침" },
+  { id: "오", name: "오시(午時)", hours: "11–13시", phase: "한낮" },
+  { id: "미", name: "미시(未時)", hours: "13–15시", phase: "오후" },
+  { id: "신", name: "신시(申時)", hours: "15–17시", phase: "늦은 오후" },
+  { id: "유", name: "유시(酉時)", hours: "17–19시", phase: "해질녘" },
+  { id: "술", name: "술시(戌時)", hours: "19–21시", phase: "초저녁" },
+  { id: "해", name: "해시(亥時)", hours: "21–23시", phase: "밤" },
+] as const;
+
+export function sichenLabel(id: string): string {
+  const s = SICHEN_LIST.find((x) => x.id === id);
+  return s ? s.name : id;
+}
+
+export function sichenPhase(id: string): string {
+  const s = SICHEN_LIST.find((x) => x.id === id);
+  return s ? s.phase : "";
+}
+
+export function formatGameTime(t: { year: number; month: number; day: number; sichen: string }): string {
+  return `강호력 ${t.year}년 ${t.month}월 ${t.day}일 · ${sichenLabel(t.sichen)}`;
 }
 

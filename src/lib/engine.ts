@@ -105,6 +105,7 @@ export interface NewGameOptions {
   sect_id?: string | null; // 소속 문파
   rank?: string | null;
   silver_taels?: number;
+  martial_arts?: Array<{ art_id: string; mastery_pct: number }>;
 }
 
 export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
@@ -163,6 +164,16 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
     tpl.inventory.silver_taels = 5;
   }
 
+  // 보유 무공
+  if (Array.isArray(opts.martial_arts) && opts.martial_arts.length > 0) {
+    tpl.martial_arts_known = opts.martial_arts
+      .filter((a) => a.art_id && a.art_id.trim())
+      .map((a) => ({
+        art_id: a.art_id,
+        mastery_pct: Math.max(0, Math.min(100, Math.floor(a.mastery_pct || 0))),
+      }));
+  }
+
   return tpl as CharacterState;
 }
 
@@ -176,6 +187,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
     turn: 0,
     character,
     relationships: {},
+    gameTime: { year: 1, month: 3, day: 1, sichen: "진" },
     worldStateOverrides: {
       npc_overrides: {},
       sect_overrides: {},
@@ -405,6 +417,8 @@ function applyExtraction(rawText: string, save: SaveData) {
     applyPlayerField(save, p.field, p.value);
   }
 
+  applyTimeAdvance(save, (parsed as any).timeAdvance);
+
   if (parsed.summary) {
     save.character.biography_summary =
       (save.character.biography_summary ? save.character.biography_summary + " | " : "") + parsed.summary;
@@ -449,6 +463,53 @@ function applyPlayerField(save: SaveData, field: string, value: unknown) {
   };
   const fn = allowed[field];
   if (fn) try { fn(value); } catch { /* ignore */ }
+}
+
+const SICHEN_ORDER = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];
+
+function applyTimeAdvance(save: SaveData, raw: any) {
+  if (!save.gameTime) {
+    save.gameTime = { year: 1, month: 3, day: 1, sichen: "진" };
+  }
+  if (!raw || typeof raw !== "object") return;
+
+  const t = save.gameTime;
+
+  if (typeof raw.set_year === "number") t.year = Math.max(1, Math.floor(raw.set_year));
+  if (typeof raw.set_month === "number") t.month = clamp(Math.floor(raw.set_month), 1, 12);
+  if (typeof raw.set_day === "number") t.day = clamp(Math.floor(raw.set_day), 1, 30);
+  if (typeof raw.set_sichen === "string" && SICHEN_ORDER.includes(raw.set_sichen)) {
+    t.sichen = raw.set_sichen;
+  }
+
+  const sichenDelta = Number(raw.sichen_delta) || 0;
+  const dayDelta = Number(raw.day_delta) || 0;
+  const monthDelta = Number(raw.month_delta) || 0;
+  const yearDelta = Number(raw.year_delta) || 0;
+
+  if (sichenDelta) {
+    let idx = SICHEN_ORDER.indexOf(t.sichen);
+    if (idx < 0) idx = 4;
+    const total = idx + sichenDelta;
+    const dayShift = Math.floor(total / 12);
+    const newIdx = ((total % 12) + 12) % 12;
+    t.sichen = SICHEN_ORDER[newIdx];
+    t.day += dayShift;
+  }
+
+  t.day += dayDelta;
+  while (t.day > 30) { t.day -= 30; t.month += 1; }
+  while (t.day < 1) { t.day += 30; t.month -= 1; }
+
+  t.month += monthDelta;
+  while (t.month > 12) { t.month -= 12; t.year += 1; }
+  while (t.month < 1) { t.month += 12; t.year -= 1; }
+
+  t.year = Math.max(1, t.year + yearDelta);
+}
+
+function clamp(n: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, n));
 }
 
 function stripCodeFences(text: string): string {

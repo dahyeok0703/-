@@ -48,6 +48,7 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "inventoryUpdates": [{ "action": "add|remove|change", "item": "...", "qty": 1 }],
   "eventLogs": [{ "title": "...", "content": "...", "importance": 1-10, "tags": [] }],
   "unresolvedThreads": [{ "title": "...", "content": "...", "importance": 1-10 }],
+  "timeAdvance": { "sichen_delta": 0, "day_delta": 0, "month_delta": 0, "year_delta": 0, "set_sichen": "자|축|인|묘|진|사|오|미|신|유|술|해" },
   "summary": "이번 턴 1-2문장 요약"
 }
 
@@ -55,4 +56,11 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
 - 변화 없는 카테고리는 빈 배열로 둔다.
 - 모호한 추측은 하지 않는다. 본문에 명시된 사실만 기록한다.
 - importance 6 이상은 큰 사건만.
+- timeAdvance: 한 턴에서 흐른 시간만큼만 진행시킨다.
+  · 짧은 대화·단일 행동: sichen_delta 0 또는 1.
+  · 일상적 이동·식사·수련 한 차례: sichen_delta 1~3.
+  · 하루 종일/잠/장거리 이동: day_delta 1 이상.
+  · 긴 폐관수련·여정·시간 도약은 day_delta/month_delta/year_delta 사용.
+  · 본문에 시간 흐름이 명시되지 않았다면 sichen_delta 0.
+  · set_sichen 은 명시적 시각 전환("새벽이 되었다")에만 사용.
 - JSON 외의 어떤 텍스트(인사·설명·코드블록 표기)도 출력하지 마라. 순수 JSON 한 덩어리.`;
