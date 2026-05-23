@@ -13,7 +13,10 @@ import {
   startNewGame, processTurn, regenerateLastResponse, restartGame,
 } from "@/lib/engine";
 import { ChatMessage, SaveData, UsageRecord } from "@/lib/types";
-import { getAllStageOptions, getAllSectOptions, stageNameKR, sectNameKR, artNameKR } from "@/data/world-data";
+import {
+  getAllStageOptions, getAllSectOptions, getAllArtOptions,
+  stageNameKR, sectNameKR, artNameKR, formatWorldTime,
+} from "@/data/world-data";
 
 const MODEL_PRESETS = [
   { id: "gpt-5.4-mini", label: "gpt-5.4-mini (기본 진행)" },
@@ -22,6 +25,15 @@ const MODEL_PRESETS = [
 
 const STAGE_OPTIONS = getAllStageOptions();
 const SECT_OPTIONS = getAllSectOptions();
+const ART_OPTIONS = getAllArtOptions();
+const ART_GRADES = ["삼류", "이류", "일류", "절정", "초절정", "신공"];
+
+interface ArtPick {
+  art_id: string;
+  name?: string;
+  grade?: string;
+  mastery_pct: number;
+}
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -57,6 +69,12 @@ export default function Page() {
   const [newSect, setNewSect] = useState<string>("");
   const [newRank, setNewRank] = useState<string>("제자");
   const [newSilver, setNewSilver] = useState<number>(0);
+  const [newArts, setNewArts] = useState<ArtPick[]>([]);
+  const [artPickerId, setArtPickerId] = useState<string>("");
+  const [artFilterSect, setArtFilterSect] = useState<string>("");
+  const [customArtName, setCustomArtName] = useState<string>("");
+  const [customArtGrade, setCustomArtGrade] = useState<string>("일류");
+  const [customArtMastery, setCustomArtMastery] = useState<number>(30);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -175,6 +193,7 @@ export default function Page() {
         sect_id: newIsMartial && newSect ? newSect : null,
         rank: newIsMartial && newSect ? newRank : null,
         silver_taels: newSilver,
+        martial_arts: newIsMartial ? newArts : [],
       });
       setSave(s);
       setMessages([]);
@@ -542,6 +561,147 @@ export default function Page() {
                 )}
               </fieldset>
 
+              {/* 보유 무공 */}
+              {newIsMartial && (
+                <fieldset className="space-y-3 border border-ink-500/30 rounded p-3">
+                  <legend className="px-2 text-xs text-ink-300">보유 무공 (선택)</legend>
+
+                  {/* 선택된 무공 목록 */}
+                  {newArts.length === 0 ? (
+                    <p className="text-xs text-ink-300">아직 선택한 무공이 없습니다.</p>
+                  ) : (
+                    <ul className="space-y-1">
+                      {newArts.map((a, i) => (
+                        <li key={i} className="flex items-center gap-2 bg-ink-900/50 border border-ink-500/30 rounded px-2 py-1.5 text-sm">
+                          <span className="flex-1 truncate">
+                            {a.name || artNameKR(a.art_id)}
+                            {a.grade ? <span className="text-ink-300 text-xs"> [{a.grade}]</span> : null}
+                          </span>
+                          <input
+                            type="number"
+                            min={0}
+                            max={100}
+                            value={a.mastery_pct}
+                            onChange={(e) => {
+                              const v = Math.max(0, Math.min(100, parseInt(e.target.value) || 0));
+                              setNewArts((prev) => prev.map((x, idx) => (idx === i ? { ...x, mastery_pct: v } : x)));
+                            }}
+                            className="w-16 px-1.5 py-1 bg-ink-900 border border-ink-500 rounded text-center text-xs"
+                          />
+                          <span className="text-xs text-ink-300">%</span>
+                          <button
+                            type="button"
+                            onClick={() => setNewArts((prev) => prev.filter((_, idx) => idx !== i))}
+                            className="text-red-300 hover:text-red-100 text-xs px-1"
+                            title="제거"
+                          >
+                            ✕
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* 기존 무공에서 선택 */}
+                  <div className="space-y-2 border-t border-ink-500/20 pt-2">
+                    <p className="text-xs text-ink-300">강호의 무공에서 선택</p>
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_auto] gap-2">
+                      <select
+                        className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                        value={artFilterSect}
+                        onChange={(e) => { setArtFilterSect(e.target.value); setArtPickerId(""); }}
+                      >
+                        <option value="">전체 문파</option>
+                        <option value="__none__">무소속 / 잡학</option>
+                        {SECT_OPTIONS.map((s) => (
+                          <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                      </select>
+                      <select
+                        className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                        value={artPickerId}
+                        onChange={(e) => setArtPickerId(e.target.value)}
+                      >
+                        <option value="">— 무공 선택 —</option>
+                        {ART_OPTIONS
+                          .filter((a) => {
+                            if (!artFilterSect) return true;
+                            if (artFilterSect === "__none__") return !a.sect;
+                            return a.sect === artFilterSect;
+                          })
+                          .filter((a) => !newArts.some((p) => p.art_id === a.id))
+                          .map((a) => (
+                            <option key={a.id} value={a.id}>
+                              {a.name} [{a.grade}] {a.type ? `· ${a.type}` : ""}
+                            </option>
+                          ))}
+                      </select>
+                      <button
+                        type="button"
+                        disabled={!artPickerId}
+                        onClick={() => {
+                          const a = ART_OPTIONS.find((x) => x.id === artPickerId);
+                          if (!a) return;
+                          setNewArts((prev) => [...prev, { art_id: a.id, grade: a.grade, mastery_pct: 20 }]);
+                          setArtPickerId("");
+                        }}
+                        className="px-3 py-1.5 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold disabled:opacity-50"
+                      >
+                        추가
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 직접 만들기 */}
+                  <div className="space-y-2 border-t border-ink-500/20 pt-2">
+                    <p className="text-xs text-ink-300">직접 만든 무공 (가전·자체 창안 등)</p>
+                    <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_auto] gap-2">
+                      <input
+                        className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                        placeholder="무공명 (예: 한가검법)"
+                        value={customArtName}
+                        onChange={(e) => setCustomArtName(e.target.value)}
+                      />
+                      <select
+                        className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                        value={customArtGrade}
+                        onChange={(e) => setCustomArtGrade(e.target.value)}
+                      >
+                        {ART_GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
+                      </select>
+                      <div className="flex items-center gap-1">
+                        <input
+                          type="number"
+                          min={0}
+                          max={100}
+                          value={customArtMastery}
+                          onChange={(e) => setCustomArtMastery(Math.max(0, Math.min(100, parseInt(e.target.value) || 0)))}
+                          className="w-full px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs text-center"
+                        />
+                        <span className="text-xs text-ink-300">%</span>
+                      </div>
+                      <button
+                        type="button"
+                        disabled={!customArtName.trim()}
+                        onClick={() => {
+                          const name = customArtName.trim();
+                          if (!name) return;
+                          setNewArts((prev) => [
+                            ...prev,
+                            { art_id: "custom:" + name, name, grade: customArtGrade, mastery_pct: customArtMastery },
+                          ]);
+                          setCustomArtName("");
+                          setCustomArtMastery(30);
+                        }}
+                        className="px-3 py-1.5 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold disabled:opacity-50"
+                      >
+                        만들기
+                      </button>
+                    </div>
+                  </div>
+                </fieldset>
+              )}
+
               {/* 자산 */}
               <fieldset className="space-y-2 border border-ink-500/30 rounded p-3">
                 <legend className="px-2 text-xs text-ink-300">자산 (선택)</legend>
@@ -647,6 +807,10 @@ export default function Page() {
 
       {/* ─── 우측 패널 ─── */}
       <aside className="hidden lg:flex flex-col h-screen overflow-y-auto scroll-area p-4 gap-4 text-sm">
+        <div className="bg-ink-900/60 border border-ink-500/40 rounded p-3">
+          <div className="text-xs text-ink-300 mb-0.5">강호의 시각</div>
+          <div className="font-bold text-ink-100">{formatWorldTime(save?.worldTime)}</div>
+        </div>
         <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
           <h2 className="font-bold mb-2">캐릭터</h2>
           {save?.character ? (
@@ -698,7 +862,7 @@ export default function Page() {
                 <span className="text-ink-300">보유 무공:</span>{" "}
                 {save.character.martial_arts_known?.length
                   ? save.character.martial_arts_known
-                      .map((a) => `${artNameKR(a.art_id)} (${a.mastery_pct}%)`)
+                      .map((a) => `${a.name || artNameKR(a.art_id)}${a.grade ? `[${a.grade}]` : ""} (${a.mastery_pct}%)`)
                       .join(", ")
                   : "(없음)"}
               </li>

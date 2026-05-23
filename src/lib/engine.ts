@@ -12,11 +12,12 @@ import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
-import { CHARACTER_TEMPLATE, getStageById } from "../data/world-data";
+import { CHARACTER_TEMPLATE, getStageById, advanceWorldTime } from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
 const MAX_OUT_TOK = 1500;
+const MINUTES_PER_TURN = 30;
 
 function newMsgId(): string {
   return "msg_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
@@ -56,6 +57,9 @@ export async function regenerateLastResponse(opts?: { monthlyBudgetUSD?: number 
   const save = loadSave<SaveData | null>(null);
   if (save && save.turn > 0) {
     save.turn -= 1;
+    if (save.worldTime) {
+      save.worldTime = advanceWorldTime(save.worldTime, -MINUTES_PER_TURN);
+    }
     saveSave(save);
   }
 
@@ -105,6 +109,7 @@ export interface NewGameOptions {
   sect_id?: string | null; // 소속 문파
   rank?: string | null;
   silver_taels?: number;
+  martial_arts?: Array<{ art_id: string; mastery_pct: number; name?: string; grade?: string }>;
 }
 
 export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
@@ -163,6 +168,18 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
     tpl.inventory.silver_taels = 5;
   }
 
+  // 보유 무공
+  if (Array.isArray(opts.martial_arts) && opts.martial_arts.length > 0) {
+    tpl.martial_arts_known = opts.martial_arts
+      .filter((a) => a && a.art_id)
+      .map((a) => ({
+        art_id: a.art_id,
+        mastery_pct: Math.max(0, Math.min(100, Math.round(a.mastery_pct ?? 0))),
+        ...(a.name ? { name: a.name } : {}),
+        ...(a.grade ? { grade: a.grade } : {}),
+      }));
+  }
+
   return tpl as CharacterState;
 }
 
@@ -176,6 +193,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
     turn: 0,
     character,
     relationships: {},
+    worldTime: { year: 1, month: 3, day: 1, hour: 7, minute: 0 },
     worldStateOverrides: {
       npc_overrides: {},
       sect_overrides: {},
@@ -289,6 +307,8 @@ export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?:
     saveMessages(allMsgs);
     save.turn += 1;
     save.updatedAt = new Date().toISOString();
+    if (!save.worldTime) save.worldTime = { year: 1, month: 3, day: 1, hour: 7, minute: 0 };
+    save.worldTime = advanceWorldTime(save.worldTime, MINUTES_PER_TURN);
     saveSave(save);
     saveUsage([...allUsage, chatUsage]);
   } catch (e) {

@@ -217,6 +217,7 @@ export function sectNameKR(sectId: string | null | undefined): string {
 
 export function artNameKR(artId: string | null | undefined): string {
   if (!artId) return "";
+  if (artId.startsWith("custom:")) return artId.slice(7);
   for (const list of Object.values(WORLD.arts || {})) {
     if (Array.isArray(list)) {
       for (const a of list as any[]) {
@@ -225,5 +226,87 @@ export function artNameKR(artId: string | null | undefined): string {
     }
   }
   return artId;
+}
+
+export interface ArtOption {
+  id: string;
+  name: string;
+  sect: string | null;
+  grade: string;
+  type: string;
+  weapon: string;
+  description: string;
+  category: string;
+}
+
+let _artOptions: ArtOption[] | null = null;
+export function getAllArtOptions(): ArtOption[] {
+  if (_artOptions) return _artOptions;
+  const out: ArtOption[] = [];
+  for (const [cat, list] of Object.entries(WORLD.arts || {})) {
+    if (!Array.isArray(list)) continue;
+    for (const a of list as any[]) {
+      if (!a?.id || !a?.name) continue;
+      out.push({
+        id: a.id,
+        name: a.name,
+        sect: a.sect ?? null,
+        grade: a.grade || "",
+        type: a.type || "",
+        weapon: a.weapon || "",
+        description: a.description || "",
+        category: cat,
+      });
+    }
+  }
+  _artOptions = out;
+  return out;
+}
+
+// ---------- 강호력 시간 ----------
+
+const SIJIN_NAMES = ["자시", "축시", "인시", "묘시", "진시", "사시", "오시", "미시", "신시", "유시", "술시", "해시"];
+const MONTH_NAMES = ["정월", "이월", "삼월", "사월", "오월", "유월", "칠월", "팔월", "구월", "시월", "동월", "섣달"];
+
+export function sijinName(hour: number): string {
+  // 자시 23~01, 축시 01~03, ...
+  const idx = Math.floor(((hour + 1) % 24) / 2);
+  return SIJIN_NAMES[idx];
+}
+
+export function monthName(month: number): string {
+  return MONTH_NAMES[(month - 1 + 12) % 12] || `${month}월`;
+}
+
+export function seasonName(month: number): string {
+  if (month >= 2 && month <= 4) return "봄";
+  if (month >= 5 && month <= 7) return "여름";
+  if (month >= 8 && month <= 10) return "가을";
+  return "겨울";
+}
+
+export function formatWorldTime(t: { year: number; month: number; day: number; hour: number; minute: number } | null | undefined): string {
+  if (!t) return "(시간 미정)";
+  const hh = String(t.hour).padStart(2, "0");
+  const mm = String(t.minute).padStart(2, "0");
+  return `강호력 ${t.year}년 ${seasonName(t.month)} ${monthName(t.month)} ${t.day}일 · ${sijinName(t.hour)} (${hh}:${mm})`;
+}
+
+export function advanceWorldTime(
+  t: { year: number; month: number; day: number; hour: number; minute: number },
+  addMinutes: number
+): { year: number; month: number; day: number; hour: number; minute: number } {
+  let { year, month, day, hour, minute } = t;
+  minute += addMinutes;
+  while (minute < 0) { minute += 60; hour -= 1; }
+  while (minute >= 60) { minute -= 60; hour += 1; }
+  while (hour < 0) { hour += 24; day -= 1; }
+  while (hour >= 24) { hour -= 24; day += 1; }
+  while (day < 1) { day += 30; month -= 1; }
+  while (day > 30) { day -= 30; month += 1; }
+  while (month < 1) { month += 12; year -= 1; }
+  while (month > 12) { month -= 12; year += 1; }
+  if (year < 1) year = 1;
+  return { year, month, day, hour, minute };
 }
 

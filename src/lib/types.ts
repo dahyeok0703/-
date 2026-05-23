@@ -61,7 +61,7 @@ export interface CharacterState {
     mental_state: string;
     status_effects: string[];
   };
-  martial_arts_known: Array<{ art_id: string; mastery_pct: number }>;
+  martial_arts_known: Array<{ art_id: string; mastery_pct: number; name?: string; grade?: string }>;
   weapons_owned: string[];
   inventory: { silver_taels: number; gold_taels: number; items: string[] };
   affiliation: {
@@ -84,6 +84,14 @@ export interface CharacterState {
   biography_summary: string;
 }
 
+export interface WorldTime {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+}
+
 export interface SaveData {
   slot: string;
   createdAt: string;
@@ -91,6 +99,7 @@ export interface SaveData {
   turn: number;
   character: CharacterState;
   relationships: Record<string, RelationshipEntry>;
+  worldTime?: WorldTime;
   worldStateOverrides: {
     npc_overrides: Record<string, unknown>;
     sect_overrides: Record<string, unknown>;

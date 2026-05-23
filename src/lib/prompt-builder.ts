@@ -2,6 +2,7 @@ import { ChatMessage, LongTermMemory, SaveData } from "./types";
 import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
+import { formatWorldTime, artNameKR } from "../data/world-data";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -70,6 +71,7 @@ function buildDynamicContext(
   const c = save.character;
   const L: string[] = [];
 
+  if (save.worldTime) L.push(`[현재 시각] ${formatWorldTime(save.worldTime)}`);
   L.push("[플레이어 상태]");
   L.push(`이름 ${c.identity.name || "(미정)"} · ${c.identity.gender || "?"} · ${c.identity.age}세`);
   if (c.identity.family_background) L.push(`태생: ${c.identity.family_background}`);
@@ -78,7 +80,7 @@ function buildDynamicContext(
   L.push(`생기: HP ${c.vitals.hp_current}/${c.vitals.hp_max} · 내상 ${c.vitals.internal_injury} · 외상 ${c.vitals.external_injury} · 정신 ${c.vitals.mental_state}`);
   if (c.affiliation.sect_id) L.push(`소속: ${c.affiliation.sect_id} (${c.affiliation.rank || "-"})`);
   if (c.martial_arts_known.length) {
-    L.push(`무공: ${c.martial_arts_known.map((a) => `${a.art_id}(${a.mastery_pct}%)`).join(", ")}`);
+    L.push(`무공: ${c.martial_arts_known.map((a) => `${a.name || artNameKR(a.art_id)}${a.grade ? `[${a.grade}]` : ""}(${a.mastery_pct}%)`).join(", ")}`);
   }
   if (c.inventory.silver_taels || c.inventory.items.length) {
     L.push(`인벤: 은자 ${c.inventory.silver_taels}냥 · [${c.inventory.items.join(", ")}]`);
