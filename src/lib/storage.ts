@@ -6,6 +6,7 @@ const KEYS = {
   apiKey: PREFIX + "openai_api_key",
   modelChat: PREFIX + "model_chat",
   modelSummary: PREFIX + "model_summary",
+  maxOutputTokens: PREFIX + "max_output_tokens",
   save: PREFIX + "save",
   messages: PREFIX + "messages",
   memories: PREFIX + "memories",
@@ -67,6 +68,19 @@ export function setModelSummary(m: string) {
   if (m.trim()) set(KEYS.modelSummary, m.trim());
 }
 
+// 출력 길이
+const DEFAULT_MAX_OUT = 1500;
+export function getMaxOutputTokens(): number {
+  const raw = get(KEYS.maxOutputTokens);
+  if (!raw) return DEFAULT_MAX_OUT;
+  const n = parseInt(raw, 10);
+  if (!isFinite(n) || n < 100) return DEFAULT_MAX_OUT;
+  return Math.min(n, 16000);
+}
+export function setMaxOutputTokens(n: number) {
+  set(KEYS.maxOutputTokens, String(Math.max(100, Math.min(16000, Math.floor(n)))));
+}
+
 // ---------- 게임 데이터 ----------
 function getJSON<T>(key: string, fallback: T): T {
   const raw = get(key);
@@ -123,6 +137,7 @@ export function clearEverythingIncludingKey() {
   del(KEYS.apiKey);
   del(KEYS.modelChat);
   del(KEYS.modelSummary);
+  del(KEYS.maxOutputTokens);
 }
 
 // ---------- 백업 슬롯 ----------

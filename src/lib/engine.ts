@@ -3,20 +3,19 @@
 import { ChatMessage, ExtractedUpdates, SaveData, UsageRecord, CharacterState } from "./types";
 import {
   loadSave, saveSave, loadMessages, saveMessages,
-  loadUsage, saveUsage, getApiKey, getModelChat, getModelSummary,
+  loadUsage, saveUsage, getApiKey, getModelChat, getModelSummary, getMaxOutputTokens,
   clearAllGameData,
 } from "./storage";
 import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemories } from "./memory";
 import { buildPrompt } from "./prompt-builder";
 import { EXTRACTOR_RULES } from "./prompts/system";
-import { callResponses, classifyError, CallResult } from "./openai-browser";
+import { callResponses, callChatStream, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
 import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions } from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
-const MAX_OUT_TOK = 1500;
 
 function newMsgId(): string {
   return "msg_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
@@ -31,7 +30,7 @@ export function restartGame() {
 // 마지막 AI 응답을 새로 받기.
 // 마지막 user 메시지를 보존, 마지막 assistant 메시지 + 그 턴의 사용량은 롤백.
 // 메모리/관계 변화는 정확한 롤백이 어려워 그대로 둠.
-export async function regenerateLastResponse(opts?: { monthlyBudgetUSD?: number }): Promise<TurnResult> {
+export async function regenerateLastResponse(opts?: TurnOpts): Promise<TurnResult> {
   const messages = loadMessages<ChatMessage[]>([]);
   if (messages.length === 0) {
     return { ok: false, error: "재생성할 메시지가 없어요." };
@@ -210,6 +209,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
 export interface TurnResult {
   ok: boolean;
   reply?: string;
+  aborted?: boolean;
   error?: string;
   errorKind?: string;
   saveErrorWarning?: string;
@@ -229,7 +229,13 @@ export interface TurnResult {
   budgetWarning?: string;
 }
 
-export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?: number }): Promise<TurnResult> {
+export interface TurnOpts {
+  monthlyBudgetUSD?: number;
+  onChunk?: (delta: string) => void;
+  signal?: AbortSignal;
+}
+
+export async function processTurn(userInput: string, opts?: TurnOpts): Promise<TurnResult> {
   if (!userInput.trim()) return { ok: false, error: "입력이 비어있어요." };
 
   const save = getSave();
@@ -266,24 +272,42 @@ export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?:
     ? `주의: 이번 달 $${monthlyTotal.toFixed(4)} (한도 $${budget}의 80%).`
     : undefined;
 
-  // 메인 호출
+  // 메인 호출 (스트리밍)
+  const maxOut = getMaxOutputTokens();
   let chatResult: CallResult;
+  let aborted = false;
   try {
     if (useMock) {
       chatResult = mockChat(userInput);
+      if (opts?.onChunk) {
+        // 모의 모드도 청크 흉내
+        for (const ch of chatResult.text) {
+          if (opts.signal?.aborted) { aborted = true; break; }
+          opts.onChunk(ch);
+        }
+      }
     } else {
-      chatResult = await callResponses({
+      const streamed = await callChatStream({
         apiKey,
         model: getModelChat(),
         instructions: built.instructions,
         input: built.input,
-        maxOutputTokens: MAX_OUT_TOK,
+        maxOutputTokens: maxOut,
+        onChunk: opts?.onChunk,
+        signal: opts?.signal,
       });
+      aborted = streamed.aborted;
+      chatResult = { text: streamed.text, usage: streamed.usage, model: streamed.model };
     }
   } catch (err) {
     const info = classifyError(err);
     console.error("[OpenAI 호출 실패]", info.kind, err);
     return { ok: false, error: info.userMessage, errorKind: info.kind };
+  }
+
+  // 빈 응답 (즉시 중단된 경우 등)
+  if (!chatResult.text) {
+    return { ok: false, error: aborted ? "출력을 중단했어요." : "응답이 비어있어요.", aborted };
   }
 
   const userMsg: ChatMessage = { id: newMsgId(), role: "user", content: userInput, createdAt: new Date().toISOString() };
@@ -314,7 +338,7 @@ export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?:
     saveErr = "메시지 저장 실패 (응답은 표시됨)";
   }
 
-  // 상태 추출 (별도 호출)
+  // 상태 추출 (별도 호출) — 중단되었어도 받은 텍스트 기준으로 갱신
   let summaryUsage: UsageRecord | undefined;
   try {
     const extractor = useMock
@@ -364,6 +388,7 @@ export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?:
   return {
     ok: true,
     reply: chatResult.text,
+    aborted,
     saveErrorWarning: saveErr,
     budgetWarning: budgetWarn,
     debug: {

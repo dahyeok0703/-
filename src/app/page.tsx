@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   getApiKey, setApiKey, clearApiKey,
   getModelChat, setModelChat, getModelSummary, setModelSummary,
+  getMaxOutputTokens, setMaxOutputTokens,
   clearAllGameData, clearEverythingIncludingKey,
   listBackupSlots, saveBackupSlot, loadBackupSlot, deleteBackupSlot,
   BackupSlot,
@@ -20,8 +21,18 @@ import {
 } from "@/data/world-data";
 
 const MODEL_PRESETS = [
-  { id: "gpt-5.4-mini", label: "gpt-5.4-mini (기본 진행)" },
-  { id: "gpt-5-mini", label: "gpt-5-mini (비용 절약)" },
+  { id: "gpt-5", label: "gpt-5 — 최상위 (느리고 비쌈, 최고 묘사력)" },
+  { id: "gpt-5-mini", label: "gpt-5-mini — 균형 (권장 기본)" },
+  { id: "gpt-5-nano", label: "gpt-5-nano — 초경량·최저가" },
+  { id: "gpt-4.1", label: "gpt-4.1 — 안정적 고품질" },
+  { id: "gpt-4.1-mini", label: "gpt-4.1-mini — 빠르고 저렴" },
+  { id: "gpt-4.1-nano", label: "gpt-4.1-nano — 초경량" },
+  { id: "gpt-4o", label: "gpt-4o — 빠른 대화형" },
+  { id: "gpt-4o-mini", label: "gpt-4o-mini — 가장 저렴" },
+  { id: "o3", label: "o3 — 추론형 (느림, 복잡한 상황 판정)" },
+  { id: "o3-mini", label: "o3-mini — 추론형 경량" },
+  { id: "o4-mini", label: "o4-mini — 추론형 신형" },
+  { id: "gpt-5.4-mini", label: "gpt-5.4-mini (구 기본값)" },
 ];
 
 const STAGE_OPTIONS = getAllStageOptions();
@@ -37,8 +48,9 @@ export default function Page() {
 
   // 설정
   const [apiKey, setApiKeyState] = useState("");
-  const [modelChat, setModelChatState] = useState("gpt-5.4-mini");
+  const [modelChat, setModelChatState] = useState("gpt-5-mini");
   const [modelSummary, setModelSummaryState] = useState("");
+  const [maxOut, setMaxOutState] = useState<number>(1500);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   // 입력
@@ -47,6 +59,10 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
   const [debug, setDebug] = useState<any>(null);
+
+  // 스트리밍
+  const [streamingText, setStreamingText] = useState<string>("");
+  const abortRef = useRef<AbortController | null>(null);
 
   // 백업 슬롯
   const [backups, setBackups] = useState<BackupSlot[]>([]);
@@ -79,13 +95,14 @@ export default function Page() {
     setApiKeyState(getApiKey());
     setModelChatState(getModelChat());
     setModelSummaryState(getModelSummary());
+    setMaxOutState(getMaxOutputTokens());
     refreshAll();
     setReady(true);
   }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages, loading, streamingText]);
 
   function refreshAll() {
     setSave(getSave());
@@ -142,20 +159,33 @@ export default function Page() {
     setLoading(true);
     setError(null);
     setWarning(null);
+    setStreamingText("");
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
     try {
-      const result = await regenerateLastResponse();
+      const result = await regenerateLastResponse({
+        onChunk: (d) => setStreamingText((t) => t + d),
+        signal: ctrl.signal,
+      });
       if (!result.ok) {
         setError(result.error || "재생성 실패");
       } else {
         if (result.budgetWarning) setWarning(result.budgetWarning);
+        if (result.aborted) setWarning((w) => (w ? w + " · " : "") + "출력 중단됨");
         if (result.debug) setDebug(result.debug);
         refreshAll();
       }
     } catch (e) {
       setError("재생성 실패: " + (e as Error).message);
     } finally {
+      abortRef.current = null;
+      setStreamingText("");
       setLoading(false);
     }
+  }
+
+  function stopStreaming() {
+    abortRef.current?.abort();
   }
 
   function saveApiKey() {
@@ -207,6 +237,7 @@ export default function Page() {
     setLoading(true);
     setError(null);
     setWarning(null);
+    setStreamingText("");
     const userInput = input;
     setInput("");
 
@@ -219,19 +250,28 @@ export default function Page() {
     };
     setMessages((prev) => [...prev, tempUser]);
 
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+
     try {
-      const result = await processTurn(userInput);
+      const result = await processTurn(userInput, {
+        onChunk: (d) => setStreamingText((t) => t + d),
+        signal: ctrl.signal,
+      });
       if (!result.ok) {
         setError(result.error || "오류");
       } else {
         if (result.budgetWarning) setWarning(result.budgetWarning);
         if (result.saveErrorWarning) setWarning((w) => (w ? w + " · " : "") + result.saveErrorWarning!);
+        if (result.aborted) setWarning((w) => (w ? w + " · " : "") + "출력 중단됨");
         if (result.debug) setDebug(result.debug);
         refreshAll();
       }
     } catch (e) {
       setError("요청 실패: " + (e as Error).message);
     } finally {
+      abortRef.current = null;
+      setStreamingText("");
       setLoading(false);
     }
   }
@@ -379,6 +419,43 @@ export default function Page() {
                 onChange={(e) => saveModelSummary(e.target.value)}
                 placeholder="비우면 기본 진행 모델 사용"
               />
+            </div>
+
+            <div>
+              <label className="block text-xs text-ink-300 mb-1">
+                출력 길이 (max output tokens) — <span className="font-mono">{maxOut}</span>
+              </label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="range"
+                  min={300}
+                  max={8000}
+                  step={100}
+                  value={maxOut}
+                  onChange={(e) => {
+                    const n = parseInt(e.target.value);
+                    setMaxOutState(n);
+                    setMaxOutputTokens(n);
+                  }}
+                  className="flex-1"
+                />
+                <input
+                  type="number"
+                  min={100}
+                  max={16000}
+                  step={100}
+                  value={maxOut}
+                  onChange={(e) => {
+                    const n = parseInt(e.target.value) || 1500;
+                    setMaxOutState(n);
+                    setMaxOutputTokens(n);
+                  }}
+                  className="w-24 px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-center text-xs"
+                />
+              </div>
+              <p className="text-xs text-ink-300 mt-1">
+                낮으면 짧고 빠름·저렴. 높으면 긴 묘사·전투·정치 장면 가능. 기본 1500.
+              </p>
             </div>
 
             <div className="flex gap-2 pt-2 border-t border-ink-700">
@@ -842,7 +919,16 @@ export default function Page() {
                   </div>
                 );
               })}
-              {loading && <div className="text-ink-300 text-sm">강호가 천천히 응답하는 중…</div>}
+              {loading && (
+                <div className="bg-ink-900/40 border border-ink-500/30 rounded-lg p-3">
+                  <div className="text-xs text-ink-300 mb-1">강호 (출력 중…)</div>
+                  {streamingText ? (
+                    <div className="whitespace-pre-wrap leading-relaxed">{streamingText}<span className="animate-pulse">▍</span></div>
+                  ) : (
+                    <div className="text-ink-300 text-sm">강호가 응답을 시작합니다…</div>
+                  )}
+                </div>
+              )}
               {error && (
                 <div className="bg-red-900/40 border border-red-700 text-red-200 p-3 rounded text-sm">
                   {error}
@@ -865,14 +951,27 @@ export default function Page() {
                 onKeyDown={onKeyDown}
                 disabled={loading}
               />
-              <div className="mt-2 flex justify-end">
-                <button
-                  onClick={send}
-                  disabled={loading || !input.trim()}
-                  className="bg-ink-500 hover:bg-ink-300 text-ink-900 font-bold px-4 py-2 rounded disabled:opacity-50"
-                >
-                  {loading ? "기다리는 중…" : "전송"}
-                </button>
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <div className="text-xs text-ink-300">
+                  출력 길이: <span className="font-mono">{maxOut}</span> tokens
+                </div>
+                <div className="flex gap-2">
+                  {loading && (
+                    <button
+                      onClick={stopStreaming}
+                      className="bg-red-700 hover:bg-red-600 text-red-50 font-bold px-4 py-2 rounded"
+                    >
+                      ■ 중단
+                    </button>
+                  )}
+                  <button
+                    onClick={send}
+                    disabled={loading || !input.trim()}
+                    className="bg-ink-500 hover:bg-ink-300 text-ink-900 font-bold px-4 py-2 rounded disabled:opacity-50"
+                  >
+                    {loading ? "출력 중…" : "전송"}
+                  </button>
+                </div>
               </div>
             </div>
           </>

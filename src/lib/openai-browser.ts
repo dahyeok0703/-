@@ -64,6 +64,86 @@ export async function callChat(args: {
 // 하위 호환: 기존 callResponses 이름도 export
 export const callResponses = callChat;
 
+// 스트리밍 호출. onChunk(delta)로 토큰 단위 전달.
+// AbortSignal 로 중단 가능. 중단 시 그때까지 받은 텍스트로 CallResult 반환.
+export async function callChatStream(args: {
+  apiKey: string;
+  model: string;
+  instructions: string;
+  input: Array<{ role: "user" | "assistant" | "system"; content: string }>;
+  maxOutputTokens: number;
+  signal?: AbortSignal;
+  onChunk?: (delta: string) => void;
+}): Promise<CallResult & { aborted: boolean }> {
+  const client = getClient(args.apiKey);
+
+  const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
+    { role: "system", content: args.instructions },
+    ...args.input.map((m) => ({
+      role: m.role as "system" | "user" | "assistant",
+      content: m.content,
+    })),
+  ];
+
+  let fullText = "";
+  let inputTokens = 0;
+  let outputTokens = 0;
+  let totalTokens = 0;
+  let aborted = false;
+
+  try {
+    const stream: any = await client.chat.completions.create(
+      {
+        model: args.model,
+        messages: messages as any,
+        max_completion_tokens: args.maxOutputTokens,
+        stream: true,
+        stream_options: { include_usage: true },
+      } as any,
+      args.signal ? { signal: args.signal } : undefined,
+    );
+
+    for await (const chunk of stream as AsyncIterable<any>) {
+      if (args.signal?.aborted) {
+        aborted = true;
+        break;
+      }
+      const delta = chunk?.choices?.[0]?.delta?.content || "";
+      if (delta) {
+        fullText += delta;
+        args.onChunk?.(delta);
+      }
+      if (chunk?.usage) {
+        inputTokens = chunk.usage.prompt_tokens || inputTokens;
+        outputTokens = chunk.usage.completion_tokens || outputTokens;
+        totalTokens = chunk.usage.total_tokens || totalTokens;
+      }
+    }
+  } catch (err: any) {
+    if (err?.name === "AbortError" || args.signal?.aborted) {
+      aborted = true;
+    } else {
+      throw err;
+    }
+  }
+
+  // 토큰 사용량을 못 받았으면 출력 길이로 대략 추정 (스트림 중단 케이스 등)
+  if (!outputTokens && fullText) {
+    outputTokens = Math.ceil(fullText.length / 3);
+  }
+
+  return {
+    text: fullText,
+    usage: {
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      total_tokens: totalTokens || inputTokens + outputTokens,
+    },
+    model: args.model,
+    aborted,
+  };
+}
+
 export function classifyError(err: unknown): { kind: string; userMessage: string } {
   const e = err as any;
   const status = e?.status || e?.response?.status;
