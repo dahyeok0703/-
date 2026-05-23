@@ -4,9 +4,10 @@
   "private": true,
   "description": "개인용 로컬 무협 챗 게임 (OpenAI API 연동)",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "start": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
-    "start": "next start",
+    "prod": "next start -H 0.0.0.0 -p 3000",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
