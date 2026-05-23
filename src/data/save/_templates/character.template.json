@@ -54,6 +54,8 @@
     "standing": 0
   },
   "reputation": {
+    "fame": 0,
+    "notoriety": 0,
     "in_jianghu": 0,
     "in_orthodox": 0,
     "in_unorthodox": 0,

@@ -124,7 +124,7 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "inventoryUpdates": [{ "action": "add|remove|change", "item": "...", "qty": 1 }],
   "weaponUpdates": [{ "action": "add|remove", "weapon": "무기 이름" }],
   "martialArtUpdates": [{ "action": "add|remove|change", "name": "무공 이름", "art_id": "있다면 id", "mastery_pct": 0-100, "mastery_delta": -100~100 }],
-  "reputationUpdates": [{ "field": "in_jianghu|in_orthodox|in_unorthodox|in_demonic|in_commoners", "delta": 0 }],
+  "reputationUpdates": [{ "field": "fame|notoriety|in_jianghu|in_orthodox|in_unorthodox|in_demonic|in_commoners", "delta": 0 }],
   "titleAdds": ["새로 얻은 별호"],
   "titleRemoves": ["사라진 별호"],
   "familyUpdates": [{ "field": "spouse|father_alive|mother_alive|siblings|concubines|children", "action": "set|add|remove", "value": "..." }],
@@ -158,7 +158,10 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
 - 내공·HP·돈 변동은 본문에 묘사가 있을 때마다 playerUpdates 에 절대값으로 기록(예: vitals.hp_current = 35).
 - 경지 상승은 realm.current_realm/current_stage/tier/internal_energy_cap 를 함께 갱신한다.
 - 평판은 ±1~±10 단위 delta. 큰 사건만 ±20 이상.
-- 별호(titles)는 강호에서 새로 붙은 경우에만 titleAdds.
+- 명성(fame) = 강호에 알려진 좋은 행적·의로움·구함. 협의로운 행동으로 +.
+- 악명(notoriety) = 두려움·잔혹·살인·배신·약탈로 알려진 정도. 잔혹 행위·살인·배신으로 +.
+- 같은 행동이 명성과 악명 양쪽을 동시에 올릴 수도 있다(예: 강자를 베면 명성 +5 악명 +3).
+- 별호(titles)는 강호에서 새로 붙은 경우에만 titleAdds. 명성이 쌓이면 협호풍의 별호("의협검", "철검대협"), 악명이 쌓이면 사파풍의 별호("혈마", "독수")가 자연스럽게 붙는다.
 - importance 6 이상은 큰 사건만(eventLogs/unresolvedThreads).
 - timeAdvance:
   · 짧은 대화·단일 행동: sichen_delta 0 또는 1.

@@ -997,13 +997,23 @@ export default function Page() {
               <li>
                 <span className="text-ink-300">이름:</span> {save.character.identity.name} ({save.character.identity.gender}, {save.character.identity.age}세)
               </li>
-              {Array.isArray(save.character.reputation?.titles) &&
-                (save.character.reputation.titles as string[]).length > 0 && (
-                  <li>
-                    <span className="text-ink-300">별호:</span>{" "}
-                    {(save.character.reputation.titles as string[]).join(", ")}
-                  </li>
-                )}
+              <li>
+                <span className="text-ink-300">별호:</span>{" "}
+                {Array.isArray(save.character.reputation?.titles) &&
+                (save.character.reputation.titles as string[]).length > 0
+                  ? (save.character.reputation.titles as string[]).join(", ")
+                  : "(없음)"}
+              </li>
+              <li>
+                <span className="text-ink-300">명성:</span>{" "}
+                <span className="text-emerald-200 font-bold">
+                  {Number(save.character.reputation?.fame ?? 0)}
+                </span>
+                <span className="text-ink-300"> · 악명: </span>
+                <span className="text-red-300 font-bold">
+                  {Number(save.character.reputation?.notoriety ?? 0)}
+                </span>
+              </li>
               <li>
                 <span className="text-ink-300">경지:</span>{" "}
                 {stageNameKR(save.character.realm?.current_stage)} · 내공{" "}

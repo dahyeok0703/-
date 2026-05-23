@@ -84,6 +84,10 @@ function buildDynamicContext(
   L.push(`구분: ${c.civilian_or_martial === "martial" ? "무림인" : "일반인"} · 경지 ${c.realm.current_stage} · 내공 ${c.realm.internal_energy}/${c.realm.internal_energy_cap}`);
   L.push(`생기: HP ${c.vitals.hp_current}/${c.vitals.hp_max} · 내상 ${c.vitals.internal_injury} · 외상 ${c.vitals.external_injury} · 정신 ${c.vitals.mental_state}`);
   if (c.affiliation.sect_id) L.push(`소속: ${c.affiliation.sect_id} (${c.affiliation.rank || "-"})`);
+  const fame = Number((c.reputation as any)?.fame ?? 0);
+  const noto = Number((c.reputation as any)?.notoriety ?? 0);
+  const titles = (c.reputation as any)?.titles as string[] | undefined;
+  L.push(`평판: 명성 ${fame} · 악명 ${noto}${titles && titles.length ? ` · 별호 [${titles.join(", ")}]` : ""}`);
   if (c.martial_arts_known.length) {
     L.push(`무공: ${c.martial_arts_known.map((a) => `${a.art_id}(${a.mastery_pct}%)`).join(", ")}`);
   }
