@@ -11,7 +11,7 @@ import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
-import { CHARACTER_TEMPLATE } from "../data/world-data";
+import { CHARACTER_TEMPLATE, getStageById } from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
@@ -38,22 +38,79 @@ export function getUsage(): UsageRecord[] {
   return loadUsage<UsageRecord[]>([]);
 }
 
-export function buildInitialCharacter(overrides: { name?: string; gender?: string; family_background?: string }): CharacterState {
-  // 템플릿 깊은 복제 (메타 필드 제거)
+export interface NewGameOptions {
+  name?: string;
+  gender?: string;
+  age?: number;
+  family_background?: string;
+  appearance?: string;
+  civilian_or_martial?: "civilian" | "martial";
+  stage_id?: string;       // 예: "hwagyeong_chuip"
+  sect_id?: string | null; // 소속 문파
+  rank?: string | null;
+  silver_taels?: number;
+}
+
+export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
   const tpl = JSON.parse(JSON.stringify(CHARACTER_TEMPLATE));
   delete tpl._description;
   delete tpl._martial_arts_format;
   delete tpl._civilian_or_martial_note;
+
   tpl.identity = {
     ...tpl.identity,
-    name: overrides.name || "이름없음",
-    gender: overrides.gender || "남",
-    family_background: overrides.family_background || tpl.identity.family_background || "",
+    name: opts.name || "이름없음",
+    gender: opts.gender || "남",
+    age: opts.age ?? 5,
+    family_background: opts.family_background || tpl.identity.family_background || "",
+    appearance: opts.appearance || tpl.identity.appearance || "",
   };
+
+  const isMartial = opts.civilian_or_martial === "martial";
+  tpl.civilian_or_martial = isMartial ? "martial" : "civilian";
+
+  if (isMartial && opts.stage_id) {
+    const stage = getStageById(opts.stage_id);
+    if (stage) {
+      tpl.realm.current_realm = stage.realm_id;
+      tpl.realm.current_stage = stage.stage_id;
+      tpl.realm.tier = stage.tier;
+      tpl.realm.internal_energy = stage.internal_energy_midpoint;
+      tpl.realm.internal_energy_cap = stage.internal_energy_cap;
+      tpl.realm.stage_progress_pct = 50;
+    }
+  } else if (!isMartial) {
+    tpl.realm.current_realm = "samryu";
+    tpl.realm.current_stage = "samryu_chuip";
+    tpl.realm.tier = 1;
+    tpl.realm.internal_energy = 0;
+    tpl.realm.internal_energy_cap = 10;
+  }
+
+  // HP는 경지 tier에 비례해서 보정
+  const tier = tpl.realm.tier || 1;
+  const hpMax = isMartial ? 30 + (tier - 1) * 30 : 30;
+  tpl.vitals.hp_max = hpMax;
+  tpl.vitals.hp_current = hpMax;
+
+  // 소속
+  if (opts.sect_id) {
+    tpl.affiliation.sect_id = opts.sect_id;
+    tpl.affiliation.rank = opts.rank || "제자";
+    tpl.affiliation.joined_at_age = Math.max(5, (opts.age ?? 5) - 5);
+  }
+
+  // 시작 자금
+  if (typeof opts.silver_taels === "number") {
+    tpl.inventory.silver_taels = opts.silver_taels;
+  } else if (isMartial) {
+    tpl.inventory.silver_taels = 5;
+  }
+
   return tpl as CharacterState;
 }
 
-export function startNewGame(opts: { name?: string; gender?: string; family_background?: string }): SaveData {
+export function startNewGame(opts: NewGameOptions): SaveData {
   const now = new Date().toISOString();
   const character = buildInitialCharacter(opts);
   const save: SaveData = {

@@ -11,11 +11,15 @@ import {
   startNewGame, processTurn,
 } from "@/lib/engine";
 import { ChatMessage, SaveData, UsageRecord } from "@/lib/types";
+import { getAllStageOptions, getAllSectOptions } from "@/data/world-data";
 
 const MODEL_PRESETS = [
   { id: "gpt-5.4-mini", label: "gpt-5.4-mini (기본 진행)" },
   { id: "gpt-5-mini", label: "gpt-5-mini (비용 절약)" },
 ];
+
+const STAGE_OPTIONS = getAllStageOptions();
+const SECT_OPTIONS = getAllSectOptions();
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -39,7 +43,14 @@ export default function Page() {
   // 새 게임 폼
   const [newName, setNewName] = useState("");
   const [newGender, setNewGender] = useState("남");
+  const [newAge, setNewAge] = useState<number>(5);
   const [newBackground, setNewBackground] = useState("산기슭 작은 마을의 평민 가정");
+  const [newAppearance, setNewAppearance] = useState("");
+  const [newIsMartial, setNewIsMartial] = useState(false);
+  const [newStage, setNewStage] = useState("samryu_chuip");
+  const [newSect, setNewSect] = useState<string>("");
+  const [newRank, setNewRank] = useState<string>("제자");
+  const [newSilver, setNewSilver] = useState<number>(0);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -85,7 +96,14 @@ export default function Page() {
       const s = startNewGame({
         name: newName || "이름없음",
         gender: newGender,
+        age: newAge,
         family_background: newBackground,
+        appearance: newAppearance,
+        civilian_or_martial: newIsMartial ? "martial" : "civilian",
+        stage_id: newIsMartial ? newStage : undefined,
+        sect_id: newIsMartial && newSect ? newSect : null,
+        rank: newIsMartial && newSect ? newRank : null,
+        silver_taels: newSilver,
       });
       setSave(s);
       setMessages([]);
@@ -265,45 +283,184 @@ export default function Page() {
 
         {/* 새 게임 폼 */}
         {!save && (
-          <div className="flex-1 overflow-y-auto scroll-area flex items-center justify-center p-4">
+          <div className="flex-1 overflow-y-auto scroll-area flex items-start justify-center p-4">
             <form
               onSubmit={onCreate}
-              className="bg-ink-700/40 border border-ink-500/40 p-6 rounded-lg w-full max-w-md space-y-4"
+              className="bg-ink-700/40 border border-ink-500/40 p-6 rounded-lg w-full max-w-2xl space-y-4 my-6"
             >
-              <h2 className="text-2xl font-bold">새 무림인의 시작</h2>
+              <h2 className="text-2xl font-bold">새 캐릭터 만들기</h2>
               <p className="text-sm text-ink-300">현재 모드: <span className="font-mono">{mode}</span></p>
-              <label className="block">
-                <span className="text-sm text-ink-100">이름</span>
-                <input
-                  className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  placeholder="예: 한설"
-                />
-              </label>
-              <label className="block">
-                <span className="text-sm text-ink-100">성별</span>
-                <select
-                  className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
-                  value={newGender}
-                  onChange={(e) => setNewGender(e.target.value)}
-                >
-                  <option value="남">남</option>
-                  <option value="여">여</option>
-                </select>
-              </label>
-              <label className="block">
-                <span className="text-sm text-ink-100">출신 배경</span>
-                <textarea
-                  className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
-                  rows={3}
-                  value={newBackground}
-                  onChange={(e) => setNewBackground(e.target.value)}
-                />
-              </label>
+
+              {/* 기본 정보 */}
+              <fieldset className="space-y-3 border border-ink-500/30 rounded p-3">
+                <legend className="px-2 text-xs text-ink-300">기본</legend>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <label className="block md:col-span-2">
+                    <span className="text-sm text-ink-100">이름</span>
+                    <input
+                      className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      placeholder="예: 한설"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-sm text-ink-100">성별</span>
+                    <select
+                      className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                      value={newGender}
+                      onChange={(e) => setNewGender(e.target.value)}
+                    >
+                      <option value="남">남</option>
+                      <option value="여">여</option>
+                    </select>
+                  </label>
+                </div>
+                <label className="block">
+                  <span className="text-sm text-ink-100">나이</span>
+                  <div className="flex gap-2 mt-1">
+                    <input
+                      type="range"
+                      min={5}
+                      max={90}
+                      value={newAge}
+                      onChange={(e) => setNewAge(parseInt(e.target.value))}
+                      className="flex-1"
+                    />
+                    <input
+                      type="number"
+                      min={5}
+                      max={120}
+                      value={newAge}
+                      onChange={(e) => setNewAge(parseInt(e.target.value) || 5)}
+                      className="w-20 px-2 py-2 bg-ink-900 border border-ink-500 rounded text-center"
+                    />
+                    <span className="self-center text-sm text-ink-300">세</span>
+                  </div>
+                </label>
+                <label className="block">
+                  <span className="text-sm text-ink-100">출신 배경</span>
+                  <textarea
+                    className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                    rows={2}
+                    value={newBackground}
+                    onChange={(e) => setNewBackground(e.target.value)}
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-sm text-ink-100">외양 (선택)</span>
+                  <input
+                    className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                    value={newAppearance}
+                    onChange={(e) => setNewAppearance(e.target.value)}
+                    placeholder="예: 검은 머리, 차가운 눈매"
+                  />
+                </label>
+              </fieldset>
+
+              {/* 무공 / 경지 */}
+              <fieldset className="space-y-3 border border-ink-500/30 rounded p-3">
+                <legend className="px-2 text-xs text-ink-300">무공·신분</legend>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setNewIsMartial(false)}
+                    className={`flex-1 px-3 py-2 rounded border ${
+                      !newIsMartial
+                        ? "bg-ink-500 text-ink-900 border-ink-500 font-bold"
+                        : "bg-ink-900 border-ink-500 text-ink-100"
+                    }`}
+                  >
+                    일반인 (무공 없음)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewIsMartial(true)}
+                    className={`flex-1 px-3 py-2 rounded border ${
+                      newIsMartial
+                        ? "bg-ink-500 text-ink-900 border-ink-500 font-bold"
+                        : "bg-ink-900 border-ink-500 text-ink-100"
+                    }`}
+                  >
+                    무림인
+                  </button>
+                </div>
+
+                {newIsMartial && (
+                  <>
+                    <label className="block">
+                      <span className="text-sm text-ink-100">시작 경지</span>
+                      <select
+                        className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                        value={newStage}
+                        onChange={(e) => setNewStage(e.target.value)}
+                      >
+                        {STAGE_OPTIONS.map((s) => (
+                          <option key={s.stage_id} value={s.stage_id}>
+                            {s.stage_name} — 내공 {s.internal_energy_midpoint}/{s.internal_energy_cap}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="mt-1 text-xs text-ink-300">
+                        {STAGE_OPTIONS.find((s) => s.stage_id === newStage)?.notes}
+                      </p>
+                    </label>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <label className="block">
+                        <span className="text-sm text-ink-100">소속 문파 (선택)</span>
+                        <select
+                          className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                          value={newSect}
+                          onChange={(e) => setNewSect(e.target.value)}
+                        >
+                          <option value="">무소속 / 낭인</option>
+                          {SECT_OPTIONS.map((s) => (
+                            <option key={s.id} value={s.id}>
+                              {s.name} ({s.category})
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      {newSect && (
+                        <label className="block">
+                          <span className="text-sm text-ink-100">소속 내 직책</span>
+                          <input
+                            className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                            value={newRank}
+                            onChange={(e) => setNewRank(e.target.value)}
+                            placeholder="예: 제자 / 장로 / 가주"
+                          />
+                        </label>
+                      )}
+                    </div>
+                  </>
+                )}
+              </fieldset>
+
+              {/* 자산 */}
+              <fieldset className="space-y-2 border border-ink-500/30 rounded p-3">
+                <legend className="px-2 text-xs text-ink-300">자산 (선택)</legend>
+                <label className="block">
+                  <span className="text-sm text-ink-100">시작 은자(銀子)</span>
+                  <input
+                    type="number"
+                    min={0}
+                    className="w-full mt-1 px-3 py-2 bg-ink-900 border border-ink-500 rounded"
+                    value={newSilver}
+                    onChange={(e) => setNewSilver(parseInt(e.target.value) || 0)}
+                    placeholder="0"
+                  />
+                  <p className="mt-1 text-xs text-ink-300">평민 일당 동전 몇 닢, 한 달 생활 약 1냥.</p>
+                </label>
+              </fieldset>
+
               {error && <p className="text-red-400 text-sm">{error}</p>}
-              <button type="submit" className="w-full bg-ink-500 hover:bg-ink-300 text-ink-900 font-bold py-2 rounded">
-                5세부터 시작
+              <button
+                type="submit"
+                className="w-full bg-ink-500 hover:bg-ink-300 text-ink-900 font-bold py-3 rounded text-lg"
+              >
+                강호에 발을 들이다 ({newAge}세 {newIsMartial ? "· 무림인" : "· 일반인"})
               </button>
             </form>
           </div>

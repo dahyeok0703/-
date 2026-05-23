@@ -145,3 +145,61 @@ export function buildNameIndex(): NameEntry[] {
   _index = idx;
   return idx;
 }
+
+// ---------- UI 헬퍼: 경지 단계 / 문파 목록 ----------
+
+export interface StageOption {
+  stage_id: string;
+  stage_name: string;
+  realm_id: string;
+  realm_name: string;
+  tier: number;
+  internal_energy_cap: number;
+  internal_energy_midpoint: number;
+  notes: string;
+}
+
+export function getAllStageOptions(): StageOption[] {
+  const out: StageOption[] = [];
+  for (const r of WORLD.realms?.realms || []) {
+    for (const s of r.stages || []) {
+      const range = s.internal_energy_range || [0, 0];
+      out.push({
+        stage_id: s.id,
+        stage_name: s.name,
+        realm_id: r.id,
+        realm_name: r.name,
+        tier: r.tier,
+        internal_energy_cap: range[1] || 30,
+        internal_energy_midpoint: Math.floor(((range[0] || 0) + (range[1] || 30)) / 2),
+        notes: s.notes || "",
+      });
+    }
+  }
+  return out;
+}
+
+export interface SectOption {
+  id: string;
+  name: string;
+  faction: string;
+  category: string;
+}
+
+export function getAllSectOptions(): SectOption[] {
+  const out: SectOption[] = [];
+  for (const s of WORLD.sects?.sects || []) {
+    out.push({
+      id: s.id,
+      name: s.name,
+      faction: s.faction || "",
+      category: s.category || "",
+    });
+  }
+  return out;
+}
+
+export function getStageById(stageId: string): StageOption | null {
+  return getAllStageOptions().find((s) => s.stage_id === stageId) || null;
+}
+
