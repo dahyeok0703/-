@@ -203,3 +203,15 @@ export function getStageById(stageId: string): StageOption | null {
   return getAllStageOptions().find((s) => s.stage_id === stageId) || null;
 }
 
+export function stageNameKR(stageId: string | null | undefined): string {
+  if (!stageId) return "(미정)";
+  const s = getStageById(stageId);
+  return s ? s.stage_name : stageId;
+}
+
+export function sectNameKR(sectId: string | null | undefined): string {
+  if (!sectId) return "무소속";
+  const s = getAllSectOptions().find((x) => x.id === sectId);
+  return s ? s.name : sectId;
+}
+

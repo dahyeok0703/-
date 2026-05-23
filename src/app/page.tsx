@@ -5,13 +5,15 @@ import {
   getApiKey, setApiKey, clearApiKey,
   getModelChat, setModelChat, getModelSummary, setModelSummary,
   clearAllGameData, clearEverythingIncludingKey,
+  listBackupSlots, saveBackupSlot, loadBackupSlot, deleteBackupSlot,
+  BackupSlot,
 } from "@/lib/storage";
 import {
-  hasSave, getSave, getMessages, getUsage,
-  startNewGame, processTurn,
+  getSave, getMessages, getUsage,
+  startNewGame, processTurn, regenerateLastResponse, restartGame,
 } from "@/lib/engine";
 import { ChatMessage, SaveData, UsageRecord } from "@/lib/types";
-import { getAllStageOptions, getAllSectOptions } from "@/data/world-data";
+import { getAllStageOptions, getAllSectOptions, stageNameKR, sectNameKR } from "@/data/world-data";
 
 const MODEL_PRESETS = [
   { id: "gpt-5.4-mini", label: "gpt-5.4-mini (기본 진행)" },
@@ -39,6 +41,10 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [warning, setWarning] = useState<string | null>(null);
   const [debug, setDebug] = useState<any>(null);
+
+  // 백업 슬롯
+  const [backups, setBackups] = useState<BackupSlot[]>([]);
+  const [showLoadDialog, setShowLoadDialog] = useState(false);
 
   // 새 게임 폼
   const [newName, setNewName] = useState("");
@@ -71,6 +77,71 @@ export default function Page() {
     setSave(getSave());
     setMessages(getMessages());
     setUsage(getUsage());
+    setBackups(listBackupSlots());
+  }
+
+  function doSaveSlot() {
+    const cur = getSave();
+    if (!cur) {
+      setError("저장할 게임이 없어요.");
+      return;
+    }
+    const defaultLabel = `${cur.character.identity.name} · ${cur.character.identity.age}세 · 턴 ${cur.turn}`;
+    const label = prompt("저장 이름 (취소 시 자동 라벨):", defaultLabel);
+    if (label === null) return;
+    saveBackupSlot(label || defaultLabel);
+    setBackups(listBackupSlots());
+    setWarning("저장됐어요.");
+    setTimeout(() => setWarning(null), 2000);
+  }
+
+  function doLoadSlot(slotId: string) {
+    if (!confirm("현재 진행 중인 게임은 덮어써집니다. 불러올까요?")) return;
+    const ok = loadBackupSlot(slotId);
+    if (!ok) {
+      setError("슬롯을 찾지 못했어요.");
+      return;
+    }
+    refreshAll();
+    setShowLoadDialog(false);
+    setDebug(null);
+  }
+
+  function doDeleteSlot(slotId: string) {
+    if (!confirm("이 백업을 영구 삭제할까요?")) return;
+    deleteBackupSlot(slotId);
+    setBackups(listBackupSlots());
+  }
+
+  function doRestart() {
+    if (!confirm("다시하기를 하면 현재 캐릭터·대화·기억이 전부 사라지고\n새 캐릭터 생성 화면으로 돌아갑니다.\n(저장된 백업은 보존됩니다)\n계속할까요?")) return;
+    restartGame();
+    setSave(null);
+    setMessages([]);
+    setUsage([]);
+    setDebug(null);
+  }
+
+  async function doRegenerate() {
+    if (loading) return;
+    if (!confirm("마지막 AI 응답을 새로 받을까요?\n(직전 사용량은 환불되지만, 그 턴에 기록된 기억/관계 변화는 그대로 남을 수 있어요)")) return;
+    setLoading(true);
+    setError(null);
+    setWarning(null);
+    try {
+      const result = await regenerateLastResponse();
+      if (!result.ok) {
+        setError(result.error || "재생성 실패");
+      } else {
+        if (result.budgetWarning) setWarning(result.budgetWarning);
+        if (result.debug) setDebug(result.debug);
+        refreshAll();
+      }
+    } catch (e) {
+      setError("재생성 실패: " + (e as Error).message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function saveApiKey() {
@@ -193,21 +264,54 @@ export default function Page() {
     <main className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_340px]">
       {/* ─── 좌측 채팅 ─── */}
       <section className="flex flex-col h-screen border-r border-ink-700">
-        <header className="px-4 py-3 border-b border-ink-700 flex items-center justify-between gap-2">
+        <header className="px-4 py-3 border-b border-ink-700 flex items-center justify-between gap-2 flex-wrap">
           <h1 className="text-lg font-bold">무협 챗 게임</h1>
-          <div className="text-xs text-ink-300 flex items-center gap-3">
+          <div className="text-xs text-ink-300 flex items-center gap-2 flex-wrap">
             <span>턴 {save?.turn ?? 0}</span>
             <span className={apiKey ? "px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-200" : "px-2 py-0.5 rounded bg-yellow-900/60 text-yellow-200"}>
               {mode}
             </span>
-            <button
-              onClick={() => setSettingsOpen((v) => !v)}
-              className="underline hover:text-ink-100"
-            >
+            {save && (
+              <>
+                <button onClick={doSaveSlot} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
+                  💾 저장
+                </button>
+                <button onClick={() => { setBackups(listBackupSlots()); setShowLoadDialog(true); }} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
+                  📂 불러오기 ({backups.length})
+                </button>
+                <button onClick={doRestart} className="px-2 py-1 rounded bg-ink-700 hover:bg-yellow-900 hover:text-yellow-100">
+                  🔁 다시하기
+                </button>
+              </>
+            )}
+            <button onClick={() => setSettingsOpen((v) => !v)} className="px-2 py-1 rounded bg-ink-700 hover:bg-ink-500 hover:text-ink-900">
               ⚙ 설정
             </button>
           </div>
         </header>
+
+        {/* 불러오기 다이얼로그 */}
+        {showLoadDialog && (
+          <div className="border-b border-ink-700 bg-ink-900/80 p-4 space-y-2 max-h-72 overflow-y-auto scroll-area">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold">저장된 게임</h3>
+              <button onClick={() => setShowLoadDialog(false)} className="text-ink-300 hover:text-ink-100 text-sm">닫기 ✕</button>
+            </div>
+            {backups.length === 0 && <p className="text-ink-300 text-sm">저장된 백업이 없어요.</p>}
+            {backups.map((s) => (
+              <div key={s.id} className="flex items-center justify-between gap-2 bg-ink-700/30 border border-ink-500/30 rounded p-2 text-sm">
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold truncate">{s.label}</div>
+                  <div className="text-xs text-ink-300">
+                    {s.characterName} · {s.characterAge}세 · 턴 {s.turn} · {new Date(s.createdAt).toLocaleString("ko-KR")}
+                  </div>
+                </div>
+                <button onClick={() => doLoadSlot(s.id)} className="px-2 py-1 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold">불러오기</button>
+                <button onClick={() => doDeleteSlot(s.id)} className="px-2 py-1 bg-red-900/60 hover:bg-red-800 text-red-100 rounded text-xs">삭제</button>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* 설정 패널 */}
         {settingsOpen && (
@@ -475,21 +579,35 @@ export default function Page() {
                   세계가 너를 기다린다. 첫 행동을 입력해. (예: "주변을 둘러본다.")
                 </p>
               )}
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={
-                    m.role === "user"
-                      ? "bg-ink-700/40 border border-ink-500/40 rounded-lg p-3"
-                      : "bg-ink-900/40 border border-ink-500/30 rounded-lg p-3"
-                  }
-                >
-                  <div className="text-xs text-ink-300 mb-1">
-                    {m.role === "user" ? "당신" : "강호"}
+              {messages.map((m, idx) => {
+                const isLastAssistant =
+                  m.role === "assistant" &&
+                  idx === messages.length - 1;
+                return (
+                  <div
+                    key={m.id}
+                    className={
+                      m.role === "user"
+                        ? "bg-ink-700/40 border border-ink-500/40 rounded-lg p-3"
+                        : "bg-ink-900/40 border border-ink-500/30 rounded-lg p-3"
+                    }
+                  >
+                    <div className="text-xs text-ink-300 mb-1 flex items-center justify-between">
+                      <span>{m.role === "user" ? "당신" : "강호"}</span>
+                      {isLastAssistant && !loading && (
+                        <button
+                          onClick={doRegenerate}
+                          title="이 응답을 새로 받기"
+                          className="text-ink-300 hover:text-ink-100 underline"
+                        >
+                          🔄 다시 받기
+                        </button>
+                      )}
+                    </div>
+                    <div className="whitespace-pre-wrap leading-relaxed">{m.content}</div>
                   </div>
-                  <div className="whitespace-pre-wrap leading-relaxed">{m.content}</div>
-                </div>
-              ))}
+                );
+              })}
               {loading && <div className="text-ink-300 text-sm">강호가 천천히 응답하는 중…</div>}
               {error && (
                 <div className="bg-red-900/40 border border-red-700 text-red-200 p-3 rounded text-sm">
@@ -533,15 +651,61 @@ export default function Page() {
           <h2 className="font-bold mb-2">캐릭터</h2>
           {save?.character ? (
             <ul className="space-y-1">
-              <li><span className="text-ink-300">이름:</span> {save.character.identity.name} ({save.character.identity.gender}, {save.character.identity.age}세)</li>
-              <li><span className="text-ink-300">구분:</span> {save.character.civilian_or_martial === "martial" ? "무림인" : "일반인"}</li>
-              <li><span className="text-ink-300">경지:</span> {save.character.realm?.current_stage} · 내공 {save.character.realm?.internal_energy}/{save.character.realm?.internal_energy_cap}</li>
-              <li><span className="text-ink-300">HP:</span> {save.character.vitals?.hp_current}/{save.character.vitals?.hp_max} · 내상 {save.character.vitals?.internal_injury} · 외상 {save.character.vitals?.external_injury}</li>
-              <li><span className="text-ink-300">위치:</span> {save.character.current_location_id || "(미정)"}</li>
-              <li><span className="text-ink-300">소속:</span> {save.character.affiliation?.sect_id || "무소속"}</li>
-              <li><span className="text-ink-300">은자:</span> {save.character.inventory?.silver_taels}냥</li>
+              <li>
+                <span className="text-ink-300">이름:</span> {save.character.identity.name} ({save.character.identity.gender}, {save.character.identity.age}세)
+              </li>
+              {Array.isArray(save.character.reputation?.titles) &&
+                (save.character.reputation.titles as string[]).length > 0 && (
+                  <li>
+                    <span className="text-ink-300">별호:</span>{" "}
+                    {(save.character.reputation.titles as string[]).join(", ")}
+                  </li>
+                )}
+              <li>
+                <span className="text-ink-300">경지:</span>{" "}
+                {stageNameKR(save.character.realm?.current_stage)} · 내공{" "}
+                {save.character.realm?.internal_energy}/{save.character.realm?.internal_energy_cap}
+              </li>
+              <li>
+                <span className="text-ink-300">HP:</span> {save.character.vitals?.hp_current}/{save.character.vitals?.hp_max} · 내상 {save.character.vitals?.internal_injury} · 외상 {save.character.vitals?.external_injury}
+              </li>
+              <li>
+                <span className="text-ink-300">위치:</span> {save.character.current_location_id || "(미정)"}
+              </li>
+              <li>
+                <span className="text-ink-300">소속:</span>{" "}
+                {sectNameKR(save.character.affiliation?.sect_id)}
+                {save.character.affiliation?.rank ? ` (${save.character.affiliation.rank})` : ""}
+              </li>
+              <li>
+                <span className="text-ink-300">돈:</span>{" "}
+                {save.character.inventory?.gold_taels ? `금자 ${save.character.inventory.gold_taels}냥 · ` : ""}
+                은자 {save.character.inventory?.silver_taels ?? 0}냥
+              </li>
+              <li>
+                <span className="text-ink-300">무기:</span>{" "}
+                {save.character.weapons_owned?.length
+                  ? save.character.weapons_owned.join(", ")
+                  : "(없음)"}
+              </li>
+              <li>
+                <span className="text-ink-300">소지품:</span>{" "}
+                {save.character.inventory?.items?.length
+                  ? save.character.inventory.items.join(", ")
+                  : "(없음)"}
+              </li>
+              {save.character.martial_arts_known?.length > 0 && (
+                <li>
+                  <span className="text-ink-300">무공:</span>{" "}
+                  {save.character.martial_arts_known
+                    .map((a) => `${a.art_id}(${a.mastery_pct}%)`)
+                    .join(", ")}
+                </li>
+              )}
             </ul>
-          ) : <p className="text-ink-300">캐릭터 없음</p>}
+          ) : (
+            <p className="text-ink-300">캐릭터 없음</p>
+          )}
         </div>
 
         <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">

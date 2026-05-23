@@ -124,3 +124,65 @@ export function clearEverythingIncludingKey() {
   del(KEYS.modelChat);
   del(KEYS.modelSummary);
 }
+
+// ---------- 백업 슬롯 ----------
+
+const SLOTS_KEY = PREFIX + "backup_slots";
+
+export interface BackupSlot {
+  id: string;
+  createdAt: string;
+  label: string;
+  characterName: string;
+  characterAge: number;
+  turn: number;
+  data: {
+    save: unknown;
+    messages: unknown;
+    memories: unknown;
+    usage: unknown;
+  };
+}
+
+export function listBackupSlots(): BackupSlot[] {
+  return getJSON<BackupSlot[]>(SLOTS_KEY, []);
+}
+
+export function saveBackupSlot(label: string): BackupSlot {
+  const slots = listBackupSlots();
+  const id = "slot_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+  const saveData = loadSave<any>(null);
+  const messages = loadMessages<any>([]);
+  const memories = loadMemories<any>([]);
+  const usage = loadUsage<any>([]);
+  const slot: BackupSlot = {
+    id,
+    createdAt: new Date().toISOString(),
+    label: label || `백업 ${new Date().toLocaleString("ko-KR")}`,
+    characterName: saveData?.character?.identity?.name || "?",
+    characterAge: saveData?.character?.identity?.age ?? 0,
+    turn: saveData?.turn ?? 0,
+    data: { save: saveData, messages, memories, usage },
+  };
+  slots.unshift(slot);
+  // 최대 20개 유지
+  if (slots.length > 20) slots.length = 20;
+  setJSON(SLOTS_KEY, slots);
+  return slot;
+}
+
+export function loadBackupSlot(slotId: string): boolean {
+  const slots = listBackupSlots();
+  const slot = slots.find((s) => s.id === slotId);
+  if (!slot) return false;
+  if (slot.data.save) saveSave(slot.data.save);
+  saveMessages(slot.data.messages || []);
+  saveMemories(slot.data.memories || []);
+  saveUsage(slot.data.usage || []);
+  return true;
+}
+
+export function deleteBackupSlot(slotId: string) {
+  const slots = listBackupSlots().filter((s) => s.id !== slotId);
+  setJSON(SLOTS_KEY, slots);
+}

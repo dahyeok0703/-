@@ -4,6 +4,7 @@ import { ChatMessage, ExtractedUpdates, SaveData, UsageRecord, CharacterState } 
 import {
   loadSave, saveSave, loadMessages, saveMessages,
   loadUsage, saveUsage, getApiKey, getModelChat, getModelSummary,
+  clearAllGameData,
 } from "./storage";
 import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemories } from "./memory";
 import { buildPrompt } from "./prompt-builder";
@@ -19,6 +20,61 @@ const MAX_OUT_TOK = 1500;
 
 function newMsgId(): string {
   return "msg_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+}
+
+// 다시하기 — 현재 게임 데이터 전체 초기화 (캐릭터 생성 폼으로 돌아감)
+// API 키와 모델 설정은 보존.
+export function restartGame() {
+  clearAllGameData();
+}
+
+// 마지막 AI 응답을 새로 받기.
+// 마지막 user 메시지를 보존, 마지막 assistant 메시지 + 그 턴의 사용량은 롤백.
+// 메모리/관계 변화는 정확한 롤백이 어려워 그대로 둠.
+export async function regenerateLastResponse(opts?: { monthlyBudgetUSD?: number }): Promise<TurnResult> {
+  const messages = loadMessages<ChatMessage[]>([]);
+  if (messages.length === 0) {
+    return { ok: false, error: "재생성할 메시지가 없어요." };
+  }
+
+  // 끝에서부터 마지막 user 메시지 찾기
+  let lastUserIdx = -1;
+  for (let i = messages.length - 1; i >= 0; i--) {
+    if (messages[i].role === "user") { lastUserIdx = i; break; }
+  }
+  if (lastUserIdx === -1) {
+    return { ok: false, error: "이전 입력이 없어요." };
+  }
+
+  const lastUserInput = messages[lastUserIdx].content;
+
+  // 마지막 assistant 응답 제거 + 마지막 user 메시지도 제거 (processTurn이 다시 추가함)
+  const trimmed = messages.slice(0, lastUserIdx);
+  saveMessages(trimmed);
+
+  // turn 카운터도 1 되돌림
+  const save = loadSave<SaveData | null>(null);
+  if (save && save.turn > 0) {
+    save.turn -= 1;
+    saveSave(save);
+  }
+
+  // 마지막 사용량 2개(채팅+요약)도 롤백
+  const usage = loadUsage<UsageRecord[]>([]);
+  if (usage.length >= 2) {
+    const last2 = usage.slice(-2);
+    // 마지막 두 개가 동일 시점 페어면 제거
+    if (last2[0].requestType === "chat" || last2[1].requestType === "summary") {
+      saveUsage(usage.slice(0, -2));
+    } else {
+      saveUsage(usage.slice(0, -1));
+    }
+  } else if (usage.length === 1) {
+    saveUsage([]);
+  }
+
+  // 재실행
+  return processTurn(lastUserInput, opts);
 }
 
 export function hasSave(): boolean {
