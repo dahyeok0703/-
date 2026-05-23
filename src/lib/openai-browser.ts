@@ -45,8 +45,8 @@ export async function callChat(args: {
   const response: any = await client.chat.completions.create({
     model: args.model,
     messages: messages as any,
-    max_tokens: args.maxOutputTokens,
-  });
+    max_completion_tokens: args.maxOutputTokens,
+  } as any);
 
   const text = response?.choices?.[0]?.message?.content || "";
   const usage = response?.usage || {};
