@@ -12,7 +12,7 @@ import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
-import { CHARACTER_TEMPLATE, getStageById } from "../data/world-data";
+import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions } from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
@@ -324,7 +324,7 @@ export async function processTurn(userInput: string, opts?: { monthlyBudgetUSD?:
           model: getModelSummary(),
           instructions: EXTRACTOR_RULES,
           input: [{ role: "user", content: `유저 입력:\n${userInput}\n\n게임 마스터 응답:\n${chatResult.text}` }],
-          maxOutputTokens: 600,
+          maxOutputTokens: 1000,
         });
     summaryUsage = {
       id: "u_" + Date.now().toString(36) + "_s",
@@ -419,11 +419,53 @@ function applyExtraction(rawText: string, save: SaveData) {
     }
   }
 
+  for (const w of parsed.weaponUpdates || []) {
+    const name = (w.weapon || "").trim();
+    if (!name) continue;
+    if (w.action === "add") {
+      if (!save.character.weapons_owned.includes(name)) save.character.weapons_owned.push(name);
+    } else if (w.action === "remove") {
+      save.character.weapons_owned = save.character.weapons_owned.filter((x) => x !== name);
+    }
+  }
+
+  for (const a of parsed.martialArtUpdates || []) {
+    applyMartialArtUpdate(save, a);
+  }
+
+  for (const r of parsed.reputationUpdates || []) {
+    if (!r.field) continue;
+    const cur = (save.character.reputation as any)[r.field];
+    if (typeof r.value === "number") {
+      (save.character.reputation as any)[r.field] = r.value;
+    } else if (typeof r.delta === "number") {
+      const base = typeof cur === "number" ? cur : 0;
+      (save.character.reputation as any)[r.field] = base + r.delta;
+    }
+  }
+
+  if (Array.isArray(parsed.titleAdds) && parsed.titleAdds.length > 0) {
+    const titles = (save.character.reputation.titles as string[]) || [];
+    for (const t of parsed.titleAdds) {
+      const tt = String(t || "").trim();
+      if (tt && !titles.includes(tt)) titles.push(tt);
+    }
+    save.character.reputation.titles = titles;
+  }
+  if (Array.isArray(parsed.titleRemoves) && parsed.titleRemoves.length > 0) {
+    const titles = (save.character.reputation.titles as string[]) || [];
+    save.character.reputation.titles = titles.filter((x) => !parsed!.titleRemoves!.includes(x));
+  }
+
+  for (const f of parsed.familyUpdates || []) {
+    applyFamilyUpdate(save, f);
+  }
+
   for (const p of parsed.playerUpdates || []) {
     applyPlayerField(save, p.field, p.value);
   }
 
-  applyTimeAdvance(save, (parsed as any).timeAdvance);
+  applyTimeAdvance(save, parsed.timeAdvance);
 
   if (parsed.summary) {
     save.character.biography_summary =
@@ -451,24 +493,154 @@ function applyExtraction(rawText: string, save: SaveData) {
 }
 
 function applyPlayerField(save: SaveData, field: string, value: unknown) {
+  const c = save.character;
   const allowed: Record<string, (v: any) => void> = {
-    "identity.name": (v) => (save.character.identity.name = String(v)),
-    "identity.age": (v) => (save.character.identity.age = Number(v)),
-    "identity.appearance": (v) => (save.character.identity.appearance = String(v)),
-    "current_location_id": (v) => (save.character.current_location_id = String(v)),
-    "affiliation.sect_id": (v) => (save.character.affiliation.sect_id = v ? String(v) : null),
-    "affiliation.rank": (v) => (save.character.affiliation.rank = v ? String(v) : null),
-    "civilian_or_martial": (v) => (save.character.civilian_or_martial = v === "martial" ? "martial" : "civilian"),
-    "realm.current_realm": (v) => (save.character.realm.current_realm = String(v)),
-    "realm.current_stage": (v) => (save.character.realm.current_stage = String(v)),
-    "realm.internal_energy": (v) => (save.character.realm.internal_energy = Number(v)),
-    "vitals.hp_current": (v) => (save.character.vitals.hp_current = Number(v)),
-    "vitals.internal_injury": (v) => (save.character.vitals.internal_injury = Number(v)),
-    "vitals.external_injury": (v) => (save.character.vitals.external_injury = Number(v)),
-    "inventory.silver_taels": (v) => (save.character.inventory.silver_taels = Number(v)),
+    "identity.name": (v) => (c.identity.name = String(v)),
+    "identity.age": (v) => (c.identity.age = Number(v)),
+    "identity.gender": (v) => (c.identity.gender = String(v)),
+    "identity.appearance": (v) => (c.identity.appearance = String(v)),
+    "identity.birthplace": (v) => (c.identity.birthplace = String(v)),
+    "identity.family_background": (v) => (c.identity.family_background = String(v)),
+
+    "current_location_id": (v) => (c.current_location_id = v ? String(v) : null),
+    "civilian_or_martial": (v) => (c.civilian_or_martial = v === "martial" ? "martial" : "civilian"),
+    "alive": (v) => (c.alive = Boolean(v)),
+    "biography_summary": (v) => (c.biography_summary = String(v)),
+
+    "affiliation.sect_id": (v) => (c.affiliation.sect_id = v ? String(v) : null),
+    "affiliation.rank": (v) => (c.affiliation.rank = v ? String(v) : null),
+    "affiliation.standing": (v) => (c.affiliation.standing = Number(v)),
+    "affiliation.joined_at_age": (v) => (c.affiliation.joined_at_age = v === null ? null : Number(v)),
+
+    "realm.current_realm": (v) => (c.realm.current_realm = String(v)),
+    "realm.current_stage": (v) => (c.realm.current_stage = String(v)),
+    "realm.tier": (v) => (c.realm.tier = Number(v)),
+    "realm.internal_energy": (v) => (c.realm.internal_energy = Number(v)),
+    "realm.internal_energy_cap": (v) => (c.realm.internal_energy_cap = Number(v)),
+    "realm.stage_progress_pct": (v) => (c.realm.stage_progress_pct = Math.max(0, Math.min(100, Number(v)))),
+
+    "vitals.hp_current": (v) => (c.vitals.hp_current = Number(v)),
+    "vitals.hp_max": (v) => (c.vitals.hp_max = Number(v)),
+    "vitals.internal_injury": (v) => (c.vitals.internal_injury = Number(v)),
+    "vitals.external_injury": (v) => (c.vitals.external_injury = Number(v)),
+    "vitals.mental_state": (v) => (c.vitals.mental_state = String(v)),
+    "vitals.status_effects": (v) => {
+      if (Array.isArray(v)) c.vitals.status_effects = v.map((x) => String(x));
+    },
+
+    "inventory.silver_taels": (v) => (c.inventory.silver_taels = Number(v)),
+    "inventory.gold_taels": (v) => (c.inventory.gold_taels = Number(v)),
   };
   const fn = allowed[field];
   if (fn) try { fn(value); } catch { /* ignore */ }
+}
+
+function applyMartialArtUpdate(
+  save: SaveData,
+  a: { action: "add" | "remove" | "change"; name?: string; art_id?: string; mastery_pct?: number; mastery_delta?: number },
+) {
+  const list = save.character.martial_arts_known;
+  let explicitId = (a.art_id || "").trim();
+  const name = (a.name || "").trim();
+
+  // 이름으로 강호의 표준 무공 id 역추적
+  if (!explicitId && name) {
+    const hit = getAllArtOptions().find((o) => o.name === name);
+    if (hit) explicitId = hit.id;
+  }
+  const resolvedId = explicitId || (name ? makeCustomArtIdLocal(name) : "");
+  if (!resolvedId && !name) return;
+
+  const matchesArt = (artId: string): boolean => {
+    if (artId === resolvedId) return true;
+    if (name && (artNameKR(artId) === name || artNameOf(artId) === name)) return true;
+    return false;
+  };
+
+  if (a.action === "remove") {
+    save.character.martial_arts_known = list.filter((x) => !matchesArt(x.art_id));
+    return;
+  }
+
+  const existing = list.find((x) => matchesArt(x.art_id));
+
+  if (a.action === "add") {
+    if (existing) {
+      if (typeof a.mastery_pct === "number") existing.mastery_pct = clampPct(a.mastery_pct);
+      else if (typeof a.mastery_delta === "number") existing.mastery_pct = clampPct(existing.mastery_pct + a.mastery_delta);
+    } else {
+      list.push({ art_id: resolvedId, mastery_pct: clampPct(a.mastery_pct ?? 10) });
+    }
+    return;
+  }
+
+  // action=change
+  if (existing) {
+    if (typeof a.mastery_pct === "number") existing.mastery_pct = clampPct(a.mastery_pct);
+    else if (typeof a.mastery_delta === "number") existing.mastery_pct = clampPct(existing.mastery_pct + a.mastery_delta);
+  } else {
+    // 본문에 처음 등장했고 change 로 들어왔어도 등록.
+    list.push({ art_id: resolvedId, mastery_pct: clampPct(a.mastery_pct ?? Math.max(0, a.mastery_delta ?? 0)) });
+  }
+}
+
+function applyFamilyUpdate(
+  save: SaveData,
+  f: { field: string; action?: "set" | "add" | "remove"; value?: unknown },
+) {
+  const fs = save.character.family_status;
+  const v = f.value;
+  switch (f.field) {
+    case "spouse":
+      fs.spouse = v == null || v === "" ? null : String(v);
+      break;
+    case "father_alive":
+      fs.father_alive = Boolean(v);
+      break;
+    case "mother_alive":
+      fs.mother_alive = Boolean(v);
+      break;
+    case "siblings":
+    case "concubines":
+    case "children": {
+      const arr = (fs as any)[f.field] as string[];
+      if (f.action === "remove") {
+        (fs as any)[f.field] = arr.filter((x) => x !== String(v));
+      } else if (f.action === "set" && Array.isArray(v)) {
+        (fs as any)[f.field] = (v as unknown[]).map((x) => String(x));
+      } else {
+        // add (default)
+        const name = String(v || "").trim();
+        if (name && !arr.includes(name)) arr.push(name);
+      }
+      break;
+    }
+  }
+}
+
+function clampPct(n: number): number {
+  if (!isFinite(n)) return 0;
+  return Math.max(0, Math.min(100, Math.floor(n)));
+}
+
+function makeCustomArtIdLocal(name: string): string {
+  try {
+    return "custom_" + btoa(unescape(encodeURIComponent(name.trim())));
+  } catch {
+    return "custom_" + encodeURIComponent(name.trim());
+  }
+}
+
+function artNameOf(artId: string): string {
+  if (!artId) return "";
+  if (artId.startsWith("custom_")) {
+    try {
+      return decodeURIComponent(escape(atob(artId.slice(7))));
+    } catch {
+      return artId;
+    }
+  }
+  return artId;
 }
 
 const SICHEN_ORDER = ["자", "축", "인", "묘", "진", "사", "오", "미", "신", "유", "술", "해"];

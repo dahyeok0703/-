@@ -141,7 +141,24 @@ export interface ExtractedUpdates {
   factionUpdates?: Array<{ faction_id: string; note: string }>;
   locationUpdates?: Array<{ location_id: string; note: string }>;
   inventoryUpdates?: Array<{ action: "add" | "remove" | "change"; item: string; qty?: number }>;
+  weaponUpdates?: Array<{ action: "add" | "remove"; weapon: string }>;
+  martialArtUpdates?: Array<{
+    action: "add" | "remove" | "change";
+    name?: string;
+    art_id?: string;
+    mastery_pct?: number;
+    mastery_delta?: number;
+  }>;
+  reputationUpdates?: Array<{ field: string; delta?: number; value?: number }>;
+  titleAdds?: string[];
+  titleRemoves?: string[];
+  familyUpdates?: Array<{
+    field: string;
+    action?: "set" | "add" | "remove";
+    value?: unknown;
+  }>;
   eventLogs?: Array<{ title: string; content: string; importance: number; tags?: string[] }>;
   unresolvedThreads?: Array<{ title: string; content: string; importance: number }>;
+  timeAdvance?: Record<string, unknown>;
   summary?: string;
 }
