@@ -13,7 +13,7 @@ import {
   startNewGame, processTurn, regenerateLastResponse, restartGame,
 } from "@/lib/engine";
 import { ChatMessage, SaveData, UsageRecord } from "@/lib/types";
-import { getAllStageOptions, getAllSectOptions, stageNameKR, sectNameKR } from "@/data/world-data";
+import { getAllStageOptions, getAllSectOptions, stageNameKR, sectNameKR, artNameKR } from "@/data/world-data";
 
 const MODEL_PRESETS = [
   { id: "gpt-5.4-mini", label: "gpt-5.4-mini (기본 진행)" },
@@ -694,14 +694,14 @@ export default function Page() {
                   ? save.character.inventory.items.join(", ")
                   : "(없음)"}
               </li>
-              {save.character.martial_arts_known?.length > 0 && (
-                <li>
-                  <span className="text-ink-300">무공:</span>{" "}
-                  {save.character.martial_arts_known
-                    .map((a) => `${a.art_id}(${a.mastery_pct}%)`)
-                    .join(", ")}
-                </li>
-              )}
+              <li>
+                <span className="text-ink-300">보유 무공:</span>{" "}
+                {save.character.martial_arts_known?.length
+                  ? save.character.martial_arts_known
+                      .map((a) => `${artNameKR(a.art_id)} (${a.mastery_pct}%)`)
+                      .join(", ")
+                  : "(없음)"}
+              </li>
             </ul>
           ) : (
             <p className="text-ink-300">캐릭터 없음</p>

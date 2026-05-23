@@ -215,3 +215,15 @@ export function sectNameKR(sectId: string | null | undefined): string {
   return s ? s.name : sectId;
 }
 
+export function artNameKR(artId: string | null | undefined): string {
+  if (!artId) return "";
+  for (const list of Object.values(WORLD.arts || {})) {
+    if (Array.isArray(list)) {
+      for (const a of list as any[]) {
+        if (a?.id === artId) return a.name || artId;
+      }
+    }
+  }
+  return artId;
+}
+
