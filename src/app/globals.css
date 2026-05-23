@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #__next {
+  background: #1a1610;
+  color: #e8e2d1;
+  height: 100%;
+}
+body {
+  font-family: "Noto Serif KR", ui-serif, Georgia, serif;
+}
+
+.scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: #5d513a #1a1610;
+}
+.scroll-area::-webkit-scrollbar { width: 8px; }
+.scroll-area::-webkit-scrollbar-track { background: #1a1610; }
+.scroll-area::-webkit-scrollbar-thumb { background: #322a1d; border-radius: 4px; }

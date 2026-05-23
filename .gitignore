@@ -1,0 +1,11 @@
+node_modules
+.next
+.env
+.env.local
+*.log
+.DS_Store
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# 플레이 세이브는 로컬 전용 (선택)
+data/save/slot1/
