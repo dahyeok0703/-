@@ -281,6 +281,43 @@ export function makeCustomArtId(name: string): string {
   }
 }
 
+// ---------- 무기 옵션 ----------
+
+export interface WeaponOption {
+  id: string;
+  name: string;
+  type: string;
+  rarity: string;
+  price: string;
+  effect: string;
+  category: string;
+}
+
+export function getAllWeaponOptions(): WeaponOption[] {
+  const out: WeaponOption[] = [];
+  const w = WORLD.weapons || {};
+  const skipKeys = new Set(["description", "rarity_scale", "grade_definition"]);
+  for (const [category, list] of Object.entries(w)) {
+    if (skipKeys.has(category) || !Array.isArray(list)) continue;
+    for (const a of list as any[]) {
+      if (!a?.name) continue;
+      const price = typeof a.price_silver === "number"
+        ? `${a.price_silver}냥`
+        : (a.price_silver ? String(a.price_silver) : "비매");
+      out.push({
+        id: a.id || a.name,
+        name: a.name,
+        type: a.type || "",
+        rarity: a.rarity || "흔함",
+        price,
+        effect: a.effect || "",
+        category,
+      });
+    }
+  }
+  return out;
+}
+
 // ---------- 게임 시진(時辰) ----------
 
 export const SICHEN_LIST = [

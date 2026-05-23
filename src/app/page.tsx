@@ -14,7 +14,7 @@ import {
 } from "@/lib/engine";
 import { ChatMessage, SaveData, UsageRecord } from "@/lib/types";
 import {
-  getAllStageOptions, getAllSectOptions, getAllArtOptions,
+  getAllStageOptions, getAllSectOptions, getAllArtOptions, getAllWeaponOptions,
   stageNameKR, sectNameKR, artNameKR,
   makeCustomArtId, formatGameTime, sichenPhase,
 } from "@/data/world-data";
@@ -27,6 +27,7 @@ const MODEL_PRESETS = [
 const STAGE_OPTIONS = getAllStageOptions();
 const SECT_OPTIONS = getAllSectOptions();
 const ART_OPTIONS = getAllArtOptions();
+const WEAPON_OPTIONS = getAllWeaponOptions();
 
 export default function Page() {
   const [ready, setReady] = useState(false);
@@ -66,6 +67,10 @@ export default function Page() {
   const [artPick, setArtPick] = useState<string>("");
   const [customArtName, setCustomArtName] = useState<string>("");
   const [artFilter, setArtFilter] = useState<string>("");
+  const [newWeapons, setNewWeapons] = useState<string[]>([]);
+  const [weaponPick, setWeaponPick] = useState<string>("");
+  const [weaponFilter, setWeaponFilter] = useState<string>("");
+  const [customWeaponName, setCustomWeaponName] = useState<string>("");
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -187,6 +192,7 @@ export default function Page() {
         martial_arts: newIsMartial
           ? newArts.map((a) => ({ art_id: a.art_id, mastery_pct: a.mastery_pct }))
           : [],
+        weapons: newWeapons,
       });
       setSave(s);
       setMessages([]);
@@ -254,17 +260,6 @@ export default function Page() {
     setUsage([]);
     setDebug(null);
   }
-
-  // 비용 계산
-  const today = new Date().toDateString();
-  const dailyCost = usage.filter((u) => new Date(u.createdAt).toDateString() === today)
-    .reduce((s, u) => s + u.estimated_cost_usd, 0);
-  const now = new Date();
-  const monthlyCost = usage.filter((u) => {
-    const d = new Date(u.createdAt);
-    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-  }).reduce((s, u) => s + u.estimated_cost_usd, 0);
-  const totalTokens = usage.reduce((s, u) => s + u.total_tokens, 0);
 
   const mode = apiKey ? "OpenAI API Mode" : "Mock Mode";
 
@@ -681,6 +676,106 @@ export default function Page() {
                 )}
               </fieldset>
 
+              {/* 무기 */}
+              <fieldset className="space-y-2 border border-ink-500/30 rounded p-3">
+                <legend className="px-2 text-xs text-ink-300">보유 무기 (선택)</legend>
+                <p className="text-xs text-ink-300">
+                  강호의 무기 목록에서 고르거나, 직접 이름을 적어 가져가도 됩니다. (무공 없이도 가능)
+                </p>
+
+                <div className="flex gap-2 flex-wrap">
+                  <input
+                    type="text"
+                    className="flex-1 min-w-[120px] px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                    placeholder="무기 검색 (이름·종류·등급)"
+                    value={weaponFilter}
+                    onChange={(e) => setWeaponFilter(e.target.value)}
+                  />
+                  <select
+                    className="flex-1 min-w-[200px] px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                    value={weaponPick}
+                    onChange={(e) => setWeaponPick(e.target.value)}
+                  >
+                    <option value="">— 강호의 무기 선택 —</option>
+                    {WEAPON_OPTIONS.filter((w) => {
+                      const q = weaponFilter.trim().toLowerCase();
+                      if (!q) return true;
+                      return (
+                        w.name.toLowerCase().includes(q) ||
+                        w.type.toLowerCase().includes(q) ||
+                        w.rarity.toLowerCase().includes(q) ||
+                        w.category.toLowerCase().includes(q)
+                      );
+                    })
+                      .slice(0, 200)
+                      .map((w) => (
+                        <option key={w.id} value={w.name}>
+                          {w.name} [{w.rarity}/{w.type} · {w.price}]
+                        </option>
+                      ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!weaponPick) return;
+                      if (newWeapons.includes(weaponPick)) return;
+                      setNewWeapons((arr) => [...arr, weaponPick]);
+                      setWeaponPick("");
+                    }}
+                    className="px-3 py-1.5 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold"
+                  >
+                    + 추가
+                  </button>
+                </div>
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    className="flex-1 px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                    placeholder="직접 입력 (예: 낡은 목검)"
+                    value={customWeaponName}
+                    onChange={(e) => setCustomWeaponName(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const t = customWeaponName.trim();
+                      if (!t || newWeapons.includes(t)) {
+                        setCustomWeaponName("");
+                        return;
+                      }
+                      setNewWeapons((arr) => [...arr, t]);
+                      setCustomWeaponName("");
+                    }}
+                    className="px-3 py-1.5 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold"
+                  >
+                    + 자작 추가
+                  </button>
+                </div>
+
+                {newWeapons.length === 0 ? (
+                  <p className="text-xs text-ink-300">맨손/빈손으로 시작.</p>
+                ) : (
+                  <ul className="space-y-1">
+                    {newWeapons.map((w, idx) => (
+                      <li
+                        key={w + idx}
+                        className="flex items-center gap-2 bg-ink-900/60 border border-ink-500/30 rounded px-2 py-1.5 text-xs"
+                      >
+                        <span className="flex-1 truncate">{w}</span>
+                        <button
+                          type="button"
+                          onClick={() => setNewWeapons((arr) => arr.filter((_, i) => i !== idx))}
+                          className="px-2 py-0.5 bg-red-900/60 hover:bg-red-800 text-red-100 rounded"
+                        >
+                          삭제
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </fieldset>
+
               {/* 자산 */}
               <fieldset className="space-y-2 border border-ink-500/30 rounded p-3">
                 <legend className="px-2 text-xs text-ink-300">자산 (선택)</legend>
@@ -872,32 +967,6 @@ export default function Page() {
           </ul>
         </div>
 
-        <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
-          <h2 className="font-bold mb-2">비용 (개발자 패널)</h2>
-          <ul className="space-y-1 text-xs">
-            <li>이번 턴 추정: ${debug?.costEstimateUSD?.toFixed(6) ?? "0.000000"}</li>
-            <li>오늘 누적: ${dailyCost.toFixed(4)}</li>
-            <li>이번 달: ${monthlyCost.toFixed(4)}</li>
-            <li>총 토큰: {totalTokens.toLocaleString()}</li>
-            <li>현재 모델: <span className="font-mono">{modelChat}</span></li>
-          </ul>
-        </div>
-
-        {debug && (
-          <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3 text-xs">
-            <h2 className="font-bold mb-2">디버그</h2>
-            <ul className="space-y-1">
-              <li>모드: {debug.mock ? "MOCK" : "API"}</li>
-              <li>최근 메시지 포함: {debug.recentMessageCount}</li>
-              <li>주입 기억: {debug.memoryCount}</li>
-              <li>세계관 매칭: {debug.worldHitsCount}</li>
-              <li>추정 입력 토큰: {debug.estimatedInputTokens}</li>
-              {debug.actualInputTokens !== undefined && (
-                <li>실제 입력: {debug.actualInputTokens} · 출력: {debug.actualOutputTokens}</li>
-              )}
-            </ul>
-          </div>
-        )}
       </aside>
     </main>
   );

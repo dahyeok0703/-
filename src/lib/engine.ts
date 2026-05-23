@@ -106,6 +106,7 @@ export interface NewGameOptions {
   rank?: string | null;
   silver_taels?: number;
   martial_arts?: Array<{ art_id: string; mastery_pct: number }>;
+  weapons?: string[];
 }
 
 export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
@@ -172,6 +173,11 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
         art_id: a.art_id,
         mastery_pct: Math.max(0, Math.min(100, Math.floor(a.mastery_pct || 0))),
       }));
+  }
+
+  // 보유 무기
+  if (Array.isArray(opts.weapons) && opts.weapons.length > 0) {
+    tpl.weapons_owned = opts.weapons.map((w) => w.trim()).filter(Boolean);
   }
 
   return tpl as CharacterState;
