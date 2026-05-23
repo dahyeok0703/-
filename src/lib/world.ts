@@ -15,6 +15,22 @@ export function searchWorld(query: string, recentText: string = "", limit: numbe
   const hits: WorldHit[] = [];
   const seen = new Set<string>();
 
+  // 집합 개념(사화/육천/오황/팔왕/칠성) 별칭 매칭 — 묻는 즉시 정확한 멤버를 컨텍스트에 넣어준다.
+  for (const concept of CONCEPT_GROUPS) {
+    if (concept.aliases.some((a) => text.includes(a.toLowerCase()))) {
+      const key = "concept:" + concept.key;
+      if (!seen.has(key)) {
+        hits.push({
+          name: concept.label,
+          type: "concept",
+          payload: concept.build(),
+          score: 1000,
+        });
+        seen.add(key);
+      }
+    }
+  }
+
   for (const entry of idx) {
     const key = entry.type + ":" + entry.name;
     if (seen.has(key)) continue;
@@ -27,6 +43,80 @@ export function searchWorld(query: string, recentText: string = "", limit: numbe
   hits.sort((a, b) => b.score - a.score);
   return hits.slice(0, limit);
 }
+
+interface ConceptGroup {
+  key: string;
+  label: string;
+  aliases: string[];
+  build: () => { description: string; members: Array<{ name: string; note: string }> };
+}
+
+const CONCEPT_GROUPS: ConceptGroup[] = [
+  {
+    key: "four_beauties",
+    label: "중원사화(中原四花)",
+    aliases: ["사화", "중원사화", "천하사화", "4대 미녀", "4대미녀", "사대미녀"],
+    build: () => ({
+      description:
+        WORLD.beauties?.description ||
+        "현 강호 최고의 4대 미녀. 단순 미모가 아니라 재능·신분·기품을 겸비.",
+      members: (WORLD.beauties?.four_beauties || []).map((b: any) => ({
+        name: b.name,
+        note: [b.alias && `별칭 ${b.alias}`, b.age && `${b.age}세`, b.social_status, b.location]
+          .filter(Boolean)
+          .join(" · "),
+      })),
+    }),
+  },
+  {
+    key: "yukcheon",
+    label: "육천(六天) — 현경 6인",
+    aliases: ["육천", "6천", "현경 6인", "현경 정점"],
+    build: () => ({
+      description: "현 시대 현경의 정점 여섯 명.",
+      members: (WORLD.supreme?.yukcheon || []).map((p: any) => ({
+        name: p.name,
+        note: [p.title, p.position, p.realm, p.age && `${p.age}세`].filter(Boolean).join(" · "),
+      })),
+    }),
+  },
+  {
+    key: "ohwang",
+    label: "오황(五皇) — 화경의 제(帝)",
+    aliases: ["오황", "5황", "화경 제", "화경의 제"],
+    build: () => ({
+      description: "화경의 정점 다섯, 각자 한 도(道)의 황제로 불린다.",
+      members: (WORLD.supreme?.ohwang || []).map((p: any) => ({
+        name: p.name,
+        note: [p.title, p.position, p.realm, p.age && `${p.age}세`].filter(Boolean).join(" · "),
+      })),
+    }),
+  },
+  {
+    key: "palwang",
+    label: "팔왕(八王)",
+    aliases: ["팔왕", "8왕"],
+    build: () => ({
+      description: "화경~초절정의 왕(王) 칭호 여덟 명.",
+      members: (WORLD.supreme?.palwang || []).map((p: any) => ({
+        name: p.name,
+        note: [p.title, p.position, p.realm, p.age && `${p.age}세`].filter(Boolean).join(" · "),
+      })),
+    }),
+  },
+  {
+    key: "chilseong",
+    label: "칠성(七星)",
+    aliases: ["칠성", "7성"],
+    build: () => ({
+      description: "화경~초절정의 일곱 별. 활약하는 영역이 다양하다.",
+      members: (WORLD.supreme?.chilseong || []).map((p: any) => ({
+        name: p.name,
+        note: [p.title, p.position, p.realm, p.age && `${p.age}세`].filter(Boolean).join(" · "),
+      })),
+    }),
+  },
+];
 
 export function worldPrimer(): string {
   const lines: string[] = [];

@@ -128,6 +128,13 @@ function buildDynamicContext(
     L.push("\n[관련 세계관 정보]");
     for (const h of worldHits) {
       const p = h.payload;
+      if (h.type === "concept" && Array.isArray(p?.members)) {
+        L.push(`- 집합 :: ${h.name} — ${truncate(p.description || "", 200)}`);
+        for (const m of p.members) {
+          L.push(`   · ${m.name}${m.note ? " — " + truncate(m.note, 200) : ""}`);
+        }
+        continue;
+      }
       const summary = p.summary || p.description || p.specialty || p.personality || "";
       const meta = p.realm || p.position || p.title || p.age
         ? `[${[p.position, p.title, p.realm, p.age && p.age + "세"].filter(Boolean).join(", ")}]`
