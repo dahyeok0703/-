@@ -318,6 +318,80 @@ export function getAllWeaponOptions(): WeaponOption[] {
   return out;
 }
 
+// ---------- 스탯 ----------
+
+export interface StatDef {
+  key: string;
+  label: string;
+  desc: string;
+}
+
+export const STAT_DEFS: StatDef[] = [
+  { key: "strength", label: "근력(力)", desc: "타격 위력·발경의 기반·외공 위주" },
+  { key: "agility", label: "민첩(敏)", desc: "신법·회피·암기·잔영" },
+  { key: "endurance", label: "체력(體)", desc: "HP·내상 저항·장기 운기" },
+  { key: "perception", label: "감각(感)", desc: "기 감지·기습 회피·검의 인지" },
+  { key: "intellect", label: "지혜(智)", desc: "무공 이해·진법·전략" },
+  { key: "willpower", label: "의지(志)", desc: "주화입마 저항·돌파 의지·심마" },
+  { key: "charisma", label: "매력(魅)", desc: "교섭·연정·세력 흡인" },
+  { key: "luck", label: "운(運)", desc: "기연·치명타·횡재" },
+  { key: "talent", label: "재능(才)", desc: "수련 속도·깨달음 빈도. 상한 없음." },
+];
+
+// 경지별 스탯 상·하한 (재능 제외)
+// 재능(talent) 은 모든 경지에서 상한 없음.
+// 현경 극(hyeongyeong_geuk) 도 상한 없음(∞).
+const STAGE_STAT_BOUNDS_BY_TIER: Record<number, { min: number; max: number }> = {
+  1: { min: 5, max: 25 },   // 삼류
+  2: { min: 10, max: 35 },  // 이류
+  3: { min: 20, max: 50 },  // 일류
+  4: { min: 30, max: 65 },  // 절정
+  5: { min: 40, max: 80 },  // 초절정
+  6: { min: 55, max: 90 },  // 화경
+  7: { min: 70, max: 95 },  // 현경 초입·완숙 (극은 별도)
+};
+const CIVILIAN_BOUNDS = { min: 1, max: 15 };
+
+export interface StatBounds {
+  min: number;
+  max: number; // 상한 없음일 때 9999
+  uncapped: boolean;
+}
+
+export function getStatBounds(opts: {
+  statKey: string;
+  isMartial: boolean;
+  stageId?: string | null;
+}): StatBounds {
+  // 재능은 모든 경지·구분에서 상한 없음 (하한은 1)
+  if (opts.statKey === "talent") {
+    return { min: 1, max: 9999, uncapped: true };
+  }
+
+  if (!opts.isMartial) {
+    return { ...CIVILIAN_BOUNDS, uncapped: false };
+  }
+
+  if (opts.stageId === "hyeongyeong_geuk") {
+    // 현경 극부터는 상한 없음
+    return { min: 80, max: 9999, uncapped: true };
+  }
+
+  const stage = getStageById(opts.stageId || "");
+  const tier = stage?.tier ?? 1;
+  const b = STAGE_STAT_BOUNDS_BY_TIER[tier] || STAGE_STAT_BOUNDS_BY_TIER[1];
+  return { ...b, uncapped: false };
+}
+
+export function clampStat(value: number, bounds: StatBounds): number {
+  if (!isFinite(value)) return bounds.min;
+  const n = Math.floor(value);
+  if (n < bounds.min) return bounds.min;
+  if (!bounds.uncapped && n > bounds.max) return bounds.max;
+  if (bounds.uncapped && n > 9999) return 9999;
+  return n;
+}
+
 // ---------- 게임 시진(時辰) ----------
 
 export const SICHEN_LIST = [

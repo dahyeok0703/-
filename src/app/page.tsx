@@ -18,6 +18,7 @@ import {
   getAllStageOptions, getAllSectOptions, getAllArtOptions, getAllWeaponOptions,
   stageNameKR, sectNameKR, artNameKR,
   makeCustomArtId, formatGameTime, sichenPhase,
+  STAT_DEFS, getStatBounds, clampStat,
 } from "@/data/world-data";
 
 const MODEL_PRESETS = [
@@ -87,6 +88,9 @@ export default function Page() {
   const [weaponPick, setWeaponPick] = useState<string>("");
   const [weaponFilter, setWeaponFilter] = useState<string>("");
   const [customWeaponName, setCustomWeaponName] = useState<string>("");
+  const [newStats, setNewStats] = useState<Record<string, number>>(() =>
+    Object.fromEntries(STAT_DEFS.map((d) => [d.key, d.key === "talent" ? 10 : 5])),
+  );
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -103,6 +107,26 @@ export default function Page() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading, streamingText]);
+
+  // 경지·구분 변경 시 스탯을 현 경지 범위로 재정렬
+  useEffect(() => {
+    setNewStats((prev) => {
+      const next: Record<string, number> = {};
+      let changed = false;
+      for (const def of STAT_DEFS) {
+        const b = getStatBounds({
+          statKey: def.key,
+          isMartial: newIsMartial,
+          stageId: newIsMartial ? newStage : null,
+        });
+        const cur = prev[def.key] ?? b.min;
+        const clamped = clampStat(cur, b);
+        if (clamped !== cur) changed = true;
+        next[def.key] = clamped;
+      }
+      return changed ? next : prev;
+    });
+  }, [newStage, newIsMartial]);
 
   function refreshAll() {
     setSave(getSave());
@@ -224,6 +248,7 @@ export default function Page() {
           ? newArts.map((a) => ({ art_id: a.art_id, mastery_pct: a.mastery_pct }))
           : [],
         weapons: newWeapons,
+        stats: newStats,
       });
       setSave(s);
       setMessages([]);
@@ -905,6 +930,70 @@ export default function Page() {
                 )}
               </fieldset>
 
+              {/* 스탯 */}
+              <fieldset className="space-y-3 border border-ink-500/30 rounded p-3">
+                <legend className="px-2 text-xs text-ink-300">스탯</legend>
+                <p className="text-xs text-ink-300">
+                  경지에 따라 상·하한이 정해져 있습니다. 현경 극부터는 상한이 사라지며,
+                  재능(才)은 어느 경지에서든 상한이 없습니다.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {STAT_DEFS.map((def) => {
+                    const b = getStatBounds({
+                      statKey: def.key,
+                      isMartial: newIsMartial,
+                      stageId: newIsMartial ? newStage : null,
+                    });
+                    const value = newStats[def.key] ?? b.min;
+                    const sliderMax = b.uncapped ? Math.max(100, value + 20) : b.max;
+                    return (
+                      <div
+                        key={def.key}
+                        className="bg-ink-900/40 border border-ink-500/30 rounded p-2"
+                      >
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold">{def.label}</span>
+                          <span className="text-ink-300">
+                            {b.uncapped ? `${b.min} ~ ∞` : `${b.min} ~ ${b.max}`}
+                          </span>
+                        </div>
+                        <p className="text-xs text-ink-300 mt-0.5">{def.desc}</p>
+                        <div className="flex gap-2 items-center mt-1">
+                          <input
+                            type="range"
+                            min={b.min}
+                            max={sliderMax}
+                            value={Math.min(value, sliderMax)}
+                            onChange={(e) => {
+                              const n = parseInt(e.target.value);
+                              setNewStats((s) => ({
+                                ...s,
+                                [def.key]: clampStat(n, b),
+                              }));
+                            }}
+                            className="flex-1"
+                          />
+                          <input
+                            type="number"
+                            min={b.min}
+                            max={b.uncapped ? 9999 : b.max}
+                            value={value}
+                            onChange={(e) => {
+                              const n = parseInt(e.target.value) || b.min;
+                              setNewStats((s) => ({
+                                ...s,
+                                [def.key]: clampStat(n, b),
+                              }));
+                            }}
+                            className="w-16 px-1 py-0.5 bg-ink-900 border border-ink-500 rounded text-center text-xs"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
               {/* 자산 */}
               <fieldset className="space-y-2 border border-ink-500/30 rounded p-3">
                 <legend className="px-2 text-xs text-ink-300">자산 (선택)</legend>
@@ -1112,6 +1201,26 @@ export default function Page() {
             <p className="text-ink-300">캐릭터 없음</p>
           )}
         </div>
+
+        {save?.character?.stats && (
+          <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
+            <h2 className="font-bold mb-2">스탯</h2>
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
+              {STAT_DEFS.map((def) => {
+                const v = Number(save.character.stats?.[def.key] ?? 0);
+                const isTalent = def.key === "talent";
+                return (
+                  <li key={def.key} className="flex justify-between">
+                    <span className="text-ink-300">{def.label}</span>
+                    <span className={isTalent ? "font-bold text-amber-200" : "font-bold"}>
+                      {v}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
         <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
           <h2 className="font-bold mb-2">관계 ({save ? Object.keys(save.relationships || {}).length : 0})</h2>

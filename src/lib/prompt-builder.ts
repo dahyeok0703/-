@@ -2,7 +2,7 @@ import { ChatMessage, LongTermMemory, SaveData } from "./types";
 import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
-import { formatGameTime, sichenPhase } from "../data/world-data";
+import { formatGameTime, sichenPhase, STAT_DEFS } from "../data/world-data";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -88,6 +88,10 @@ function buildDynamicContext(
   const noto = Number((c.reputation as any)?.notoriety ?? 0);
   const titles = (c.reputation as any)?.titles as string[] | undefined;
   L.push(`평판: 명성 ${fame} · 악명 ${noto}${titles && titles.length ? ` · 별호 [${titles.join(", ")}]` : ""}`);
+  if (c.stats) {
+    const statsStr = STAT_DEFS.map((d) => `${d.label}${c.stats?.[d.key] ?? 0}`).join(" ");
+    L.push(`스탯: ${statsStr}`);
+  }
   if (c.martial_arts_known.length) {
     L.push(`무공: ${c.martial_arts_known.map((a) => `${a.art_id}(${a.mastery_pct}%)`).join(", ")}`);
   }

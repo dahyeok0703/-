@@ -28,7 +28,8 @@
     "intellect": 5,
     "willpower": 5,
     "charisma": 5,
-    "luck": 5
+    "luck": 5,
+    "talent": 5
   },
   "vitals": {
     "hp_current": 30,

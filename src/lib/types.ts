@@ -150,6 +150,7 @@ export interface ExtractedUpdates {
     mastery_delta?: number;
   }>;
   reputationUpdates?: Array<{ field: string; delta?: number; value?: number }>;
+  statUpdates?: Array<{ stat: string; delta?: number; value?: number; reason?: string }>;
   titleAdds?: string[];
   titleRemoves?: string[];
   familyUpdates?: Array<{

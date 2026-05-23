@@ -125,6 +125,7 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "weaponUpdates": [{ "action": "add|remove", "weapon": "무기 이름" }],
   "martialArtUpdates": [{ "action": "add|remove|change", "name": "무공 이름", "art_id": "있다면 id", "mastery_pct": 0-100, "mastery_delta": -100~100 }],
   "reputationUpdates": [{ "field": "fame|notoriety|in_jianghu|in_orthodox|in_unorthodox|in_demonic|in_commoners", "delta": 0 }],
+  "statUpdates": [{ "stat": "strength|agility|endurance|perception|intellect|willpower|charisma|luck|talent", "delta": 0, "value": null, "reason": "..." }],
   "titleAdds": ["새로 얻은 별호"],
   "titleRemoves": ["사라진 별호"],
   "familyUpdates": [{ "field": "spouse|father_alive|mother_alive|siblings|concubines|children", "action": "set|add|remove", "value": "..." }],
@@ -158,6 +159,11 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
 - 내공·HP·돈 변동은 본문에 묘사가 있을 때마다 playerUpdates 에 절대값으로 기록(예: vitals.hp_current = 35).
 - 경지 상승은 realm.current_realm/current_stage/tier/internal_energy_cap 를 함께 갱신한다.
 - 평판은 ±1~±10 단위 delta. 큰 사건만 ±20 이상.
+- 스탯(statUpdates)은 본문에 실제 단련·각성·부상으로 명백한 변화가 있을 때만 갱신:
+  · 평범한 수련 한 차례 ±0~1, 깊은 깨달음·기연 +2~5, 영약 +3~10.
+  · 재능(talent)은 깨달음·기연으로만 오른다.
+  · 경지 상승 시 새 경지의 하한 미만 스탯은 자동으로 새 하한까지 올린다.
+  · 부상·내공 손상으로 일시적으로 떨어질 수도 있다.
 - 명성(fame) = 강호에 알려진 좋은 행적·의로움·구함. 협의로운 행동으로 +.
 - 악명(notoriety) = 두려움·잔혹·살인·배신·약탈로 알려진 정도. 잔혹 행위·살인·배신으로 +.
 - 같은 행동이 명성과 악명 양쪽을 동시에 올릴 수도 있다(예: 강자를 베면 명성 +5 악명 +3).

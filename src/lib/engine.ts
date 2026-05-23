@@ -12,7 +12,7 @@ import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, callChatStream, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
-import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions } from "../data/world-data";
+import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions, getStatBounds, clampStat, STAT_DEFS } from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
@@ -106,6 +106,7 @@ export interface NewGameOptions {
   silver_taels?: number;
   martial_arts?: Array<{ art_id: string; mastery_pct: number }>;
   weapons?: string[];
+  stats?: Record<string, number>;
 }
 
 export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
@@ -178,6 +179,17 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
   if (Array.isArray(opts.weapons) && opts.weapons.length > 0) {
     tpl.weapons_owned = opts.weapons.map((w) => w.trim()).filter(Boolean);
   }
+
+  // 스탯 (경지별 상·하한 클램프)
+  const stageForBounds = isMartial ? opts.stage_id || "samryu_chuip" : null;
+  const userStats = opts.stats || {};
+  const finalStats: Record<string, number> = {};
+  for (const def of STAT_DEFS) {
+    const bounds = getStatBounds({ statKey: def.key, isMartial, stageId: stageForBounds });
+    const raw = typeof userStats[def.key] === "number" ? userStats[def.key] : bounds.min;
+    finalStats[def.key] = clampStat(raw, bounds);
+  }
+  tpl.stats = finalStats;
 
   return tpl as CharacterState;
 }
@@ -467,6 +479,31 @@ function applyExtraction(rawText: string, save: SaveData) {
       const base = typeof cur === "number" ? cur : 0;
       (save.character.reputation as any)[r.field] = base + r.delta;
     }
+  }
+
+  if (!save.character.stats) save.character.stats = {};
+  for (const s of parsed.statUpdates || []) {
+    if (!s.stat || !STAT_DEFS.some((d) => d.key === s.stat)) continue;
+    const bounds = getStatBounds({
+      statKey: s.stat,
+      isMartial: save.character.civilian_or_martial === "martial",
+      stageId: save.character.realm?.current_stage,
+    });
+    const cur = Number(save.character.stats[s.stat] ?? bounds.min);
+    let next = cur;
+    if (typeof s.value === "number") next = s.value;
+    else if (typeof s.delta === "number") next = cur + s.delta;
+    save.character.stats[s.stat] = clampStat(next, bounds);
+  }
+  // 경지가 올라간 경우 새 하한까지 자동 보정
+  for (const def of STAT_DEFS) {
+    const bounds = getStatBounds({
+      statKey: def.key,
+      isMartial: save.character.civilian_or_martial === "martial",
+      stageId: save.character.realm?.current_stage,
+    });
+    const cur = Number(save.character.stats[def.key] ?? bounds.min);
+    if (cur < bounds.min) save.character.stats[def.key] = bounds.min;
   }
 
   if (Array.isArray(parsed.titleAdds) && parsed.titleAdds.length > 0) {
