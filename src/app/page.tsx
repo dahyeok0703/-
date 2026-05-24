@@ -1091,11 +1091,18 @@ export default function Page() {
               })}
               {loading && (
                 <div className="bg-ink-900/40 border border-ink-500/30 rounded-lg p-3">
-                  <div className="text-xs text-ink-300 mb-1">강호 (출력 중…)</div>
+                  <div className="text-xs text-ink-300 mb-1">강호</div>
                   {streamingText ? (
-                    <div className="whitespace-pre-wrap leading-relaxed">{streamingText}<span className="animate-pulse">▍</span></div>
+                    <div className="whitespace-pre-wrap leading-relaxed">
+                      {streamingText}
+                      <span className="streaming-cursor">▌</span>
+                    </div>
                   ) : (
-                    <div className="text-ink-300 text-sm">강호가 응답을 시작합니다…</div>
+                    <div className="text-ink-300 text-sm flex items-center gap-1">
+                      <span className="typing-dot"></span>
+                      <span className="typing-dot"></span>
+                      <span className="typing-dot"></span>
+                    </div>
                   )}
                 </div>
               )}

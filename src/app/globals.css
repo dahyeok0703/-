@@ -18,3 +18,33 @@ body {
 .scroll-area::-webkit-scrollbar { width: 8px; }
 .scroll-area::-webkit-scrollbar-track { background: #1a1610; }
 .scroll-area::-webkit-scrollbar-thumb { background: #322a1d; border-radius: 4px; }
+
+/* 타이핑 점 애니메이션 (응답 대기 중) */
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+.typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 2px;
+  background-color: currentColor;
+  border-radius: 50%;
+  animation: typingDot 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* 부드러운 커서 깜빡임 */
+@keyframes softBlink {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+}
+.streaming-cursor {
+  display: inline-block;
+  width: 8px;
+  margin-left: 1px;
+  color: currentColor;
+  animation: softBlink 1s ease-in-out infinite;
+}
