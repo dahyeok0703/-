@@ -93,6 +93,31 @@ export interface GameTime {
   sichen: string;   // 자/축/인/묘/진/사/오/미/신/유/술/해
 }
 
+export interface CustomWeaponEntry {
+  id: string;
+  name: string;
+  type: string;
+  rarity: string;
+  effect: string;
+  origin?: string; // 어떻게 얻었/만들었는지
+}
+
+export interface CustomArtEntry {
+  id: string;
+  name: string;
+  grade: string;
+  type: string;
+  weapon: string;
+  description: string;
+  side_effects?: string;
+  origin?: string;
+}
+
+export interface CustomCatalog {
+  weapons: CustomWeaponEntry[];
+  arts: CustomArtEntry[];
+}
+
 export interface SaveData {
   slot: string;
   createdAt: string;
@@ -101,6 +126,7 @@ export interface SaveData {
   character: CharacterState;
   relationships: Record<string, RelationshipEntry>;
   gameTime: GameTime;
+  customCatalog?: CustomCatalog;
   worldStateOverrides: {
     npc_overrides: Record<string, unknown>;
     sect_overrides: Record<string, unknown>;
@@ -144,6 +170,8 @@ export interface ExtractedUpdates {
   locationUpdates?: Array<{ location_id: string; note: string }>;
   inventoryUpdates?: Array<{ action: "add" | "remove" | "change"; item: string; qty?: number }>;
   weaponUpdates?: Array<{ action: "add" | "remove"; weapon: string }>;
+  createdWeapons?: Array<{ name: string; type?: string; rarity?: string; effect?: string; origin?: string }>;
+  createdArts?: Array<{ name: string; grade?: string; type?: string; weapon?: string; description?: string; side_effects?: string; origin?: string }>;
   martialArtUpdates?: Array<{
     action: "add" | "remove" | "change";
     name?: string;

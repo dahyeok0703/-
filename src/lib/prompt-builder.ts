@@ -204,6 +204,17 @@ function buildDynamicContext(
     }
   }
 
+  const cat = save.customCatalog;
+  if (cat && (cat.weapons.length || cat.arts.length)) {
+    L.push("\n[유저가 만든/얻은 고유 무기·무공] (스펙 일관 유지)");
+    for (const w of cat.weapons) {
+      L.push(`- 무기 :: ${w.name} [${w.rarity}/${w.type}]${w.effect ? " — " + w.effect : ""}`);
+    }
+    for (const a of cat.arts) {
+      L.push(`- 무공 :: ${a.name} [${a.grade}/${a.type}/${a.weapon}]${a.description ? " — " + a.description : ""}${a.side_effects ? " (부작용: " + a.side_effects + ")" : ""}`);
+    }
+  }
+
   if (c.biography_summary) L.push(`\n[일대기 요약] ${c.biography_summary}`);
 
   return L.join("\n");

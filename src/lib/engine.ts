@@ -215,6 +215,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
     character,
     relationships: {},
     gameTime: { year: 1, month: 3, day: 1, sichen: "진" },
+    customCatalog: { weapons: [], arts: [] },
     worldStateOverrides: {
       npc_overrides: {},
       sect_overrides: {},
@@ -504,6 +505,56 @@ function applyExtraction(rawText: string, save: SaveData) {
       if (!save.character.weapons_owned.includes(name)) save.character.weapons_owned.push(name);
     } else if (w.action === "remove") {
       save.character.weapons_owned = save.character.weapons_owned.filter((x) => x !== name);
+    }
+  }
+
+  // 플레이 중 만들거나 받은 무기를 영구 카탈로그에 등록 + 소유
+  if (!save.customCatalog) save.customCatalog = { weapons: [], arts: [] };
+  for (const cw of parsed.createdWeapons || []) {
+    const name = (cw.name || "").trim();
+    if (!name) continue;
+    const exists = save.customCatalog.weapons.some((x) => x.name === name);
+    if (!exists) {
+      save.customCatalog.weapons.push({
+        id: "uw_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 5),
+        name,
+        type: (cw.type || "기타").trim(),
+        rarity: (cw.rarity || "흔함").trim(),
+        effect: (cw.effect || "").trim(),
+        origin: (cw.origin || "").trim() || undefined,
+      });
+    }
+    if (!save.character.weapons_owned.includes(name)) save.character.weapons_owned.push(name);
+  }
+
+  // 플레이 중 만든 무공을 영구 카탈로그에 등록 + 습득
+  for (const ca of parsed.createdArts || []) {
+    const name = (ca.name || "").trim();
+    if (!name) continue;
+    const exists = save.customCatalog.arts.some((x) => x.name === name);
+    let artId = "";
+    if (!exists) {
+      artId = "uart_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 5);
+      save.customCatalog.arts.push({
+        id: artId,
+        name,
+        grade: (ca.grade || "일류").trim(),
+        type: (ca.type || "기타").trim(),
+        weapon: (ca.weapon || "무관").trim(),
+        description: (ca.description || "").trim(),
+        side_effects: (ca.side_effects || "").trim() || undefined,
+        origin: (ca.origin || "").trim() || undefined,
+      });
+    } else {
+      artId = save.customCatalog.arts.find((x) => x.name === name)!.id;
+    }
+    // 보유 무공에 추가 (이름으로 식별, custom_ 인코딩 사용)
+    const encId = makeCustomArtIdLocal(`${name} [${(ca.grade || "일류").trim()}]`);
+    const already = save.character.martial_arts_known.some(
+      (x) => x.art_id === encId || artNameOf(x.art_id) === name || artNameKR(x.art_id) === name,
+    );
+    if (!already) {
+      save.character.martial_arts_known.push({ art_id: encId, mastery_pct: 5 });
     }
   }
 

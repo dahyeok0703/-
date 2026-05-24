@@ -221,7 +221,9 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "locationUpdates": [{ "location_id": "...", "note": "..." }],
   "inventoryUpdates": [{ "action": "add|remove|change", "item": "...", "qty": 1 }],
   "weaponUpdates": [{ "action": "add|remove", "weapon": "무기 이름" }],
+  "createdWeapons": [{ "name": "새 무기 이름", "type": "검|도|창|...", "rarity": "흔함|귀함|진귀|신물|전설", "effect": "특성 한 줄", "origin": "어떻게 만들었/받았는지" }],
   "martialArtUpdates": [{ "action": "add|remove|change", "name": "무공 이름", "art_id": "있다면 id", "mastery_pct": 0-100, "mastery_delta": -100~100 }],
+  "createdArts": [{ "name": "새 무공 이름", "grade": "삼류|이류|일류|절정|초절정|신공", "type": "검법|권법|내공심법|...", "weapon": "검|맨손|무관|...", "description": "한 줄 묘사", "side_effects": "있으면", "origin": "어떻게 창안/입수했는지" }],
   "reputationUpdates": [{ "field": "fame|notoriety|in_jianghu|in_orthodox|in_unorthodox|in_demonic|in_commoners", "delta": 0 }],
   "statUpdates": [{ "stat": "strength|agility|endurance|perception|intellect|willpower|charisma|luck|talent", "delta": 0, "value": null, "reason": "..." }],
   "titleAdds": ["새로 얻은 별호"],
@@ -254,6 +256,13 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
   · 잃거나 폐기되면 action=remove.
   · 강호에 없는 자작 무공은 art_id 비우고 name만 채운다.
 - 무기 습득/상실은 weaponUpdates 로. 일반 소지품은 inventoryUpdates 로.
+- 새 무기·무공 생성/입수 (영구 카탈로그 등록):
+  · 본문에서 유저가 ① 대장간에서 무기를 주문·제작하거나, ② 명병기를 새로 얻거나, ③ 무공을 스스로 창안하거나 비급에서 새 무공을 익혔다면,
+    createdWeapons / createdArts 에 그 스펙(이름·종류·등급·효과/묘사)을 채워 등록한다. 이건 강호에 새로 생긴 실재 데이터가 되어 이후로도 일관되게 유지된다.
+  · 등급/희귀도는 그 물건의 내력·재료·제작자 솜씨·무공의 깊이에 맞게 정한다. 평범하면 흔함/이류, 명장의 작품·심오한 창안이면 진귀/절정 이상.
+  · 한 번 등록한 이름은 다시 createdWeapons/createdArts 에 넣지 마라(중복 방지). 사용·숙련 변화는 weaponUpdates/martialArtUpdates 로.
+  · 유저가 이름을 안 정했으면 어울리는 이름을 지어 등록한다.
+  · createdArts 로 등록하면 자동으로 보유 무공에 낮은 숙련도로 추가되니, martialArtUpdates 로 또 추가하지 마라.
 - 내공·HP·돈 변동은 본문에 묘사가 있을 때마다 playerUpdates 에 절대값으로 기록(예: vitals.hp_current = 35).
 - 경지 상승은 realm.current_realm/current_stage/tier/internal_energy_cap 를 함께 갱신한다.
 - 평판은 ±1~±10 단위 delta. 큰 사건만 ±20 이상.

@@ -1275,6 +1275,40 @@ export default function Page() {
           )}
         </div>
 
+        {save?.customCatalog && (save.customCatalog.weapons.length > 0 || save.customCatalog.arts.length > 0) && (
+          <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
+            <h2 className="font-bold mb-2">내가 만든 / 얻은 고유 무기·무공</h2>
+            {save.customCatalog.weapons.length > 0 && (
+              <div className="mb-2">
+                <div className="text-xs text-ink-300 mb-1">무기</div>
+                <ul className="space-y-1 text-xs">
+                  {save.customCatalog.weapons.map((w) => (
+                    <li key={w.id}>
+                      <span className="font-bold text-amber-200">{w.name}</span>
+                      <span className="text-ink-300"> [{w.rarity}/{w.type}]</span>
+                      {w.effect && <span className="text-ink-300"> — {w.effect}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {save.customCatalog.arts.length > 0 && (
+              <div>
+                <div className="text-xs text-ink-300 mb-1">무공</div>
+                <ul className="space-y-1 text-xs">
+                  {save.customCatalog.arts.map((a) => (
+                    <li key={a.id}>
+                      <span className="font-bold text-amber-200">{a.name}</span>
+                      <span className="text-ink-300"> [{a.grade}/{a.type}]</span>
+                      {a.description && <span className="text-ink-300"> — {a.description}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
         {save?.character?.stats && (
           <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
             <h2 className="font-bold mb-2">스탯</h2>
