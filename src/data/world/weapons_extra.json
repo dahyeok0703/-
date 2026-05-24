@@ -1,0 +1,80 @@
+{
+  "_description": "추가 병기 모음. 기존 카탈로그(weapons.json)에 병합된다. 약 60종.",
+  "extra_swords": [
+    {"id": "exwp_s001", "name": "청강검(靑鋼劍)", "type": "검", "rarity": "흔함", "price_silver": 35, "effect": "푸른빛이 도는 강철 보병검. 표사들이 즐겨 쓴다."},
+    {"id": "exwp_s002", "name": "유엽검(柳葉劍)", "type": "검", "rarity": "흔함", "price_silver": 40, "effect": "버들잎처럼 얇고 가벼워 초학자에게 알맞다."},
+    {"id": "exwp_s003", "name": "녹옥검(綠玉劍)", "type": "검", "rarity": "귀함", "price_silver": 280, "effect": "녹옥을 박은 손잡이가 일품인 장인 명검."},
+    {"id": "exwp_s004", "name": "한매검(寒梅劍)", "type": "검", "rarity": "귀함", "price_silver": 320, "effect": "검신에 매화 무늬가 서려 차가운 기운을 풍긴다."},
+    {"id": "exwp_s005", "name": "추혼검(追魂劍)", "type": "검", "rarity": "진귀", "price_silver": 1100, "effect": "검명이 혼을 쫓는 듯 운다. 야전에서 빛을 발한다."},
+    {"id": "exwp_s006", "name": "낙성검(落星劍)", "type": "검", "rarity": "진귀", "price_silver": 1400, "effect": "별이 떨어지는 듯한 쾌검에 어울리는 명검."},
+    {"id": "exwp_s007", "name": "현빙검(玄氷劍)", "type": "검", "rarity": "신물", "price_silver": "비매", "effect": "만년한빙으로 벼려 검을 쥐는 자의 손에 서리가 맺힌다. 베인 상처는 얼어붙어 피가 흐르지 않는다."},
+    {"id": "exwp_s008", "name": "천류검(天流劍)", "type": "검", "rarity": "전설", "price_silver": "비매", "effect": "검선(劍仙)이 남긴 신검. 검을 뽑으면 하늘의 별빛이 검신에 깃들고, 검로(劍路)는 강물처럼 끊어지지 않는다 전한다."}
+  ],
+  "extra_sabers": [
+    {"id": "exwp_d001", "name": "환수도(環首刀)", "type": "도", "rarity": "흔함", "price_silver": 35, "effect": "둥근 고리 손잡이의 군용 패도. 튼튼하다."},
+    {"id": "exwp_d002", "name": "박도(朴刀)", "type": "도", "rarity": "흔함", "price_silver": 45, "effect": "긴 자루의 보병도. 위력이 묵직하다."},
+    {"id": "exwp_d003", "name": "안령도(雁翎刀)", "type": "도", "rarity": "귀함", "price_silver": 260, "effect": "기러기 깃처럼 휜 도신이 가볍고 날렵한 명품."},
+    {"id": "exwp_d004", "name": "백홍도(白虹刀)", "type": "도", "rarity": "귀함", "price_silver": 360, "effect": "휘두르면 흰 무지개가 서린다 하여 붙은 이름."},
+    {"id": "exwp_d005", "name": "단혼도(斷魂刀)", "type": "도", "rarity": "진귀", "price_silver": 1000, "effect": "묵직한 참마도. 한 번 휘두르면 혼이 끊긴다 한다."},
+    {"id": "exwp_d006", "name": "혈음도(血飮刀)", "type": "도", "rarity": "진귀", "price_silver": 1300, "effect": "피를 마실수록 도신이 붉어진다는 마도(魔刀)."},
+    {"id": "exwp_d007", "name": "구환도(九環刀)", "type": "도", "rarity": "진귀", "price_silver": 900, "effect": "도배에 아홉 고리가 달려 베일 때 쇳소리가 울린다."},
+    {"id": "exwp_d008", "name": "패왕도(覇王刀)", "type": "도", "rarity": "신물", "price_silver": "비매", "effect": "전대 도왕(刀王)의 애병. 무게가 백 근에 달해 기력이 충만한 자만이 들 수 있으며, 일도양단의 패기가 깃들어 있다."}
+  ],
+  "extra_spears_polearms": [
+    {"id": "exwp_p001", "name": "백랍창(白蠟槍)", "type": "창", "rarity": "흔함", "price_silver": 40, "effect": "백랍나무 자루의 표준 군창. 탄력이 좋다."},
+    {"id": "exwp_p002", "name": "제미곤(齊眉棍)", "type": "곤", "rarity": "흔함", "price_silver": 25, "effect": "눈높이에 맞춘 길이의 봉. 소림 외문 수련용."},
+    {"id": "exwp_p003", "name": "낭아봉(狼牙棒)", "type": "봉", "rarity": "흔함", "price_silver": 50, "effect": "끝에 쇠가시가 박힌 둔기. 갑옷째 으깬다."},
+    {"id": "exwp_p004", "name": "사모(蛇矛)", "type": "창", "rarity": "귀함", "price_silver": 300, "effect": "뱀처럼 구불거리는 창끝이 상처를 헤집는 명병."},
+    {"id": "exwp_p005", "name": "방천극(方天戟)", "type": "창", "rarity": "진귀", "price_silver": 1500, "effect": "찌르고 베고 걸 수 있는 만능 극. 명장의 애병으로 전한다."},
+    {"id": "exwp_p006", "name": "흑룡곤(黑龍棍)", "type": "곤", "rarity": "진귀", "price_silver": 800, "effect": "흑철로 벼린 묵직한 곤. 휘두르면 용이 우는 듯하다."},
+    {"id": "exwp_p007", "name": "벽력극(霹靂戟)", "type": "창", "rarity": "신물", "price_silver": "비매", "effect": "전대 창신(槍神)이 쓰던 극. 한 번 내지르면 천둥이 친 듯 대기가 갈라진다 전한다."}
+  ],
+  "extra_fists_and_gauntlets": [
+    {"id": "exwp_f001", "name": "철포수(鐵布手)", "type": "권갑", "rarity": "흔함", "price_silver": 30, "effect": "두꺼운 가죽에 쇠편을 덧댄 수투. 주먹을 보호한다."},
+    {"id": "exwp_f002", "name": "동피수투(銅皮手套)", "type": "권갑", "rarity": "흔함", "price_silver": 45, "effect": "구리판을 댄 권갑. 외문 권사들이 쓴다."},
+    {"id": "exwp_f003", "name": "호조(虎爪)", "type": "권갑", "rarity": "귀함", "price_silver": 280, "effect": "범 발톱 모양의 강철 갑. 살을 찢고 근맥을 잡는다."},
+    {"id": "exwp_f004", "name": "판수(板手)", "type": "권갑", "rarity": "귀함", "price_silver": 220, "effect": "손등을 덮는 철판 권갑. 막기와 가격을 겸한다."},
+    {"id": "exwp_f005", "name": "묵린수갑(墨鱗手匣)", "type": "권갑", "rarity": "진귀", "price_silver": 1100, "effect": "검은 비늘을 엮은 권갑. 검날도 미끄러뜨린다."},
+    {"id": "exwp_f006", "name": "혈조투(血爪套)", "type": "권갑", "rarity": "진귀", "price_silver": 950, "effect": "마문(魔門)의 조법(爪法)에 쓰이는 독조 권갑."},
+    {"id": "exwp_f007", "name": "금강수투(金剛手套)", "type": "권갑", "rarity": "신물", "price_silver": "비매", "effect": "고승의 금강불괴(金剛不壞)가 깃든 수투. 끼면 두 주먹이 금강석처럼 단단해진다 전한다."}
+  ],
+  "extra_whips_and_chains": [
+    {"id": "exwp_w001", "name": "우피편(牛皮鞭)", "type": "채찍", "rarity": "흔함", "price_silver": 25, "effect": "질긴 소가죽 채찍. 마부와 표사가 흔히 쓴다."},
+    {"id": "exwp_w002", "name": "철척편(鐵脊鞭)", "type": "채찍", "rarity": "흔함", "price_silver": 55, "effect": "마디진 강철 편. 둔기처럼 후려친다."},
+    {"id": "exwp_w003", "name": "구절편(九節鞭)", "type": "채찍", "rarity": "귀함", "price_silver": 320, "effect": "아홉 마디 연편. 변화막측한 궤적을 그린다."},
+    {"id": "exwp_w004", "name": "혈사편(血絲鞭)", "type": "채찍", "rarity": "귀함", "price_silver": 400, "effect": "붉은 강선을 꼬아 만든 연편. 살을 파고든다."},
+    {"id": "exwp_w005", "name": "추련(錐鏈)", "type": "채찍", "rarity": "진귀", "price_silver": 900, "effect": "끝에 송곳추를 단 쇠사슬. 던지고 휘감는 데 능하다."},
+    {"id": "exwp_w006", "name": "탈백연환(奪魄連環)", "type": "채찍", "rarity": "진귀", "price_silver": 1200, "effect": "휘두르면 백을 빼앗는다는 명연편. 소리가 귀곡(鬼哭) 같다."},
+    {"id": "exwp_w007", "name": "천잠사편(天蠶絲鞭)", "type": "채찍", "rarity": "신물", "price_silver": "비매", "effect": "천잠사로 짠 무형의 연편. 평소엔 허리띠로 두르나 한번 풀면 강기를 실어 십장 밖을 친다 전한다."}
+  ],
+  "extra_hidden_weapons": [
+    {"id": "exwp_h001", "name": "유엽비도(柳葉飛刀)", "type": "암기", "rarity": "흔함", "price_silver": 30, "effect": "버들잎 모양 비도 한 묶음. 던지기 좋다."},
+    {"id": "exwp_h002", "name": "철질려(鐵蒺藜)", "type": "암기", "rarity": "흔함", "price_silver": 20, "effect": "사방 가시 마름쇠. 추격을 끊는 데 쓴다."},
+    {"id": "exwp_h003", "name": "수전(袖箭)", "type": "암기", "rarity": "귀함", "price_silver": 180, "effect": "소매 속에 감춘 발사식 화살. 불시에 쏜다."},
+    {"id": "exwp_h004", "name": "칠성표(七星鏢)", "type": "암기", "rarity": "귀함", "price_silver": 240, "effect": "북두 일곱 별처럼 잇따라 날리는 표창 세트."},
+    {"id": "exwp_h005", "name": "독린침(毒鱗針)", "type": "암기", "rarity": "진귀", "price_silver": 700, "effect": "독을 먹인 비늘침. 스치기만 해도 마비된다."},
+    {"id": "exwp_h006", "name": "탈명비황석(奪命飛蝗石)", "type": "암기", "rarity": "진귀", "price_silver": 800, "effect": "메뚜기처럼 쏟아지는 강기 박힌 돌. 명숙의 암기술에 쓰인다."},
+    {"id": "exwp_h007", "name": "만천화우낭(滿天花雨囊)", "type": "암기", "rarity": "신물", "price_silver": "비매", "effect": "전대 암기왕의 비낭. 한 번 떨치면 온 하늘에 꽃비처럼 암기가 퍼져 피할 길이 없다 전한다."}
+  ],
+  "extra_ranged": [
+    {"id": "exwp_r001", "name": "각궁(角弓)", "type": "활", "rarity": "흔함", "price_silver": 50, "effect": "물소 뿔을 덧댄 표준 단궁. 기마에 알맞다."},
+    {"id": "exwp_r002", "name": "수노(手弩)", "type": "노(쇠뇌)", "rarity": "흔함", "price_silver": 60, "effect": "한 손으로 쏘는 작은 쇠뇌. 근거리 기습용."},
+    {"id": "exwp_r003", "name": "비조(飛抓)", "type": "기타", "rarity": "흔함", "price_silver": 40, "effect": "줄 달린 갈고리. 던져 걸고 오르내린다."},
+    {"id": "exwp_r004", "name": "철태궁(鐵胎弓)", "type": "활", "rarity": "귀함", "price_silver": 350, "effect": "쇠심을 넣은 강궁. 두꺼운 갑옷도 꿰뚫는다."},
+    {"id": "exwp_r005", "name": "연주노(連珠弩)", "type": "노(쇠뇌)", "rarity": "귀함", "price_silver": 450, "effect": "구슬을 잇듯 연발로 쏘는 제갈식 쇠뇌."},
+    {"id": "exwp_r006", "name": "낙안궁(落雁弓)", "type": "활", "rarity": "진귀", "price_silver": 1200, "effect": "기러기를 떨어뜨린다는 명궁. 백 보 밖 표적을 가른다."},
+    {"id": "exwp_r007", "name": "벽력화전노(霹靂火箭弩)", "type": "노(쇠뇌)", "rarity": "진귀", "price_silver": 1600, "effect": "화약 화살을 발사하는 기문 쇠뇌. 굉음과 함께 불을 뿜는다."},
+    {"id": "exwp_r008", "name": "사일신궁(射日神弓)", "type": "활", "rarity": "전설", "price_silver": "비매", "effect": "해를 쏘아 떨어뜨렸다는 상고의 신궁. 시위를 당기면 화살에 양강(陽剛)의 불길이 깃들어 천 보 밖도 닿는다 전한다."}
+  ],
+  "extra_exotic_and_armor": [
+    {"id": "exwp_x001", "name": "철골선(鐵骨扇)", "type": "부채", "rarity": "흔함", "price_silver": 55, "effect": "쇠살을 넣은 접선. 문인의 호신용으로 쓰인다."},
+    {"id": "exwp_x002", "name": "판관필(判官筆)", "type": "판관필", "rarity": "귀함", "price_silver": 200, "effect": "쇠붓 한 쌍. 혈도를 점하는 점혈술에 능하다."},
+    {"id": "exwp_x003", "name": "묵죽선(墨竹扇)", "type": "부채", "rarity": "귀함", "price_silver": 300, "effect": "흑죽 살에 강기를 실어 폈다 접으며 검처럼 쓴다."},
+    {"id": "exwp_x004", "name": "연환쇄자갑(連環鎖子甲)", "type": "갑옷", "rarity": "귀함", "price_silver": 480, "effect": "촘촘한 쇠고리 사슬갑. 베기에 강하고 가볍다."},
+    {"id": "exwp_x005", "name": "등패(藤牌)", "type": "방패", "rarity": "흔함", "price_silver": 30, "effect": "등나무를 엮어 만든 둥근 방패. 가볍고 화살을 잘 막는다."},
+    {"id": "exwp_x006", "name": "오독선(五毒扇)", "type": "부채", "rarity": "진귀", "price_silver": 950, "effect": "다섯 독을 살에 발라 펼치면 독무를 흩뿌리는 마문 기병."},
+    {"id": "exwp_x007", "name": "현철호심경(玄鐵護心鏡)", "type": "갑옷", "rarity": "진귀", "price_silver": 1400, "effect": "현철로 만든 호심경. 심장을 노린 일격을 튕겨낸다."},
+    {"id": "exwp_x008", "name": "금사연갑(金絲軟甲)", "type": "갑옷", "rarity": "신물", "price_silver": "비매", "effect": "전대 고수의 가전 보갑. 금실로 짜 비단처럼 부드러우나 보검도 뚫지 못해 살수의 비수를 무위로 돌린다 전한다."},
+    {"id": "exwp_x009", "name": "건곤일척반(乾坤一擲盤)", "type": "기타", "rarity": "전설", "price_silver": "비매", "effect": "기문진의 비전 원반 병기. 던지면 천지를 가르는 궤적을 그리며 돌아오고, 음양의 두 기운을 실어 일격에 생사를 가른다 전하는 절세 기병."}
+  ]
+}

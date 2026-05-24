@@ -14,6 +14,7 @@ import arts from "./world/martial_arts.json";
 import manuals from "./world/manuals.json";
 import elixirs from "./world/elixirs.json";
 import weapons from "./world/weapons.json";
+import weaponsExtra from "./world/weapons_extra.json";
 
 // 문파별 NPC
 import shaolin from "./world/npcs/shaolin.json";
@@ -55,7 +56,7 @@ export const WORLD = {
   arts: arts as any,
   manuals: manuals as any,
   elixirs: elixirs as any,
-  weapons: weapons as any,
+  weapons: { ...(weapons as any), ...(weaponsExtra as any) } as any,
 } as const;
 
 export const NPCS_BY_SECT: Record<string, any> = {
