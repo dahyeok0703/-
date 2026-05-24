@@ -42,6 +42,7 @@ import nextGen from "./world/npcs/next_generation.json";
 import courtesans from "./world/npcs/courtesans.json";
 import commoners from "./world/npcs/commoners.json";
 import legendary from "./world/npcs/legendary_dead.json";
+import wanderers from "./world/npcs/wanderers.json";
 
 import characterTemplate from "./save/_templates/character.template.json";
 
@@ -71,6 +72,7 @@ export const NPCS_EXTRA: Record<string, any> = {
   courtesans,
   commoners,
   legendary_dead: legendary,
+  wanderers,
 };
 
 export const CHARACTER_TEMPLATE: any = characterTemplate;
