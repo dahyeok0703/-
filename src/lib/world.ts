@@ -1,12 +1,39 @@
 // 세계관 키워드 RAG. 정적 import한 데이터에서 입력 키워드와 매칭되는 항목만 추출.
 
-import { WORLD, buildNameIndex, NameEntry } from "../data/world-data";
+import { WORLD, buildNameIndex, NameEntry, NPCS_BY_SECT } from "../data/world-data";
 
 export interface WorldHit {
   name: string;
   type: string;
   payload: any;
   score: number;
+}
+
+// 한 항목에서 검색 가능한 키워드 목록을 뽑는다.
+// 예: "아미파(峨眉派)" → ["아미파(峨眉派)", "아미파", "峨眉派"]
+//     "혜광(慧光) 대사" → ["혜광(慧光) 대사", "혜광", "慧光", "대사"]
+//     "무화(舞花) 화옥(花玉)" → 위 + "화옥", "花玉"
+function extractSearchableTokens(fullName: string): string[] {
+  if (!fullName) return [];
+  const out = new Set<string>();
+  out.add(fullName);
+  // 괄호 안/밖 분리
+  const stripped = fullName.replace(/\([^)]*\)/g, " ");
+  for (const part of stripped.split(/\s+/)) {
+    const t = part.trim();
+    if (t.length >= 2) out.add(t);
+  }
+  const parenContents = fullName.match(/\(([^)]+)\)/g) || [];
+  for (const p of parenContents) {
+    const inner = p.slice(1, -1).trim();
+    if (inner.length >= 1) out.add(inner);
+  }
+  // 공백으로 갈린 토큰 (별도)
+  for (const part of fullName.split(/\s+/)) {
+    const t = part.trim();
+    if (t.length >= 2) out.add(t);
+  }
+  return Array.from(out);
 }
 
 export function searchWorld(query: string, recentText: string = "", limit: number = 10): WorldHit[] {
@@ -34,14 +61,79 @@ export function searchWorld(query: string, recentText: string = "", limit: numbe
   for (const entry of idx) {
     const key = entry.type + ":" + entry.name;
     if (seen.has(key)) continue;
-    const lower = entry.name.toLowerCase();
-    if (lower && lower.length >= 2 && text.includes(lower)) {
-      hits.push({ ...entry, score: lower.length });
+    const tokens = extractSearchableTokens(entry.name);
+    let matchedLen = 0;
+    for (const tok of tokens) {
+      const low = tok.toLowerCase();
+      if (low.length >= 2 && text.includes(low)) {
+        if (low.length > matchedLen) matchedLen = low.length;
+      }
+    }
+    if (matchedLen > 0) {
+      hits.push({ ...entry, score: matchedLen });
       seen.add(key);
     }
   }
+
+  // 문파(sect) 가 매칭되면 그 문파의 주요 NPC·무공도 함께 끌어온다.
+  const sectHits = hits.filter((h) => h.type === "sect");
+  for (const sh of sectHits) {
+    const sectId = (sh.payload as any)?.id;
+    if (!sectId) continue;
+    // NPCs
+    const body = NPCS_BY_SECT[sectId];
+    if (body && typeof body === "object") {
+      const npcList = collectNPCsFromBody(body).slice(0, 8);
+      for (const npc of npcList) {
+        const key = `npc_${sectId}:${npc.name}`;
+        if (!seen.has(key) && npc.name) {
+          hits.push({
+            name: npc.name,
+            type: `npc_${sectId}`,
+            payload: npc,
+            score: 500,
+          });
+          seen.add(key);
+        }
+      }
+    }
+    // 그 문파의 무공
+    const sectArts = collectArtsBySect(sectId).slice(0, 6);
+    for (const a of sectArts) {
+      const key = `art:${a.name}`;
+      if (!seen.has(key) && a.name) {
+        hits.push({ name: a.name, type: "art", payload: a, score: 400 });
+        seen.add(key);
+      }
+    }
+  }
+
   hits.sort((a, b) => b.score - a.score);
   return hits.slice(0, limit);
+}
+
+function collectNPCsFromBody(body: any): any[] {
+  if (!body || typeof body !== "object") return [];
+  const out: any[] = [];
+  for (const v of Object.values(body)) {
+    if (Array.isArray(v)) {
+      for (const it of v) {
+        if (it && typeof it === "object" && (it as any).name) out.push(it);
+      }
+    }
+  }
+  return out;
+}
+
+function collectArtsBySect(sectId: string): any[] {
+  const out: any[] = [];
+  for (const list of Object.values(WORLD.arts || {})) {
+    if (!Array.isArray(list)) continue;
+    for (const a of list as any[]) {
+      if (a?.sect === sectId) out.push(a);
+    }
+  }
+  return out;
 }
 
 interface ConceptGroup {

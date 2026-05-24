@@ -25,7 +25,7 @@ export function buildPrompt(args: {
   const { save, recentMessages, relevantMemories, userInput, maxContextTokens } = args;
   const instructions = `${SYSTEM_RULES}\n\n${worldPrimer()}`;
   const recentTxt = recentMessages.slice(-4).map((m) => m.content).join(" ");
-  const hits = searchWorld(userInput, recentTxt, 10);
+  const hits = searchWorld(userInput, recentTxt, 20);
   const dynamicCtx = buildDynamicContext(save, recentMessages, userInput, relevantMemories, hits);
 
   const baseRecent: BuiltPrompt["input"] = recentMessages.map((m) => ({
@@ -133,6 +133,59 @@ function buildDynamicContext(
         for (const m of p.members) {
           L.push(`   · ${m.name}${m.note ? " — " + truncate(m.note, 200) : ""}`);
         }
+        continue;
+      }
+      if (h.type === "sect") {
+        const parts = [
+          p.faction && `세력:${p.faction}`,
+          p.category,
+          p.location && `위치:${p.location}`,
+          p.discipline && `무공계열:${p.discipline}`,
+          p.specialty && `특색:${p.specialty}`,
+          p.atmosphere && `분위기:${p.atmosphere}`,
+          p.membership && `구성:${p.membership}`,
+        ].filter(Boolean).join(" / ");
+        const arts = Array.isArray(p.signature_arts) && p.signature_arts.length
+          ? ` · 대표무공: ${p.signature_arts.join(", ")}`
+          : "";
+        L.push(`- 문파 :: ${h.name} — ${truncate(parts, 400)}${arts}`);
+        continue;
+      }
+      if (h.type === "art") {
+        const parts = [
+          p.grade && `등급:${p.grade}`,
+          p.type && `종류:${p.type}`,
+          p.weapon && `무기:${p.weapon}`,
+          p.sect && `소속:${p.sect}`,
+          p.description,
+          p.side_effects && `부작용:${p.side_effects}`,
+        ].filter(Boolean).join(" / ");
+        L.push(`- 무공 :: ${h.name} — ${truncate(parts, 300)}`);
+        continue;
+      }
+      if (h.type === "region" || h.type === "city") {
+        const parts = [
+          p.scope && `규모:${p.scope}`,
+          p.atmosphere && `분위기:${p.atmosphere}`,
+          Array.isArray(p.major_cities) && p.major_cities.length && `도시:${p.major_cities.join(",")}`,
+        ].filter(Boolean).join(" / ");
+        L.push(`- ${h.type === "region" ? "권역" : "도시"} :: ${h.name} — ${truncate(parts, 300)}`);
+        continue;
+      }
+      // NPC 류 — 풍부한 인물 카드
+      if (h.type.startsWith("npc_")) {
+        const parts = [
+          p.position && `직위:${p.position}`,
+          p.title && `호:${p.title}`,
+          p.realm && `경지:${p.realm}`,
+          p.age && `${p.age}세`,
+          p.personality && `성격:${p.personality}`,
+          p.specialty && `특기:${p.specialty}`,
+          p.location && `위치:${p.location}`,
+          p.history && `내력:${p.history}`,
+          p.secret && `(비밀)${p.secret}`,
+        ].filter(Boolean).join(" / ");
+        L.push(`- 인물 :: ${h.name} — ${truncate(parts, 400)}`);
         continue;
       }
       const summary = p.summary || p.description || p.specialty || p.personality || "";
