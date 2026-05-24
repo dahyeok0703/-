@@ -1,0 +1,80 @@
+{
+  "_description": "추가 무공 모음. 기존 카탈로그에 병합된다.",
+  "extra_internal_arts": [
+    {"id": "ex_naegong_01", "name": "현천진기(玄天眞氣)", "sect": null, "grade": "절정", "type": "내공심법", "weapon": "무관", "description": "북방 도가의 비전 내공으로, 운기하면 손끝에 살을 에는 한기가 맺힌다.", "side_effects": "음기 과다 시 몸이 얼음처럼 차가워진다."},
+    {"id": "ex_naegong_02", "name": "태청심법(太淸心法)", "sect": "wudang", "grade": "일류", "type": "내공심법", "weapon": "무관", "description": "무당 외문 제자에게 전해지는 청정한 도가 입문 심법."},
+    {"id": "ex_naegong_03", "name": "적양신공(赤陽神功)", "sect": null, "grade": "초절정", "type": "내공심법(양)", "weapon": "무관", "description": "남방 화산 깊은 곳에서 얻은 양강의 정수로, 운기 시 온몸이 불덩이처럼 달아오른다.", "side_effects": "조급히 운기하면 주화입마로 경맥이 타들어간다."},
+    {"id": "ex_naegong_04", "name": "한매빙심결(寒梅氷心訣)", "sect": null, "grade": "절정", "type": "내공심법(음)", "weapon": "무관", "description": "엄동에 핀 매화처럼 차고 맑은 음한 계열 여인의 심법."},
+    {"id": "ex_naegong_05", "name": "벽해조생공(碧海潮生功)", "sect": null, "grade": "초절정", "type": "내공심법", "weapon": "무관", "description": "바다 밀물처럼 내력이 끊임없이 차오르고 빠지기를 반복하는 해변 은자의 비공."},
+    {"id": "ex_naegong_06", "name": "철포삼(鐵布衫)", "sect": "shaolin", "grade": "일류", "type": "내공심법(외공)", "weapon": "무관", "description": "온몸을 무쇠 천처럼 단련해 도검을 튕겨내는 외문 호체신공."},
+    {"id": "ex_naegong_07", "name": "무상삼매진기(無相三昧眞氣)", "sect": null, "grade": "신공", "type": "내공심법", "weapon": "무관", "description": "형상도 흔적도 없이 천변만화하는, 한 시대에 하나 나올까 말까 한 전설의 심법."},
+    {"id": "ex_naegong_08", "name": "오행귀원공(五行歸元功)", "sect": null, "grade": "절정", "type": "내공심법", "weapon": "무관", "description": "금목수화토 다섯 기운을 한 단전으로 돌려 모으는 균형의 내공."}
+  ],
+  "extra_sword_arts": [
+    {"id": "ex_geom_01", "name": "유운검법(流雲劍法)", "sect": null, "grade": "일류", "type": "검법", "weapon": "검", "description": "구름이 흐르듯 끊김 없이 이어지는 변초 위주의 검."},
+    {"id": "ex_geom_02", "name": "낙화검(落花劍)", "sect": "emei", "grade": "절정", "type": "검법", "weapon": "검", "description": "흩날리는 꽃잎처럼 수십 개의 검화가 동시에 적을 덮친다."},
+    {"id": "ex_geom_03", "name": "추풍검법(秋風劍法)", "sect": null, "grade": "이류", "type": "검법", "weapon": "검", "description": "가을바람처럼 서늘하고 빠르게 파고드는 실전 검술."},
+    {"id": "ex_geom_04", "name": "단천검결(斷天劍訣)", "sect": null, "grade": "초절정", "type": "검법", "weapon": "검", "description": "하늘마저 베어 가른다는 패도적 일격을 담은 검의 비결."},
+    {"id": "ex_geom_05", "name": "월영검법(月影劍法)", "sect": null, "grade": "절정", "type": "검법", "weapon": "검", "description": "달그림자처럼 허초와 실초가 뒤섞여 적의 눈을 흐린다."},
+    {"id": "ex_geom_06", "name": "유성검(流星劍)", "sect": null, "grade": "일류", "type": "검법", "weapon": "검", "description": "별똥별처럼 한 줄기 빛으로 직선을 그어 찌르는 쾌검."},
+    {"id": "ex_geom_07", "name": "청죽검법(靑竹劍法)", "sect": null, "grade": "이류", "type": "검법", "weapon": "검", "description": "푸른 대나무처럼 곧고 탄력 있는 정통 정파 검법."},
+    {"id": "ex_geom_08", "name": "무극검도(無極劍道)", "sect": "wudang", "grade": "신공", "type": "검법", "weapon": "검", "description": "초식도 형도 없이 마음 가는 대로 펼쳐지는 무당 검도의 극의."}
+  ],
+  "extra_saber_arts": [
+    {"id": "ex_do_01", "name": "벽력도법(霹靂刀法)", "sect": null, "grade": "절정", "type": "도법", "weapon": "도", "description": "벼락이 내리치듯 단숨에 적을 두 동강 내는 패도의 도법."},
+    {"id": "ex_do_02", "name": "광풍도(狂風刀)", "sect": null, "grade": "일류", "type": "도법", "weapon": "도", "description": "미친 바람처럼 사방으로 휘몰아치는 난폭한 도세."},
+    {"id": "ex_do_03", "name": "혈하도법(血河刀法)", "sect": null, "grade": "초절정", "type": "도법", "weapon": "도", "description": "한 번 휘두르면 피의 강이 흐른다는, 전장에서 나고 자란 살벌한 도법.", "side_effects": "살기에 취하면 적아를 가리지 못한다."},
+    {"id": "ex_do_04", "name": "오호단문도(五虎斷門刀)", "sect": null, "grade": "이류", "type": "도법", "weapon": "도", "description": "다섯 호랑이가 문을 끊듯 묵직하게 베어 들어가는 표사들의 도법."},
+    {"id": "ex_do_05", "name": "선풍도법(旋風刀法)", "sect": null, "grade": "일류", "type": "도법", "weapon": "도", "description": "몸을 회전하며 회오리처럼 주변을 모조리 베어내는 도법."},
+    {"id": "ex_do_06", "name": "단악도(斷岳刀)", "sect": null, "grade": "절정", "type": "도법", "weapon": "도", "description": "산악도 끊어낸다는 무거운 패력의 일도."},
+    {"id": "ex_do_07", "name": "추혼도법(追魂刀法)", "sect": null, "grade": "절정", "type": "도법", "weapon": "도", "description": "달아나는 혼마저 쫓아가 베는 집요하고 빠른 추격형 도법."}
+  ],
+  "extra_fist_palm_arts": [
+    {"id": "ex_gwon_01", "name": "붕산권(崩山拳)", "sect": null, "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "산을 무너뜨리는 듯한 묵직한 직권 위주의 강권."},
+    {"id": "ex_gwon_02", "name": "현음장(玄陰掌)", "sect": null, "grade": "절정", "type": "장법", "weapon": "맨손", "description": "장풍에 음한지기를 실어 닿는 즉시 살을 얼리는 음장.", "side_effects": "장기 사용 시 시전자의 손도 점차 얼어든다."},
+    {"id": "ex_gwon_03", "name": "복마신권(伏魔神拳)", "sect": "shaolin", "grade": "절정", "type": "권법", "weapon": "맨주먹", "description": "마를 굴복시킨다는 강맹하고 정대한 불문 권법."},
+    {"id": "ex_gwon_04", "name": "면장(綿掌)", "sect": null, "grade": "이류", "type": "장법", "weapon": "맨손", "description": "솜처럼 부드럽게 적의 힘을 흘려 되돌려주는 유(柔)의 장법."},
+    {"id": "ex_gwon_05", "name": "벽공장(劈空掌)", "sect": null, "grade": "초절정", "type": "장법", "weapon": "맨손", "description": "허공을 가르는 장력만으로 멀리 떨어진 적을 내치는 절학."},
+    {"id": "ex_gwon_06", "name": "취팔선권(醉八仙拳)", "sect": null, "grade": "일류", "type": "권법", "weapon": "맨주먹", "description": "술 취한 신선처럼 비틀거리며 예측 불가의 변초를 쏟아내는 권법."},
+    {"id": "ex_gwon_07", "name": "철사장(鐵砂掌)", "sect": null, "grade": "일류", "type": "장법(외공)", "weapon": "맨손", "description": "쇳가루에 손을 단련해 바위도 부수는 검은 손바닥의 장공."},
+    {"id": "ex_gwon_08", "name": "운룡대팔식(雲龍大八式)", "sect": null, "grade": "절정", "type": "권법", "weapon": "맨주먹", "description": "구름 속 용이 여덟 형으로 굽이치는 변화무쌍한 권장 합일의 무공."}
+  ],
+  "extra_spear_staff_arts": [
+    {"id": "ex_chang_01", "name": "회룡창법(回龍槍法)", "sect": null, "grade": "절정", "type": "창법", "weapon": "창", "description": "용이 휘감아 돌듯 찌르고 거두기를 반복하는 변화 많은 창술."},
+    {"id": "ex_chang_02", "name": "낙성창(落星槍)", "sect": null, "grade": "일류", "type": "창법", "weapon": "창", "description": "별이 떨어지듯 한 점을 향해 벼락같이 내리꽂는 쾌창."},
+    {"id": "ex_chang_03", "name": "백사창법(白蛇槍法)", "sect": null, "grade": "이류", "type": "창법", "weapon": "창", "description": "흰 뱀이 혀를 날름대듯 빠르게 찔렀다 빼는 군영의 창술."},
+    {"id": "ex_bong_01", "name": "복마봉법(伏魔棒法)", "sect": "shaolin", "grade": "일류", "type": "봉법", "weapon": "봉", "description": "소림 무승들이 산문을 지키며 익히는 묵직하고 정대한 봉술."},
+    {"id": "ex_bong_02", "name": "구절편봉(九節鞭棒)", "sect": null, "grade": "절정", "type": "봉법", "weapon": "봉", "description": "아홉 마디로 꺾이는 봉이 채찍처럼 휘어 사각을 노린다."},
+    {"id": "ex_bong_03", "name": "반선곤(蟠仙棍)", "sect": null, "grade": "이류", "type": "봉법", "weapon": "봉", "description": "신선이 지팡이를 휘두르듯 유연하게 흐르는 곤법."},
+    {"id": "ex_chang_04", "name": "패왕신창(覇王神槍)", "sect": null, "grade": "초절정", "type": "창법", "weapon": "창", "description": "패왕의 위세를 담아 일창으로 삼군을 가른다는 절세의 창법."}
+  ],
+  "extra_agility_arts": [
+    {"id": "ex_bo_01", "name": "능파미보(凌波微步)", "sect": null, "grade": "초절정", "type": "보법", "weapon": "무관", "description": "물결을 밟듯 미끄러지며 적의 공격이 닿지 않는 사각으로 빠지는 신묘한 보법."},
+    {"id": "ex_bo_02", "name": "초운종(草雲縱)", "sect": null, "grade": "일류", "type": "경공", "weapon": "무관", "description": "풀잎을 밟고 구름을 타듯 가볍게 날아오르는 경공."},
+    {"id": "ex_bo_03", "name": "비연답수(飛燕踏水)", "sect": null, "grade": "절정", "type": "경공", "weapon": "무관", "description": "제비처럼 수면을 박차고 강을 단숨에 건너는 상승 경공."},
+    {"id": "ex_bo_04", "name": "구궁환보(九宮幻步)", "sect": null, "grade": "절정", "type": "보법", "weapon": "무관", "description": "구궁의 방위를 밟아 잔상을 남기며 적의 눈을 어지럽히는 환영 보법."},
+    {"id": "ex_bo_05", "name": "답설무흔(踏雪無痕)", "sect": null, "grade": "절정", "type": "경공", "weapon": "무관", "description": "눈을 밟아도 흔적이 남지 않을 만큼 가볍게 달리는 경신술."},
+    {"id": "ex_bo_06", "name": "유성보(流星步)", "sect": null, "grade": "이류", "type": "보법", "weapon": "무관", "description": "별똥별처럼 빠르게 직선으로 거리를 좁히는 실전 보법."},
+    {"id": "ex_bo_07", "name": "제천대성종(齊天大聖縱)", "sect": null, "grade": "신공", "type": "경공", "weapon": "무관", "description": "하늘과 나란하다는 원숭이 왕의 전설이 깃든, 단번에 수십 장을 뛰어넘는 극상의 경공."}
+  ],
+  "extra_hidden_weapon_arts": [
+    {"id": "ex_amgi_01", "name": "만천화우(滿天花雨)", "sect": null, "grade": "초절정", "type": "암기", "weapon": "암기", "description": "하늘 가득 꽃비가 내리듯 수백 개의 암기를 한꺼번에 흩뿌리는 절기."},
+    {"id": "ex_amgi_02", "name": "탈명비도(奪命飛刀)", "sect": null, "grade": "절정", "type": "암기", "weapon": "암기", "description": "한 번 던지면 반드시 목숨을 앗는다는 백발백중의 비도술."},
+    {"id": "ex_amgi_03", "name": "독린추(毒鱗錐)", "sect": null, "grade": "일류", "type": "암기", "weapon": "암기", "description": "비늘처럼 작은 독침을 손가락 사이에 끼워 쏘아대는 암기 수법.", "side_effects": "잘못 다루면 시전자가 먼저 독에 중독된다."},
+    {"id": "ex_amgi_04", "name": "유성추(流星錘)", "sect": null, "grade": "이류", "type": "기타 병기", "weapon": "기타", "description": "긴 쇠사슬 끝에 추를 달아 별똥별처럼 휘둘러 내치는 연병기."},
+    {"id": "ex_pyeon_01", "name": "구천현녀편(九天玄女鞭)", "sect": null, "grade": "절정", "type": "편법", "weapon": "채찍", "description": "선녀가 비단을 휘두르듯 부드럽게 감았다 사납게 후려치는 채찍 무공."},
+    {"id": "ex_pyeon_02", "name": "추혼연자편(追魂軟子鞭)", "sect": null, "grade": "일류", "type": "편법", "weapon": "채찍", "description": "연한 채찍이 뱀처럼 살아 움직이며 적의 병기를 휘감아 빼앗는다."},
+    {"id": "ex_gung_01", "name": "관일신사(貫日神射)", "sect": null, "grade": "절정", "type": "궁술", "weapon": "활", "description": "해를 꿰뚫는다는 신궁의 사법으로, 한 화살로 수백 보 밖 표적을 맞춘다."},
+    {"id": "ex_gung_02", "name": "연주전(連珠箭)", "sect": null, "grade": "일류", "type": "궁술", "weapon": "활", "description": "구슬을 꿰듯 한 호흡에 세 발의 화살을 연달아 쏘아 보내는 속사 궁술."}
+  ],
+  "extra_demonic_and_special": [
+    {"id": "ex_special_01", "name": "혈마섭심대법(血魔攝心大法)", "sect": "cheonma", "grade": "초절정", "type": "마공(환술)", "weapon": "무관", "description": "피로 그린 술법으로 상대의 마음을 사로잡아 꼭두각시로 부린다.", "side_effects": "시전할수록 시전자 자신이 마성에 잠식되어 광인이 된다."},
+    {"id": "ex_special_02", "name": "부골음한공(腐骨陰寒功)", "sect": null, "grade": "절정", "type": "마공", "weapon": "무관", "description": "음한지독을 장력에 실어 적의 뼈를 안에서부터 썩게 만드는 사도 무공.", "side_effects": "음독이 역류하면 시전자의 손발부터 검게 괴사한다."},
+    {"id": "ex_special_03", "name": "천면환술(千面幻術)", "sect": null, "grade": "일류", "type": "환술", "weapon": "무관", "description": "역용과 음공을 결합해 천 개의 얼굴로 모습을 바꾸고 적을 현혹한다."},
+    {"id": "ex_special_04", "name": "섭혼미음공(攝魂迷音功)", "sect": null, "grade": "절정", "type": "기공(음공)", "weapon": "기타", "description": "퉁소 가락에 내력을 실어 듣는 이의 혼을 빼앗고 정신을 어지럽힌다.", "side_effects": "심지가 약한 시전자는 제 음공에 스스로 미혹된다."},
+    {"id": "ex_special_05", "name": "오독신공(五毒神功)", "sect": null, "grade": "초절정", "type": "약공(독공)", "weapon": "무관", "description": "다섯 가지 독충의 독을 몸에 길러 손길마다 맹독을 흘리는 묘강의 비전.", "side_effects": "독을 다스리지 못하면 칠규로 검은 피를 쏟으며 즉사한다."},
+    {"id": "ex_special_06", "name": "이혼대법(移魂大法)", "sect": null, "grade": "신공", "type": "마공(섭심)", "weapon": "무관", "description": "타인의 혼백을 빼내 제 그릇으로 옮겨 담는다는 금단의 전설적 마공.", "side_effects": "실패하면 두 혼이 한 몸에서 다투다 둘 다 미쳐버린다."},
+    {"id": "ex_special_07", "name": "혼원귀일진(混元歸一陣)", "sect": null, "grade": "초절정", "type": "진법", "weapon": "무관", "description": "여럿이 기를 한데 모아 적을 가두는 합격 진법으로, 강자도 빠지면 헤어나기 어렵다."},
+    {"id": "ex_special_08", "name": "혈독장(血毒掌)", "sect": "cheonma", "grade": "절정", "type": "마공(장법)", "weapon": "맨손", "description": "독혈을 끌어올린 검붉은 장으로, 스치기만 해도 상처가 곪아 터진다.", "side_effects": "운기 도중 잡념이 들면 독혈이 역류해 경맥이 끊긴다."}
+  ]
+}

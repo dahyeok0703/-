@@ -11,6 +11,7 @@ import sects from "./world/sects.json";
 import supreme from "./world/supreme_ranks.json";
 import beauties from "./world/four_beauties.json";
 import arts from "./world/martial_arts.json";
+import artsExtra from "./world/martial_arts_extra.json";
 import manuals from "./world/manuals.json";
 import elixirs from "./world/elixirs.json";
 import weapons from "./world/weapons.json";
@@ -53,7 +54,7 @@ export const WORLD = {
   sects: sects as any,
   supreme: supreme as any,
   beauties: beauties as any,
-  arts: arts as any,
+  arts: { ...(arts as any), ...(artsExtra as any) } as any,
   manuals: manuals as any,
   elixirs: elixirs as any,
   weapons: { ...(weapons as any), ...(weaponsExtra as any) } as any,
