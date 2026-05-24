@@ -17,7 +17,9 @@
     "tier": 1,
     "internal_energy": 0,
     "internal_energy_cap": 10,
+    "experience_in_stage": 0,
     "stage_progress_pct": 0,
+    "awaiting_enlightenment": false,
     "next_stage_id": "samryu_wansuk"
   },
   "stats": {

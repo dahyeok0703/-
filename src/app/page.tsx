@@ -19,6 +19,7 @@ import {
   stageNameKR, sectNameKR, artNameKR,
   makeCustomArtId, formatGameTime, sichenPhase,
   STAT_DEFS, getStatBounds, clampStat,
+  getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment,
 } from "@/data/world-data";
 
 const MODEL_PRESETS = [
@@ -1188,6 +1189,43 @@ export default function Page() {
                 {stageNameKR(save.character.realm?.current_stage)} · 내공{" "}
                 {save.character.realm?.internal_energy}/{save.character.realm?.internal_energy_cap}
               </li>
+              {(() => {
+                const stage = save.character.realm?.current_stage;
+                const xp = Math.floor(Number(save.character.realm?.experience_in_stage) || 0);
+                const need = getXpRequiredFor(stage);
+                const pct = Math.min(100, Math.floor((xp / Math.max(1, need)) * 100));
+                const nextId = getNextStageId(stage);
+                const reqEnl = nextStageRequiresEnlightenment(stage);
+                const awaiting = save.character.realm?.awaiting_enlightenment;
+                return (
+                  <li>
+                    <span className="text-ink-300">단계 진척:</span>{" "}
+                    <span className="font-bold">{xp.toLocaleString()}</span>
+                    <span className="text-ink-300"> / {need.toLocaleString()} XP</span>
+                    <div className="mt-1 h-1.5 bg-ink-900 rounded overflow-hidden">
+                      <div
+                        className={awaiting ? "h-full bg-amber-400" : "h-full bg-emerald-400"}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <div className="text-xs text-ink-300 mt-0.5">
+                      {pct}%
+                      {nextId && (
+                        <>
+                          {" · 다음: "}
+                          <span className="text-ink-100">{stageNameKR(nextId)}</span>
+                          {reqEnl && (
+                            <span className="ml-1 text-amber-300 font-bold">[깨달음 필요]</span>
+                          )}
+                        </>
+                      )}
+                      {awaiting && (
+                        <span className="ml-1 text-amber-300 font-bold">· ※깨달음 대기</span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })()}
               <li>
                 <span className="text-ink-300">HP:</span> {save.character.vitals?.hp_current}/{save.character.vitals?.hp_max} · 내상 {save.character.vitals?.internal_injury} · 외상 {save.character.vitals?.external_injury}
               </li>

@@ -12,7 +12,11 @@ import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, callChatStream, expandQueryToKeywords, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
-import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions, getStatBounds, clampStat, STAT_DEFS } from "../data/world-data";
+import {
+  CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions,
+  getStatBounds, clampStat, STAT_DEFS,
+  getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment, getStageRank,
+} from "../data/world-data";
 
 const MAX_RECENT = 18;
 const MAX_CTX_TOK = 8000;
@@ -135,7 +139,10 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
       tpl.realm.tier = stage.tier;
       tpl.realm.internal_energy = stage.internal_energy_midpoint;
       tpl.realm.internal_energy_cap = stage.internal_energy_cap;
+      const need = getXpRequiredFor(stage.stage_id);
+      tpl.realm.experience_in_stage = Math.floor(need * 0.5);
       tpl.realm.stage_progress_pct = 50;
+      tpl.realm.awaiting_enlightenment = false;
     }
   } else if (!isMartial) {
     tpl.realm.current_realm = "samryu";
@@ -143,6 +150,9 @@ export function buildInitialCharacter(opts: NewGameOptions): CharacterState {
     tpl.realm.tier = 1;
     tpl.realm.internal_energy = 0;
     tpl.realm.internal_energy_cap = 10;
+    tpl.realm.experience_in_stage = 0;
+    tpl.realm.stage_progress_pct = 0;
+    tpl.realm.awaiting_enlightenment = false;
   }
 
   // HP는 경지 tier에 비례해서 보정
@@ -559,6 +569,7 @@ function applyExtraction(rawText: string, save: SaveData) {
   }
 
   applyTimeAdvance(save, parsed.timeAdvance);
+  normalizeRealmProgress(save);
 
   if (parsed.summary) {
     save.character.biography_summary =
@@ -606,11 +617,21 @@ function applyPlayerField(save: SaveData, field: string, value: unknown) {
     "affiliation.joined_at_age": (v) => (c.affiliation.joined_at_age = v === null ? null : Number(v)),
 
     "realm.current_realm": (v) => (c.realm.current_realm = String(v)),
-    "realm.current_stage": (v) => (c.realm.current_stage = String(v)),
+    "realm.current_stage": (v) => {
+      const newStage = String(v);
+      if (newStage && newStage !== c.realm.current_stage) {
+        c.realm.current_stage = newStage;
+        c.realm.experience_in_stage = 0;
+        c.realm.stage_progress_pct = 0;
+        c.realm.awaiting_enlightenment = false;
+      }
+    },
     "realm.tier": (v) => (c.realm.tier = Number(v)),
     "realm.internal_energy": (v) => (c.realm.internal_energy = Number(v)),
     "realm.internal_energy_cap": (v) => (c.realm.internal_energy_cap = Number(v)),
     "realm.stage_progress_pct": (v) => (c.realm.stage_progress_pct = Math.max(0, Math.min(100, Number(v)))),
+    "realm.experience_in_stage": (v) => (c.realm.experience_in_stage = Math.max(0, Number(v) || 0)),
+    "realm.awaiting_enlightenment": (v) => (c.realm.awaiting_enlightenment = Boolean(v)),
 
     "vitals.hp_current": (v) => (c.vitals.hp_current = Number(v)),
     "vitals.hp_max": (v) => (c.vitals.hp_max = Number(v)),
@@ -707,6 +728,57 @@ function applyFamilyUpdate(
         if (name && !arr.includes(name)) arr.push(name);
       }
       break;
+    }
+  }
+}
+
+function normalizeRealmProgress(save: SaveData) {
+  const r = save.character.realm;
+  if (!r) return;
+  const stageId = r.current_stage;
+  const need = getXpRequiredFor(stageId);
+  const cur = Math.max(0, Math.floor(Number(r.experience_in_stage) || 0));
+
+  // 단계가 바뀌어 (AI 가 깨달음 묘사와 함께 current_stage 갱신) 진척이 정의되어 있지 않다면 0 으로
+  if (cur > need) {
+    const requiresEnl = nextStageRequiresEnlightenment(stageId);
+    if (requiresEnl) {
+      // 깨달음 대기 — XP 는 필요량으로 캡, 진척 100%, awaiting 플래그 ON
+      r.experience_in_stage = need;
+      r.stage_progress_pct = 100;
+      r.awaiting_enlightenment = true;
+    } else {
+      // 자동 진급 — 다음 단계로 이동, 남은 XP 이월
+      const nextId = getNextStageId(stageId);
+      if (nextId) {
+        const nextStage = getStageById(nextId);
+        if (nextStage) {
+          r.current_stage = nextStage.stage_id;
+          r.current_realm = nextStage.realm_id;
+          r.tier = nextStage.tier;
+          r.internal_energy_cap = nextStage.internal_energy_cap;
+          if (r.internal_energy < nextStage.internal_energy_midpoint * 0.5) {
+            r.internal_energy = nextStage.internal_energy_midpoint;
+          }
+          const carry = cur - need;
+          const newNeed = getXpRequiredFor(nextStage.stage_id);
+          r.experience_in_stage = Math.min(carry, newNeed);
+          r.stage_progress_pct = Math.floor((r.experience_in_stage / Math.max(1, newNeed)) * 100);
+          r.awaiting_enlightenment = false;
+          return normalizeRealmProgress(save); // 연쇄 진급 가능
+        }
+      }
+      r.experience_in_stage = need;
+      r.stage_progress_pct = 100;
+    }
+  } else {
+    r.experience_in_stage = cur;
+    r.stage_progress_pct = Math.floor((cur / Math.max(1, need)) * 100);
+    // XP 가 가득 찼는데 깨달음 필요 단계라면 플래그
+    if (cur >= need && nextStageRequiresEnlightenment(stageId)) {
+      r.awaiting_enlightenment = true;
+    } else if (cur < need) {
+      r.awaiting_enlightenment = false;
     }
   }
 }

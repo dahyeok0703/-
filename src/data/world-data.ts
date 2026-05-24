@@ -318,6 +318,69 @@ export function getAllWeaponOptions(): WeaponOption[] {
   return out;
 }
 
+// ---------- 경지 경험치/진행 ----------
+
+// 일반인 → 삼류 초입 → 완숙 → 극 → 이류 초입 → … → 현경 극 순서.
+export const STAGE_PROGRESSION = [
+  "civilian",            // 0
+  "samryu_chuip",        // 1
+  "samryu_wansuk",       // 2
+  "samryu_geuk",         // 3
+  "iryu_chuip",          // 4
+  "iryu_wansuk",         // 5
+  "iryu_geuk",           // 6
+  "ilryu_chuip",         // 7
+  "ilryu_wansuk",        // 8
+  "ilryu_geuk",          // 9
+  "jeoljeong_chuip",     // 10  ← 일류 극 → 절정 초입: 깨달음 필요
+  "jeoljeong_wansuk",    // 11
+  "jeoljeong_geuk",      // 12
+  "chojeoljeong_chuip",  // 13  ← 절정 극 → 초절정 초입: 깨달음 필요
+  "chojeoljeong_wansuk", // 14
+  "chojeoljeong_geuk",   // 15
+  "hwagyeong_chuip",     // 16  ← 초절정 극 → 화경 초입: 깨달음 필요
+  "hwagyeong_wansuk",    // 17
+  "hwagyeong_geuk",      // 18
+  "hyeongyeong_chuip",   // 19  ← 화경 극 → 현경 초입: 깨달음 필요
+  "hyeongyeong_wansuk",  // 20
+  "hyeongyeong_geuk",    // 21
+] as const;
+
+export function getStageRank(stageId: string | null | undefined): number {
+  if (!stageId) return -1;
+  const i = STAGE_PROGRESSION.indexOf(stageId as any);
+  return i;
+}
+
+// 현재 단계 → 다음 단계 ID
+export function getNextStageId(stageId: string | null | undefined): string | null {
+  const i = getStageRank(stageId);
+  if (i < 0 || i >= STAGE_PROGRESSION.length - 1) return null;
+  return STAGE_PROGRESSION[i + 1];
+}
+
+// 다음 단계로 가기 위한 필요 경험치 (현재 단계 기준)
+// 기하급수: 100 * 1.55^rank
+export function getXpRequiredFor(stageId: string | null | undefined): number {
+  const rank = getStageRank(stageId);
+  if (rank < 0) return 50; // 알 수 없음 → 기본
+  if (rank === 0) return 50; // 일반인 → 삼류 초입: 가벼움
+  if (rank >= STAGE_PROGRESSION.length - 1) return 9999999; // 현경 극: 사실상 무한
+  return Math.floor(100 * Math.pow(1.55, rank));
+}
+
+// 다음 단계 진입이 깨달음을 요구하는가?
+// 규칙: 일류 극(rank 9) → 절정 초입(rank 10) 부터, 경지(tier)가 바뀌는 모든 전이는 깨달음 필요.
+export function nextStageRequiresEnlightenment(stageId: string | null | undefined): boolean {
+  const nextId = getNextStageId(stageId);
+  if (!nextId) return false;
+  const cur = getStageById(stageId || "");
+  const nxt = getStageById(nextId);
+  if (!cur || !nxt) return false;
+  if (cur.tier === nxt.tier) return false; // 같은 경지 내 단계 이동
+  return cur.tier >= 3; // 일류 이상에서 다음 경지(절정) 진입부터 깨달음 강제
+}
+
 // ---------- 스탯 ----------
 
 export interface StatDef {

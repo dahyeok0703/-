@@ -50,7 +50,9 @@ export interface CharacterState {
     tier: number;
     internal_energy: number;
     internal_energy_cap: number;
+    experience_in_stage: number;
     stage_progress_pct: number;
+    awaiting_enlightenment?: boolean;
   };
   stats: Record<string, number>;
   vitals: {

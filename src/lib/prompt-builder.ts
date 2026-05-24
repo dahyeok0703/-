@@ -2,7 +2,7 @@ import { ChatMessage, LongTermMemory, SaveData } from "./types";
 import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
-import { formatGameTime, sichenPhase, STAT_DEFS } from "../data/world-data";
+import { formatGameTime, sichenPhase, STAT_DEFS, getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment } from "../data/world-data";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -83,7 +83,13 @@ function buildDynamicContext(
   L.push(`이름 ${c.identity.name || "(미정)"} · ${c.identity.gender || "?"} · ${c.identity.age}세`);
   if (c.identity.family_background) L.push(`태생: ${c.identity.family_background}`);
   if (c.identity.appearance) L.push(`외양: ${c.identity.appearance}`);
-  L.push(`구분: ${c.civilian_or_martial === "martial" ? "무림인" : "일반인"} · 경지 ${c.realm.current_stage} · 내공 ${c.realm.internal_energy}/${c.realm.internal_energy_cap}`);
+  const xpCur = Math.floor(Number(c.realm.experience_in_stage) || 0);
+  const xpNeed = getXpRequiredFor(c.realm.current_stage);
+  const xpPct = Math.floor((xpCur / Math.max(1, xpNeed)) * 100);
+  const nextId = getNextStageId(c.realm.current_stage);
+  const reqEnl = nextStageRequiresEnlightenment(c.realm.current_stage);
+  const stageLine = `구분: ${c.civilian_or_martial === "martial" ? "무림인" : "일반인"} · 경지 ${c.realm.current_stage} · 내공 ${c.realm.internal_energy}/${c.realm.internal_energy_cap} · 단계 진척 ${xpCur}/${xpNeed} (${xpPct}%)${nextId ? ` · 다음 ${nextId}${reqEnl ? " [깨달음 필요]" : ""}` : ""}${c.realm.awaiting_enlightenment ? " · ※깨달음 대기" : ""}`;
+  L.push(stageLine);
   L.push(`생기: HP ${c.vitals.hp_current}/${c.vitals.hp_max} · 내상 ${c.vitals.internal_injury} · 외상 ${c.vitals.external_injury} · 정신 ${c.vitals.mental_state}`);
   if (c.affiliation.sect_id) L.push(`소속: ${c.affiliation.sect_id} (${c.affiliation.rank || "-"})`);
   const fame = Number((c.reputation as any)?.fame ?? 0);
