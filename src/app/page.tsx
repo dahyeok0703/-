@@ -41,6 +41,9 @@ const SECT_OPTIONS = getAllSectOptions();
 const ART_OPTIONS = getAllArtOptions();
 const WEAPON_OPTIONS = getAllWeaponOptions();
 
+const ART_GRADES = ["삼류", "이류", "일류", "절정", "초절정", "신공"] as const;
+const WEAPON_RARITIES = ["흔함", "귀함", "진귀", "신물", "전설"] as const;
+
 export default function Page() {
   const [ready, setReady] = useState(false);
   const [save, setSave] = useState<SaveData | null>(null);
@@ -83,11 +86,13 @@ export default function Page() {
   const [newArts, setNewArts] = useState<Array<{ art_id: string; name: string; mastery_pct: number; custom?: boolean }>>([]);
   const [artPick, setArtPick] = useState<string>("");
   const [customArtName, setCustomArtName] = useState<string>("");
+  const [customArtGrade, setCustomArtGrade] = useState<string>("일류");
   const [artFilter, setArtFilter] = useState<string>("");
   const [newWeapons, setNewWeapons] = useState<string[]>([]);
   const [weaponPick, setWeaponPick] = useState<string>("");
   const [weaponFilter, setWeaponFilter] = useState<string>("");
   const [customWeaponName, setCustomWeaponName] = useState<string>("");
+  const [customWeaponRarity, setCustomWeaponRarity] = useState<string>("흔함");
   const [newStats, setNewStats] = useState<Record<string, number>>(() =>
     Object.fromEntries(STAT_DEFS.map((d) => [d.key, d.key === "talent" ? 10 : 5])),
   );
@@ -756,25 +761,36 @@ export default function Page() {
                       </div>
 
                       {/* 자작 무공 입력 */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                         <input
                           type="text"
-                          className="flex-1 px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                          className="flex-1 min-w-[120px] px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
                           placeholder="자작 무공 이름 (예: 풍월검법)"
                           value={customArtName}
                           onChange={(e) => setCustomArtName(e.target.value)}
                         />
+                        <select
+                          className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                          value={customArtGrade}
+                          onChange={(e) => setCustomArtGrade(e.target.value)}
+                          title="등급"
+                        >
+                          {ART_GRADES.map((g) => (
+                            <option key={g} value={g}>{g}</option>
+                          ))}
+                        </select>
                         <button
                           type="button"
                           onClick={() => {
                             const trimmed = customArtName.trim();
                             if (!trimmed) return;
-                            const id = makeCustomArtId(trimmed);
+                            const display = `${trimmed} [${customArtGrade}]`;
+                            const id = makeCustomArtId(display);
                             if (!id || newArts.some((x) => x.art_id === id)) {
                               setCustomArtName("");
                               return;
                             }
-                            setNewArts((arr) => [...arr, { art_id: id, name: trimmed, mastery_pct: 10, custom: true }]);
+                            setNewArts((arr) => [...arr, { art_id: id, name: display, mastery_pct: 10, custom: true }]);
                             setCustomArtName("");
                           }}
                           className="px-3 py-1.5 bg-ink-500 hover:bg-ink-300 text-ink-900 rounded text-xs font-bold"
@@ -882,19 +898,31 @@ export default function Page() {
                   </button>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <input
                     type="text"
-                    className="flex-1 px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                    className="flex-1 min-w-[120px] px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
                     placeholder="직접 입력 (예: 낡은 목검)"
                     value={customWeaponName}
                     onChange={(e) => setCustomWeaponName(e.target.value)}
                   />
+                  <select
+                    className="px-2 py-1.5 bg-ink-900 border border-ink-500 rounded text-xs"
+                    value={customWeaponRarity}
+                    onChange={(e) => setCustomWeaponRarity(e.target.value)}
+                    title="등급"
+                  >
+                    {WEAPON_RARITIES.map((r) => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
                   <button
                     type="button"
                     onClick={() => {
-                      const t = customWeaponName.trim();
-                      if (!t || newWeapons.includes(t)) {
+                      const base = customWeaponName.trim();
+                      if (!base) return;
+                      const t = `${base} [${customWeaponRarity}]`;
+                      if (newWeapons.includes(t)) {
                         setCustomWeaponName("");
                         return;
                       }
