@@ -9,7 +9,7 @@ import {
 import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemories } from "./memory";
 import { buildPrompt } from "./prompt-builder";
 import { EXTRACTOR_RULES } from "./prompts/system";
-import { callResponses, callChatStream, classifyError, CallResult } from "./openai-browser";
+import { callResponses, callChatStream, expandQueryToKeywords, classifyError, CallResult } from "./openai-browser";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
 import { CHARACTER_TEMPLATE, getStageById, artNameKR, getAllArtOptions, getStatBounds, clampStat, STAT_DEFS } from "../data/world-data";
@@ -268,9 +268,39 @@ export async function processTurn(userInput: string, opts?: TurnOpts): Promise<T
   };
   const memories = retrieveRelevantMemories(memCtx, 10);
 
+  // 질의 확장: 유저가 대충 친 말도 강호 정식 명칭들로 풀어내서 검색 매칭 강화.
+  let extraSearchKeywords: string[] = [];
+  let expandUsage: UsageRecord | undefined;
+  if (!useMock) {
+    try {
+      const ex = await expandQueryToKeywords({
+        apiKey,
+        model: getModelSummary(),
+        userInput,
+        recentText: memCtx.recentText,
+      });
+      extraSearchKeywords = ex.keywords;
+      if (ex.usage.total_tokens > 0) {
+        expandUsage = {
+          id: "u_" + Date.now().toString(36) + "_e",
+          createdAt: new Date().toISOString(),
+          requestType: "summary",
+          model: ex.model,
+          input_tokens: ex.usage.input_tokens,
+          output_tokens: ex.usage.output_tokens,
+          total_tokens: ex.usage.total_tokens,
+          estimated_cost_usd: estimateCostUSD(ex.model, ex.usage.input_tokens, ex.usage.output_tokens),
+        };
+      }
+    } catch {
+      extraSearchKeywords = [];
+    }
+  }
+
   const built = buildPrompt({
     save, recentMessages: recent, relevantMemories: memories,
     userInput, maxContextTokens: MAX_CTX_TOK,
+    extraSearchKeywords,
   });
 
   // 예산
@@ -344,7 +374,8 @@ export async function processTurn(userInput: string, opts?: TurnOpts): Promise<T
     save.turn += 1;
     save.updatedAt = new Date().toISOString();
     saveSave(save);
-    saveUsage([...allUsage, chatUsage]);
+    const usageBatch = expandUsage ? [expandUsage, chatUsage] : [chatUsage];
+    saveUsage([...allUsage, ...usageBatch]);
   } catch (e) {
     console.error("[저장 실패]", e);
     saveErr = "메시지 저장 실패 (응답은 표시됨)";

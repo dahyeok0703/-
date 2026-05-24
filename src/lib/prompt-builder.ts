@@ -21,11 +21,13 @@ export function buildPrompt(args: {
   relevantMemories: LongTermMemory[];
   userInput: string;
   maxContextTokens: number;
+  extraSearchKeywords?: string[];
 }): BuiltPrompt {
-  const { save, recentMessages, relevantMemories, userInput, maxContextTokens } = args;
+  const { save, recentMessages, relevantMemories, userInput, maxContextTokens, extraSearchKeywords } = args;
   const instructions = `${SYSTEM_RULES}\n\n${worldPrimer()}`;
   const recentTxt = recentMessages.slice(-4).map((m) => m.content).join(" ");
-  const hits = searchWorld(userInput, recentTxt, 20);
+  const expanded = (extraSearchKeywords || []).join(" ");
+  const hits = searchWorld(userInput, recentTxt + " " + expanded, 20);
   const dynamicCtx = buildDynamicContext(save, recentMessages, userInput, relevantMemories, hits);
 
   const baseRecent: BuiltPrompt["input"] = recentMessages.map((m) => ({
