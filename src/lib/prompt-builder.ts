@@ -2,7 +2,7 @@ import { ChatMessage, LongTermMemory, SaveData } from "./types";
 import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
-import { formatGameTime, sichenPhase, STAT_DEFS, getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment } from "../data/world-data";
+import { formatGameTime, sichenPhase, STAT_DEFS, getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment, daysUntilLabel } from "../data/world-data";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -213,6 +213,17 @@ function buildDynamicContext(
     for (const a of cat.arts) {
       L.push(`- 무공 :: ${a.name} [${a.grade}/${a.type}/${a.weapon}]${a.description ? " — " + a.description : ""}${a.side_effects ? " (부작용: " + a.side_effects + ")" : ""}`);
     }
+  }
+
+  const evs = (save.upcomingEvents || []).filter((e) => e.status !== "done" && e.status !== "cancelled");
+  if (evs.length && save.gameTime) {
+    L.push("\n[다가오는 강호 일정]");
+    for (const e of evs.slice(0, 12)) {
+      const { label } = daysUntilLabel(save.gameTime, e.date);
+      L.push(`- (${e.date.year}년 ${e.date.month}월 ${e.date.day}일, ${label}) ${e.title}${e.location ? " @" + e.location : ""}${e.description ? " — " + truncate(e.description, 120) : ""}`);
+    }
+  } else if (save.gameTime) {
+    L.push("\n[다가오는 강호 일정] (아직 비어있음 — 향후 5년 굵직한 사건 4~7개를 생성해 등록하라)");
   }
 
   if (c.biography_summary) L.push(`\n[일대기 요약] ${c.biography_summary}`);

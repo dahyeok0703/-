@@ -490,3 +490,27 @@ export function formatGameTime(t: { year: number; month: number; day: number; si
   return `강호력 ${t.year}년 ${t.month}월 ${t.day}일 · ${sichenLabel(t.sichen)}`;
 }
 
+// 이 세계는 한 달 30일·1년 12월로 단순화. 절대 일수 변환.
+export function gameDateToAbsDays(d: { year: number; month: number; day: number }): number {
+  return (d.year || 1) * 360 + (d.month || 1) * 30 + (d.day || 1);
+}
+
+// 현재 시점 대비 사건까지의 D-day 라벨.
+export function daysUntilLabel(
+  now: { year: number; month: number; day: number },
+  ev: { year: number; month: number; day: number },
+): { days: number; label: string } {
+  const diff = gameDateToAbsDays(ev) - gameDateToAbsDays(now);
+  let label: string;
+  if (diff < 0) label = "지났음";
+  else if (diff === 0) label = "오늘";
+  else if (diff < 30) label = `${diff}일 후`;
+  else if (diff < 360) label = `${Math.floor(diff / 30)}개월 후`;
+  else {
+    const y = Math.floor(diff / 360);
+    const m = Math.floor((diff % 360) / 30);
+    label = m > 0 ? `${y}년 ${m}개월 후` : `${y}년 후`;
+  }
+  return { days: diff, label };
+}
+

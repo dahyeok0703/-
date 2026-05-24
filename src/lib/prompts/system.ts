@@ -232,6 +232,7 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "eventLogs": [{ "title": "...", "content": "...", "importance": 1-10, "tags": [] }],
   "unresolvedThreads": [{ "title": "...", "content": "...", "importance": 1-10 }],
   "timeAdvance": { "sichen_delta": 0, "day_delta": 0, "month_delta": 0, "year_delta": 0, "set_sichen": "자|축|인|묘|진|사|오|미|신|유|술|해" },
+  "upcomingEventUpdates": [{ "action": "add|update|remove", "id": "기존 수정/삭제 시", "title": "사건명", "description": "한두 줄", "year": 0, "month": 1, "day": 1, "location": "장소", "importance": 1-10, "status": "scheduled|ongoing|done|cancelled" }],
   "summary": "이번 턴 1-2문장 요약"
 }
 
@@ -301,4 +302,11 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
   · 긴 폐관수련·여정·시간 도약: day_delta/month_delta/year_delta 사용.
   · 본문에 시간 흐름이 명시되지 않았다면 sichen_delta 0.
   · set_sichen 은 명시적 시각 전환("새벽이 되었다")에만 사용.
+- 강호 일정(upcomingEventUpdates) — 향후 5년 캘린더를 능동적으로 굴린다:
+  · 현재 컨텍스트의 [다가오는 강호 일정] 목록이 비어있거나 1년 내 일정만 있으면, 향후 5년에 걸친 굵직한 사건 4~7개를 생성해 add 하라.
+  · 예: 후기지수 비무대회, 무림맹 총회, 정파-사파 회담, 문파 개파대전, 영약(공청석유 등) 출현 예고, 마교의 준동 조짐, 천하제일인 선출, 표국 호위 의뢰 모집, 명숙의 회갑연 등.
+  · 각 사건엔 그럴듯한 강호력 날짜(year/month/day)·장소·중요도를 부여한다. 현재 정세·세력 관계에 개연성 있게.
+  · 시간이 흐르며 사건이 가까워지면 본문에서 소문·초대장·준비 정황으로 언급되게 하고, 날짜가 지나면 status 를 done/ongoing 으로 바꾼다.
+  · 유저 행동으로 일정이 바뀌면(취소·연기·앞당김) update/remove 로 반영한다.
+  · 이미 등록된 사건을 중복 add 하지 마라(있으면 update).
 - JSON 외의 어떤 텍스트(인사·설명·코드블록 표기)도 출력하지 마라. 순수 JSON 한 덩어리.`;

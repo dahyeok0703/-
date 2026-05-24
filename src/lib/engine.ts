@@ -216,6 +216,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
     relationships: {},
     gameTime: { year: 1, month: 3, day: 1, sichen: "진" },
     customCatalog: { weapons: [], arts: [] },
+    upcomingEvents: [],
     worldStateOverrides: {
       npc_overrides: {},
       sect_overrides: {},
@@ -621,6 +622,7 @@ function applyExtraction(rawText: string, save: SaveData) {
 
   applyTimeAdvance(save, parsed.timeAdvance);
   normalizeRealmProgress(save);
+  applyUpcomingEventUpdates(save, parsed.upcomingEventUpdates);
 
   if (parsed.summary) {
     save.character.biography_summary =
@@ -832,6 +834,57 @@ function normalizeRealmProgress(save: SaveData) {
       r.awaiting_enlightenment = false;
     }
   }
+}
+
+function applyUpcomingEventUpdates(save: SaveData, updates: ExtractedUpdates["upcomingEventUpdates"]) {
+  if (!save.upcomingEvents) save.upcomingEvents = [];
+  const list = save.upcomingEvents;
+  const now = save.gameTime;
+
+  for (const u of updates || []) {
+    if (u.action === "remove") {
+      if (u.id) save.upcomingEvents = list.filter((e) => e.id !== u.id);
+      else if (u.title) save.upcomingEvents = list.filter((e) => e.title !== u.title);
+      continue;
+    }
+    // add / update — id 또는 제목으로 기존 항목 찾기
+    let ev = u.id ? list.find((e) => e.id === u.id) : list.find((e) => e.title === u.title);
+    if (!ev) {
+      if (!u.title) continue;
+      ev = {
+        id: "ev_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 5),
+        title: u.title,
+        description: "",
+        date: { year: now?.year || 1, month: now?.month || 1, day: now?.day || 1 },
+        importance: 5,
+        status: "scheduled",
+      };
+      list.push(ev);
+    }
+    if (u.title) ev.title = u.title;
+    if (typeof u.description === "string") ev.description = u.description;
+    if (typeof u.year === "number") ev.date.year = Math.max(1, Math.floor(u.year));
+    if (typeof u.month === "number") ev.date.month = clamp(Math.floor(u.month), 1, 12);
+    if (typeof u.day === "number") ev.date.day = clamp(Math.floor(u.day), 1, 30);
+    if (typeof u.location === "string") ev.location = u.location;
+    if (typeof u.importance === "number") ev.importance = clamp(Math.floor(u.importance), 1, 10);
+    if (u.status) ev.status = u.status;
+  }
+
+  // 5년(1800일) 넘게 지난 done/cancelled 정리 + 너무 많으면 컷
+  const nowAbs = now ? now.year * 360 + now.month * 30 + now.day : 0;
+  save.upcomingEvents = save.upcomingEvents.filter((e) => {
+    const evAbs = e.date.year * 360 + e.date.month * 30 + e.date.day;
+    if ((e.status === "done" || e.status === "cancelled") && nowAbs - evAbs > 180) return false;
+    return true;
+  });
+  // 날짜순 정렬, 최대 30개
+  save.upcomingEvents.sort((a, b) => {
+    const aa = a.date.year * 360 + a.date.month * 30 + a.date.day;
+    const bb = b.date.year * 360 + b.date.month * 30 + b.date.day;
+    return aa - bb;
+  });
+  if (save.upcomingEvents.length > 30) save.upcomingEvents = save.upcomingEvents.slice(0, 30);
 }
 
 function clampPct(n: number): number {

@@ -118,6 +118,16 @@ export interface CustomCatalog {
   arts: CustomArtEntry[];
 }
 
+export interface UpcomingEvent {
+  id: string;
+  title: string;
+  description: string;
+  date: { year: number; month: number; day: number };
+  location?: string;
+  importance: number; // 1-10
+  status: "scheduled" | "ongoing" | "done" | "cancelled";
+}
+
 export interface SaveData {
   slot: string;
   createdAt: string;
@@ -127,6 +137,7 @@ export interface SaveData {
   relationships: Record<string, RelationshipEntry>;
   gameTime: GameTime;
   customCatalog?: CustomCatalog;
+  upcomingEvents?: UpcomingEvent[];
   worldStateOverrides: {
     npc_overrides: Record<string, unknown>;
     sect_overrides: Record<string, unknown>;
@@ -191,5 +202,17 @@ export interface ExtractedUpdates {
   eventLogs?: Array<{ title: string; content: string; importance: number; tags?: string[] }>;
   unresolvedThreads?: Array<{ title: string; content: string; importance: number }>;
   timeAdvance?: Record<string, unknown>;
+  upcomingEventUpdates?: Array<{
+    action: "add" | "update" | "remove";
+    id?: string;
+    title?: string;
+    description?: string;
+    year?: number;
+    month?: number;
+    day?: number;
+    location?: string;
+    importance?: number;
+    status?: "scheduled" | "ongoing" | "done" | "cancelled";
+  }>;
   summary?: string;
 }

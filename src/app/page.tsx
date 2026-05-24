@@ -20,6 +20,7 @@ import {
   makeCustomArtId, formatGameTime, sichenPhase,
   STAT_DEFS, getStatBounds, clampStat,
   getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment,
+  daysUntilLabel,
 } from "@/data/world-data";
 
 const MODEL_PRESETS = [
@@ -1166,6 +1167,42 @@ export default function Page() {
             </div>
           </div>
         )}
+
+        {save?.gameTime && (() => {
+          const evs = (save.upcomingEvents || [])
+            .filter((e) => e.status !== "done" && e.status !== "cancelled")
+            .slice(0, 10);
+          return (
+            <div className="bg-ink-900/60 border border-ink-500/40 rounded p-3">
+              <h2 className="font-bold mb-2">다가오는 강호 일정</h2>
+              {evs.length === 0 ? (
+                <p className="text-xs text-ink-300">아직 알려진 일정이 없어요. 강호를 거닐다 보면 소문이 들려옵니다.</p>
+              ) : (
+                <ul className="space-y-2">
+                  {evs.map((e) => {
+                    const { days, label } = daysUntilLabel(save.gameTime, e.date);
+                    const soon = days >= 0 && days < 60;
+                    const ongoing = e.status === "ongoing";
+                    return (
+                      <li key={e.id} className="text-xs border-l-2 pl-2" style={{ borderColor: ongoing ? "#fbbf24" : soon ? "#f87171" : "#5d513a" }}>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-bold text-ink-100">{e.title}</span>
+                          <span className={ongoing ? "text-amber-300 font-bold whitespace-nowrap" : soon ? "text-red-300 font-bold whitespace-nowrap" : "text-ink-300 whitespace-nowrap"}>
+                            {ongoing ? "진행 중" : label}
+                          </span>
+                        </div>
+                        <div className="text-ink-300">
+                          {e.date.year}년 {e.date.month}월 {e.date.day}일{e.location ? ` · ${e.location}` : ""}
+                        </div>
+                        {e.description && <div className="text-ink-300 mt-0.5">{e.description}</div>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          );
+        })()}
 
         <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
           <h2 className="font-bold mb-2">캐릭터</h2>
