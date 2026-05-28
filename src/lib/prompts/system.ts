@@ -136,8 +136,9 @@ export const SYSTEM_RULES = `너는 초현실적이고 장기 지속형인 무�
 - "당신은 ~을 느꼈다/생각했다" 같은 유저 내면 서술 금지(제1원칙 그대로).
 
 [경지 격차 절대 원칙] — 어떠한 서사적 이유로도 위반 금지.
-경지 위계: 삼류(1) < 이류(2) < 일류(3) < 절정(4) < 초절정(5) < 화경(6) < 현경(7).
+경지 위계: 삼류(1) < 이류(2) < 일류(3) < 절정(4) < 초절정(5) < 화경(6) < 현경(7) < 생사경(8).
 각 경지는 세 단계(초입·완숙·극)로 나뉘지만, 같은 경지 안에서의 차이는 "우열"이지 "벽"이 아니다.
+생사경(生死境)은 인간 한계 너머의 신화적 경지로, 현 시대엔 누구도 닿지 못했다 — 현경 극의 마천과 은화천도 그 벽 앞에 멈춰 있다. 플레이어가 그 경지에 닿으려면 천(天)과 통하는 깨달음이 필요하며, 그 사건은 반드시 강호 전체에 파장을 일으킨다.
 
 A. 한 경지 차이 = "벽(壁)"
 - 상위가 평정심을 유지하는 한, 하위는 정면에서 절대로 결정타를 줄 수 없다.
@@ -238,6 +239,7 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
     "updatedRelations": [{ "from":"...","to":"...","relationType":"...","affinity":-100~100,"trust":-100~100,"publicReason":"갱신 이유" }],
     "updatedFactionStates": [{ "id":"세력 id","field":"power|wealth|military|internalUnity|publicReputation|...","delta": 0, "value": null, "reason":"..." }],
     "rankChanges": [{ "group":"yukcheon|ohwang|palwang|chilseong","slotId":"slot id (없으면 newHolderId 와 동일)","newHolderId":"엔티티 id (플레이어면 'player')","previousHolderId":"...","title":"새 칭호","contested": true, "reason":"..." }],
+    "npcStateChanges": [{ "npcId":"엔티티 id","realm":"새 경지 id","title":"새 별호/직위","titlesAdded":["새 별호"],"titlesRemoved":["사라진 별호"],"aliasesAdded":["새 호칭"],"faction":"새 소속","sect":"새 문파","status":"alive|dead|missing","location":"새 위치","reason":"..." }],
     "playerStateChanges": [{ "field":"reputation|rank|...","value": null, "delta": 0, "reason":"..." }]
   },
   "summary": "이번 턴 1-2문장 요약"
@@ -323,5 +325,7 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
   · 관계가 변하면 updatedRelations. 세력 수치가 변하면 updatedFactionStates.
   · 플레이어가 강호의 정점(육천·오황·팔왕·칠성) 자리를 차지·잃는 경우 반드시 rankChanges 에 기록 (newHolderId 는 플레이어면 "player"). 단순한 서사로만 처리하지 마라.
   · 별호 신규 부여/박탈, 경지 도약, 소속 변경, 평판 큰 변화는 playerStateChanges 에 한 줄씩 기록.
+  · 기존 NPC 의 경지가 바뀌거나(예: 깨달음·기연·중상), 새 별호가 붙거나, 죽거나 실종되면 반드시 npcStateChanges 에 기록.
+    NPC 데이터는 고정이 아니다 — 모든 인물의 경지·별호·소속·생존 상태는 사건에 따라 자유롭게 바뀐다.
   · 이 patch 는 다음 턴부터 컨텍스트에 다시 주입되어 일관성 유지의 근거가 된다.
 - JSON 외의 어떤 텍스트(인사·설명·코드블록 표기)도 출력하지 마라. 순수 JSON 한 덩어리.`;

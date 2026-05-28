@@ -10,7 +10,7 @@ import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemori
 import { buildPrompt } from "./prompt-builder";
 import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, callChatStream, expandQueryToKeywords, classifyError, CallResult } from "./openai-browser";
-import { emptyRuntimeDelta, promoteEntityToSupremeRank } from "./world-registry";
+import { emptyRuntimeDelta, promoteEntityToSupremeRank, applyNpcStateChange } from "./world-registry";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
 import {
@@ -946,6 +946,12 @@ function applyWorldPatch(save: SaveData, patch: ExtractedUpdates["worldPatch"]) 
         lastChangedTurn: turn,
       });
     }
+  }
+
+  // NPC 상태 (경지·별호·소속·생존) 런타임 갱신
+  for (const ns of patch.npcStateChanges || []) {
+    if (!ns?.npcId) continue;
+    applyNpcStateChange(save, ns);
   }
 
   // supreme rank 변경

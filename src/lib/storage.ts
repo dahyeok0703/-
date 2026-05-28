@@ -126,6 +126,7 @@ function migrateSaveInPlace(save: any) {
       rumors: [],
       titleChanges: [],
       rankState: [],
+      npcStateOverrides: [],
       playerHistory: [],
       updatedAt: new Date().toISOString(),
     };
@@ -134,7 +135,7 @@ function migrateSaveInPlace(save: any) {
     for (const k of [
       "generatedNpcs","generatedFactions","generatedSects","generatedRegions","generatedItems",
       "generatedMartialArts","generatedRelations","generatedEvents","generatedConflicts",
-      "rumors","titleChanges","rankState","playerHistory",
+      "rumors","titleChanges","rankState","npcStateOverrides","playerHistory",
     ]) {
       if (!Array.isArray(d[k])) d[k] = [];
     }

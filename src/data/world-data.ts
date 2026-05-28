@@ -358,6 +358,9 @@ export const STAGE_PROGRESSION = [
   "hyeongyeong_chuip",   // 19  ← 화경 극 → 현경 초입: 깨달음 필요
   "hyeongyeong_wansuk",  // 20
   "hyeongyeong_geuk",    // 21
+  "saengsa_chuip",       // 22  ← 현경 극 → 생사경 초입: 천(天)의 깨달음 필요. 아직 누구도 도달 못함.
+  "saengsa_wansuk",      // 23
+  "saengsa_geuk",        // 24
 ] as const;
 
 export function getStageRank(stageId: string | null | undefined): number {
@@ -426,6 +429,7 @@ const STAGE_STAT_BOUNDS_BY_TIER: Record<number, { min: number; max: number }> = 
   5: { min: 40, max: 80 },  // 초절정
   6: { min: 55, max: 90 },  // 화경
   7: { min: 70, max: 95 },  // 현경 초입·완숙 (극은 별도)
+  8: { min: 95, max: 9999 },// 생사경 — 인간 한계 너머, 상한 없음
 };
 const CIVILIAN_BOUNDS = { min: 1, max: 15 };
 

@@ -98,11 +98,25 @@
       "stages": [
         {"id": "hyeongyeong_chuip", "name": "현경 초입", "internal_energy_range": [3500, 5000], "notes": "검의(劍意)를 형에서 해방. 검 없이도 검이 있다."},
         {"id": "hyeongyeong_wansuk", "name": "현경 완숙", "internal_energy_range": [5000, 7500], "notes": "산을 가르고 강을 막는다는 것이 비유가 아니다."},
-        {"id": "hyeongyeong_geuk", "name": "현경 극", "internal_energy_range": [7500, 9999], "notes": "신화의 영역. 전설의 끝."}
+        {"id": "hyeongyeong_geuk", "name": "현경 극", "internal_energy_range": [7500, 12000], "notes": "신화의 영역. 생사경의 문턱. 의(意)와 천(天)이 통한다."}
       ],
       "world_population_pct_of_martial": 0.001,
       "typical_age_to_reach": "80세 이상",
-      "notes": "한 시대에 한두 명."
+      "notes": "한 시대에 한두 명. 현 시대엔 현경 극에 이른 자도 둘 있다고 전해진다."
+    },
+    {
+      "id": "saengsa",
+      "tier": 8,
+      "name": "생사경(生死境)",
+      "summary": "생사의 경계를 다룬다. 전설로만 전해지는 인간 너머의 경지.",
+      "stages": [
+        {"id": "saengsa_chuip", "name": "생사경 초입", "internal_energy_range": [12000, 20000], "notes": "삶과 죽음의 호흡이 하나가 된다. 천지를 한 호흡 안에 담는다."},
+        {"id": "saengsa_wansuk", "name": "생사경 완숙", "internal_energy_range": [20000, 35000], "notes": "한 걸음에 천 리, 한 호흡에 백 명의 명운. 인간의 한계를 넘은 자."},
+        {"id": "saengsa_geuk", "name": "생사경 극", "internal_energy_range": [35000, 99999], "notes": "더는 인간이라 부르지 않는다. 신화의 결."}
+      ],
+      "world_population_pct_of_martial": 0,
+      "typical_age_to_reach": "—",
+      "notes": "현 시대엔 누구도 이 경지에 닿지 못했다. 현경 극에 이른 자들도 이 벽 앞에서 멈춰 있다. 전대의 천마조차 이 경지를 엿보았을 뿐. 존재 자체가 강호의 전설."
     }
   ],
   "promotion_rules": {

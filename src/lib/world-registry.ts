@@ -262,6 +262,19 @@ export function getResolvedRegistry(save: SaveData | null): CanonicalEntity[] {
   for (const i of delta.generatedItems || []) {
     pushUnique(out, { id: i.id, kind: "item", name: i.name, aliases: expandAliases(i.name, [i.id]), isRuntime: true, payload: i });
   }
+
+  // NPC 상태 오버라이드를 기존 엔트리에 반영 (별호·realm·소속·생존)
+  for (const ov of delta.npcStateOverrides || []) {
+    const ent = out.find((e) => e.kind === "npc" && e.id === ov.npcId);
+    if (!ent) continue;
+    ent.payload = getNpcCurrentState(save, ov.npcId, ent.payload || {});
+    if (ov.realm) ent.realm = ov.realm;
+    if (ov.faction) ent.faction = ov.faction;
+    if (ov.sect) ent.sect = ov.sect;
+    if (Array.isArray(ov.aliasesAdded)) for (const a of ov.aliasesAdded) if (!ent.aliases.includes(a)) ent.aliases.push(a);
+    if (ov.title && !ent.aliases.includes(ov.title)) ent.aliases.push(ov.title);
+  }
+
   return out;
 }
 
@@ -393,9 +406,79 @@ export function emptyRuntimeDelta(): RuntimeWorldDelta {
     rumors: [],
     titleChanges: [],
     rankState: [],
+    npcStateOverrides: [],
     playerHistory: [],
     updatedAt: new Date().toISOString(),
   };
+}
+
+// NPC 의 정적 데이터에 런타임 오버라이드를 합쳐 현재 상태로 반환.
+// realm/title/별호/소속/생존 등을 자유롭게 갱신 가능 — 정적 데이터는 그대로 유지.
+export function getNpcCurrentState(save: any, npcId: string, base?: any): any {
+  const ov = save?.runtimeDelta?.npcStateOverrides?.find((o: any) => o.npcId === npcId);
+  if (!base && !ov) return null;
+  const out: any = { ...(base || {}) };
+  if (!ov) return out;
+  if (ov.realm) out.realm = ov.realm;
+  if (ov.title) out.title = ov.title;
+  if (ov.faction) out.faction = ov.faction;
+  if (ov.sect) out.sect = ov.sect;
+  if (ov.status) out.status = ov.status;
+  if (ov.location) out.location = ov.location;
+  // titles 배열 병합
+  const titlesBase: string[] = Array.isArray(out.titles) ? out.titles.slice() : [];
+  if (Array.isArray(ov.titlesAdded)) for (const t of ov.titlesAdded) if (!titlesBase.includes(t)) titlesBase.push(t);
+  if (Array.isArray(ov.titlesRemoved)) out.titles = titlesBase.filter((t: string) => !ov.titlesRemoved!.includes(t));
+  else out.titles = titlesBase;
+  // aliases 배열 병합
+  const aliasBase: string[] = Array.isArray(out.aliases) ? out.aliases.slice() : [];
+  if (Array.isArray(ov.aliasesAdded)) for (const a of ov.aliasesAdded) if (!aliasBase.includes(a)) aliasBase.push(a);
+  out.aliases = aliasBase;
+  return out;
+}
+
+export function applyNpcStateChange(
+  save: any,
+  change: {
+    npcId: string;
+    realm?: string;
+    title?: string;
+    titlesAdded?: string[];
+    titlesRemoved?: string[];
+    aliasesAdded?: string[];
+    faction?: string;
+    sect?: string;
+    status?: "alive" | "dead" | "missing";
+    location?: string;
+    reason?: string;
+  },
+) {
+  if (!save.runtimeDelta) save.runtimeDelta = emptyRuntimeDelta();
+  if (!Array.isArray(save.runtimeDelta.npcStateOverrides)) save.runtimeDelta.npcStateOverrides = [];
+  const arr = save.runtimeDelta.npcStateOverrides;
+  let cur = arr.find((x: any) => x.npcId === change.npcId);
+  if (!cur) {
+    cur = { npcId: change.npcId };
+    arr.push(cur);
+  }
+  if (change.realm) cur.realm = change.realm;
+  if (change.title) cur.title = change.title;
+  if (change.faction) cur.faction = change.faction;
+  if (change.sect) cur.sect = change.sect;
+  if (change.status) cur.status = change.status;
+  if (change.location) cur.location = change.location;
+  if (Array.isArray(change.titlesAdded)) {
+    cur.titlesAdded = Array.from(new Set([...(cur.titlesAdded || []), ...change.titlesAdded]));
+  }
+  if (Array.isArray(change.titlesRemoved)) {
+    cur.titlesRemoved = Array.from(new Set([...(cur.titlesRemoved || []), ...change.titlesRemoved]));
+  }
+  if (Array.isArray(change.aliasesAdded)) {
+    cur.aliasesAdded = Array.from(new Set([...(cur.aliasesAdded || []), ...change.aliasesAdded]));
+  }
+  cur.note = change.reason;
+  cur.updatedAtTurn = save.turn;
+  save.runtimeDelta.updatedAt = new Date().toISOString();
 }
 
 // supreme rank 승급/탈락 적용.

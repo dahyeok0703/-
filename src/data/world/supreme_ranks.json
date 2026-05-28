@@ -28,7 +28,8 @@
       "realm": "화경~초절정",
       "title_suffix": "성(星)",
       "description": "육천·오황·팔왕을 제외한 일곱 절대 강자."
-    }
+    },
+    "era_note": "현 시대는 무림 황금기로, 육천 중 둘이 현경 극에 닿았고 마천은 생사경의 벽을 두드린다는 풍문이 돈다. 오황은 전원 화경 완숙 이상, 팔왕·칠성도 평균 한 단계씩 올라간 상태."
   },
   "yukcheon": [
     {
@@ -37,10 +38,10 @@
       "title": "무림맹주",
       "age": 68,
       "sect": "huashan",
-      "realm": "hyeongyeong_chuip",
+      "realm": "hyeongyeong_wansuk",
       "personality": "고결, 명분에 산다. 노쇠해가나 위엄은 여전.",
-      "signature": "이십사수매화검법·자하신공의 현경",
-      "status": "현 무림맹주 11년차. 화산파 출신."
+      "signature": "이십사수매화검법·자하신공의 현경 완숙",
+      "status": "현 무림맹주 11년차. 화산파 출신. 명실상부 정파 최강."
     },
     {
       "id": "buldocheon",
@@ -48,9 +49,9 @@
       "title": "소림 방장",
       "age": 75,
       "sect": "shaolin",
-      "realm": "hyeongyeong_chuip",
+      "realm": "hyeongyeong_wansuk",
       "personality": "자비롭고 묵묵. 결단은 단호.",
-      "signature": "역근경·백보신권의 현경",
+      "signature": "역근경·백보신권의 현경 완숙. 한 손가락에 산이 갈라진다.",
       "status": "소림 방장 30년차."
     },
     {
@@ -59,9 +60,9 @@
       "title": "무당 장문인",
       "age": 71,
       "sect": "wudang",
-      "realm": "hyeongyeong_chuip",
+      "realm": "hyeongyeong_wansuk",
       "personality": "무위(無爲). 말 없으나 한번 움직이면 끝낸다.",
-      "signature": "태극검·순양무극공의 현경"
+      "signature": "태극검·순양무극공의 현경 완숙"
     },
     {
       "id": "magcheon",
@@ -69,10 +70,10 @@
       "title": "천마신교 교주",
       "age": "불명(50대 추정)",
       "sect": "cheonma",
-      "realm": "hyeongyeong_wansuk",
+      "realm": "hyeongyeong_geuk",
       "personality": "신비. 중원에 모습을 거의 드러내지 않음. 현존 최강이라는 풍문.",
-      "signature": "천마신공의 현경 완숙",
-      "status": "60년 전 정마대전 이후 침묵. 정체 불명."
+      "signature": "천마신공의 현경 극. 생사경의 문턱을 두드리고 있다는 소문.",
+      "status": "60년 전 정마대전 이후 침묵. 정체 불명. 현경 극에 이른 두 사람 중 하나라 전해진다."
     },
     {
       "id": "eunhwacheon",
@@ -80,10 +81,10 @@
       "title": "은거기인",
       "age": "약 90세",
       "sect": null,
-      "realm": "hyeongyeong_wansuk",
+      "realm": "hyeongyeong_geuk",
       "personality": "어느 세력에도 속하지 않음. 강호와 거리.",
-      "signature": "현경의 검도. 무공 정체 불명.",
-      "status": "사천 깊은 산 어딘가. 만난 자 거의 없음."
+      "signature": "현경 극의 검도. 무공 정체 불명. 생사경을 엿보았다는 전설.",
+      "status": "사천 깊은 산 어딘가. 만난 자 거의 없음. 현경 극에 이른 두 사람 중 하나."
     },
     {
       "id": "samacheon",
@@ -91,9 +92,9 @@
       "title": "전대 살왕",
       "age": "불명(70대 추정)",
       "sect": null,
-      "realm": "hyeongyeong_chuip",
+      "realm": "hyeongyeong_wansuk",
       "personality": "은퇴한 살수. 살문도 모르는 존재. 표적이 있을 때만 움직인다.",
-      "signature": "암살 무공의 정점",
+      "signature": "암살 무공의 정점. 그가 표적으로 삼으면 화경 고수도 무사하지 못한다.",
       "status": "강호에 등장하지 않은 지 20년. 그러나 살아있다는 풍문."
     }
   ],
@@ -114,7 +115,7 @@
       "title": "사천당가 가주",
       "age": 64,
       "sect": "danga",
-      "realm": "hwagyeong_wansuk",
+      "realm": "hwagyeong_geuk",
       "personality": "음험·가족주의. 외인에 마음을 열지 않음.",
       "signature": "만천화우의 화경. 천하제일 독공."
     },
@@ -124,7 +125,7 @@
       "title": "황보세가 가주",
       "age": 56,
       "sect": "hwangbo",
-      "realm": "hwagyeong_wansuk",
+      "realm": "hwagyeong_geuk",
       "personality": "호방하고 의리. 한번 약속하면 죽음으로 지킨다.",
       "signature": "패왕도법·황보권의 화경"
     },
@@ -134,7 +135,7 @@
       "title": "사도련 사대호법 수좌",
       "age": "약 55",
       "sect": "sadoryeon",
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "잔혹. 사도련에서도 두려움의 대상.",
       "signature": "혈마와 연관된 무공이라는 풍문. 확증 없음."
     },
@@ -156,7 +157,7 @@
       "title": "사도련주",
       "age": 54,
       "sect": "noklim",
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "냉혹·야망. 부하에게는 의리. 외눈.",
       "signature": "녹림 출신 최초의 화경. 도법과 산전기공."
     },
@@ -166,7 +167,7 @@
       "title": "개방 방주",
       "age": 62,
       "sect": "gaebang",
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "늘 취해 있다. 천하 정보가 그를 거친다.",
       "signature": "항룡십팔장·취팔선보"
     },
@@ -176,7 +177,7 @@
       "title": "살문 사대살왕 수좌",
       "age": 47,
       "sect": "salmun",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "표정 없음. 임무가 정해지면 천 리도 쫓아간다.",
       "signature": "탈혼수의 극."
     },
@@ -186,7 +187,7 @@
       "title": "장강수로채 채주",
       "age": 51,
       "sect": "jangang",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "거친 호한. 그러나 배 위에서는 누구보다 침착.",
       "signature": "수룡창법·잠룡수공의 극."
     },
@@ -196,7 +197,7 @@
       "title": "모용세가 가주",
       "age": 49,
       "sect": "moyong",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "온화한 얼굴 뒤 야망. 강호 통일 야망 풍문.",
       "signature": "두전성이·참합지의 극."
     },
@@ -206,7 +207,7 @@
       "title": "소림 수좌호법",
       "age": 65,
       "sect": "shaolin",
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "지혜와 자비. 방장 다음 가는 권위.",
       "signature": "달마검법·반야선공의 화경."
     },
@@ -216,7 +217,7 @@
       "title": "낭인 출신, 무소속",
       "age": 45,
       "sect": null,
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "검 하나로 천하를 떠돈다. 어느 세력에도 속하지 않음.",
       "signature": "자기만의 검로. 무서운 실전 감각."
     },
@@ -226,7 +227,7 @@
       "title": "강남 흑도의 패자",
       "age": 50,
       "sect": "sadoryeon",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "강남 흑도를 다스리는 자. 신비.",
       "signature": "도법과 보법의 절기."
     }
@@ -238,7 +239,7 @@
       "title": "점창파 장문",
       "age": 60,
       "sect": "jeomchang",
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "쾌검의 정점. 말보다 검이 빠르다.",
       "signature": "사일검법의 화경"
     },
@@ -248,7 +249,7 @@
       "title": "아미파 장문",
       "age": 60,
       "sect": "emei",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "단호·청정. 여승의 정점.",
       "signature": "아미구양공·복호장의 극."
     },
@@ -258,7 +259,7 @@
       "title": "하오문주",
       "age": 44,
       "sect": "haomun",
-      "realm": "chojeoljeong_wansuk",
+      "realm": "chojeoljeong_geuk",
       "personality": "교활. 인맥이 천하제일.",
       "signature": "정보가 무기. 무공도 결코 약하지 않다."
     },
@@ -268,7 +269,7 @@
       "title": "약왕문 문주",
       "age": 78,
       "sect": null,
-      "realm": "hwagyeong_chuip",
+      "realm": "hwagyeong_wansuk",
       "personality": "단약(丹藥)의 천하제일. 무공보다 의술.",
       "signature": "독·약·내공의 융합. 자기방어용 화경."
     },
@@ -278,7 +279,7 @@
       "title": "곤륜파 장문",
       "age": 64,
       "sect": "kunlun",
-      "realm": "chojeoljeong_geuk",
+      "realm": "hwagyeong_chuip",
       "personality": "고고하고 거리감 있다. 서역의 위엄.",
       "signature": "운룡대팔식·곤륜검의 극."
     },
@@ -288,7 +289,7 @@
       "title": "제갈세가 가주",
       "age": 55,
       "sect": "jegal",
-      "realm": "chojeoljeong_wansuk",
+      "realm": "chojeoljeong_geuk",
       "personality": "지략의 정점. 무공은 그다음.",
       "signature": "팔진도·와룡진."
     },
@@ -298,7 +299,7 @@
       "title": "기루 천향각 주인 (실은 절세 고수)",
       "age": 42,
       "sect": null,
-      "realm": "chojeoljeong_wansuk",
+      "realm": "chojeoljeong_geuk",
       "personality": "강호의 비밀. 기녀 출신으로 알려졌으나 절세 고수. 중원사화의 일원.",
       "signature": "춤과 검의 융합. 어디서 배웠는지 알려지지 않음."
     }

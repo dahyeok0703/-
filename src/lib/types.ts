@@ -195,6 +195,22 @@ export interface SupremeRankState {
   reason?: string;
 }
 
+// 정적 NPC 의 상태(경지·별호·소속·생존)를 런타임에 덮어쓴다. 데이터는 정적 그대로 두고 표시·검색·프롬프트에선 오버라이드 결과를 사용.
+export interface NpcStateOverride {
+  npcId: string;
+  realm?: string;
+  title?: string;
+  titlesAdded?: string[];
+  titlesRemoved?: string[];
+  aliasesAdded?: string[];
+  faction?: string;
+  sect?: string;
+  status?: "alive" | "dead" | "missing";
+  location?: string;
+  note?: string;
+  updatedAtTurn?: number;
+}
+
 export interface RuntimeWorldDelta {
   generatedNpcs: RuntimeNpc[];
   generatedFactions: Array<{ id: string; name: string; alignment?: string; summary?: string; origin_turn?: number }>;
@@ -208,6 +224,7 @@ export interface RuntimeWorldDelta {
   rumors: RuntimeRumor[];
   titleChanges: Array<{ entityId: string; newTitle?: string; removedTitle?: string; turn: number; reason?: string }>;
   rankState: SupremeRankState[];
+  npcStateOverrides: NpcStateOverride[];
   playerHistory: Array<{ turn: number; entry: string }>;
   updatedAt: string;
 }
@@ -308,6 +325,20 @@ export interface ExtractedUpdates {
       previousHolderId?: string;
       title?: string;
       contested?: boolean;
+      reason?: string;
+    }>;
+    // NPC 경지·별호·소속·생존 상태 런타임 갱신.
+    npcStateChanges?: Array<{
+      npcId: string;
+      realm?: string;
+      title?: string;
+      titlesAdded?: string[];
+      titlesRemoved?: string[];
+      aliasesAdded?: string[];
+      faction?: string;
+      sect?: string;
+      status?: "alive" | "dead" | "missing";
+      location?: string;
       reason?: string;
     }>;
     playerStateChanges?: Array<{ field: string; value?: unknown; delta?: number; reason?: string }>;

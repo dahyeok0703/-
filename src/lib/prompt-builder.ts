@@ -3,7 +3,7 @@ import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
 import { formatGameTime, sichenPhase, STAT_DEFS, getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment, daysUntilLabel } from "../data/world-data";
-import { findEntitiesInText, getResolvedSupremeRanks } from "./world-registry";
+import { findEntitiesInText, getResolvedSupremeRanks, getNpcCurrentState } from "./world-registry";
 import { findRelations, findConflicts } from "./relations-rag";
 
 export interface BuiltPrompt {
@@ -182,18 +182,22 @@ function buildDynamicContext(
         L.push(`- ${h.type === "region" ? "권역" : "도시"} :: ${h.name} — ${truncate(parts, 300)}`);
         continue;
       }
-      // NPC 류 — 풍부한 인물 카드
+      // NPC 류 — 풍부한 인물 카드 (런타임 오버라이드 적용)
       if (h.type.startsWith("npc_")) {
+        const npcId = (p as any).id;
+        const overridden = npcId ? getNpcCurrentState(save, npcId, p) : p;
+        const cur = overridden || p;
         const parts = [
-          p.position && `직위:${p.position}`,
-          p.title && `호:${p.title}`,
-          p.realm && `경지:${p.realm}`,
-          p.age && `${p.age}세`,
-          p.personality && `성격:${p.personality}`,
-          p.specialty && `특기:${p.specialty}`,
-          p.location && `위치:${p.location}`,
-          p.history && `내력:${p.history}`,
-          p.secret && `(비밀)${p.secret}`,
+          cur.position && `직위:${cur.position}`,
+          cur.title && `호:${cur.title}`,
+          cur.realm && `경지:${cur.realm}`,
+          cur.age && `${cur.age}세`,
+          cur.status && cur.status !== "alive" && `상태:${cur.status}`,
+          cur.personality && `성격:${cur.personality}`,
+          cur.specialty && `특기:${cur.specialty}`,
+          cur.location && `위치:${cur.location}`,
+          cur.history && `내력:${cur.history}`,
+          cur.secret && `(비밀)${cur.secret}`,
         ].filter(Boolean).join(" / ");
         L.push(`- 인물 :: ${h.name} — ${truncate(parts, 400)}`);
         continue;
