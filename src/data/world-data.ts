@@ -45,6 +45,9 @@ import legendary from "./world/npcs/legendary_dead.json";
 import wanderers from "./world/npcs/wanderers.json";
 import sectExpansion from "./world/npcs/sect_expansion.json";
 import supremeExtras from "./world/npcs/supreme_extras.json";
+import paeng from "./world/npcs/paeng.json";
+import regionsBulk from "./world/npcs/regions_bulk.json";
+import extrasMisc from "./world/npcs/extras_misc.json";
 
 import characterTemplate from "./save/_templates/character.template.json";
 
@@ -67,6 +70,7 @@ export const NPCS_BY_SECT: Record<string, any> = {
   shaolin, wudang, huashan, jongnam, emei, qingcheng, kunlun, jeomchang,
   kongdong, gaebang, namgung, hwangbo, moyong, danga, jegal,
   noklim, jangang, salmun, haomun, cheonma,
+  paeng,
 };
 
 export const NPCS_EXTRA: Record<string, any> = {
@@ -77,6 +81,8 @@ export const NPCS_EXTRA: Record<string, any> = {
   wanderers,
   sect_expansion: sectExpansion,
   supreme_extras: supremeExtras,
+  regions_bulk: regionsBulk,
+  extras_misc: extrasMisc,
 };
 
 export const CHARACTER_TEMPLATE: any = characterTemplate;
