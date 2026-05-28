@@ -43,6 +43,8 @@ import courtesans from "./world/npcs/courtesans.json";
 import commoners from "./world/npcs/commoners.json";
 import legendary from "./world/npcs/legendary_dead.json";
 import wanderers from "./world/npcs/wanderers.json";
+import sectExpansion from "./world/npcs/sect_expansion.json";
+import supremeExtras from "./world/npcs/supreme_extras.json";
 
 import characterTemplate from "./save/_templates/character.template.json";
 
@@ -73,6 +75,8 @@ export const NPCS_EXTRA: Record<string, any> = {
   commoners,
   legendary_dead: legendary,
   wanderers,
+  sect_expansion: sectExpansion,
+  supreme_extras: supremeExtras,
 };
 
 export const CHARACTER_TEMPLATE: any = characterTemplate;

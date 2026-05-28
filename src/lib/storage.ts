@@ -96,10 +96,50 @@ function setJSON(key: string, value: unknown) {
 }
 
 export function loadSave<T>(fallback: T): T {
-  return getJSON<T>(KEYS.save, fallback);
+  const raw = getJSON<T>(KEYS.save, fallback);
+  // 마이그레이션 — 구버전 세이브 보정
+  if (raw && typeof raw === "object") {
+    migrateSaveInPlace(raw as any);
+  }
+  return raw;
 }
 export function saveSave(data: unknown) {
   setJSON(KEYS.save, data);
+}
+
+function migrateSaveInPlace(save: any) {
+  if (!save) return;
+  if (!save.gameTime) save.gameTime = { year: 1, month: 3, day: 1, sichen: "진" };
+  if (!save.customCatalog) save.customCatalog = { weapons: [], arts: [] };
+  if (!Array.isArray(save.upcomingEvents)) save.upcomingEvents = [];
+  if (!save.runtimeDelta) {
+    save.runtimeDelta = {
+      generatedNpcs: [],
+      generatedFactions: [],
+      generatedSects: [],
+      generatedRegions: [],
+      generatedItems: [],
+      generatedMartialArts: [],
+      generatedRelations: [],
+      generatedEvents: [],
+      generatedConflicts: [],
+      rumors: [],
+      titleChanges: [],
+      rankState: [],
+      playerHistory: [],
+      updatedAt: new Date().toISOString(),
+    };
+  } else {
+    const d = save.runtimeDelta;
+    for (const k of [
+      "generatedNpcs","generatedFactions","generatedSects","generatedRegions","generatedItems",
+      "generatedMartialArts","generatedRelations","generatedEvents","generatedConflicts",
+      "rumors","titleChanges","rankState","playerHistory",
+    ]) {
+      if (!Array.isArray(d[k])) d[k] = [];
+    }
+    if (!d.updatedAt) d.updatedAt = new Date().toISOString();
+  }
 }
 
 export function loadMessages<T>(fallback: T): T {

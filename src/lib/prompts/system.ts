@@ -62,6 +62,14 @@ export const SYSTEM_RULES = `너는 초현실적이고 장기 지속형인 무�
 - 등장은 개연성 있게: 그 지역·세력·정세에 맞는 인물과 사물만 나온다. 사천이면 당가·아미 사람, 마교 영역이면 마인.
 - 같은 인물·사물만 반복 등장시키지 말고 주입된 데이터를 폭넓게 돌려 쓴다.
 
+[세계 데이터 보존 — 일관성]:
+- 이미 존재하는 NPC·단체·지역·무공·사건의 설정을 임의로 바꾸지 마라.
+- 새 설정(인물·단체·지명·무공·아이템·관계·사건·소문·갈등)을 즉석에서 만들 수는 있다. 단 그 내용은 곧 [상태 추출 JSON 의 worldPatch] 로 구조화되어 영구 저장된다.
+- 같은 이름·별호·축약·한자명이 가리키는 것은 항상 같은 엔티티다. 같은 인물을 다음 턴에 다른 인물처럼 묘사하지 마라.
+- 플레이어가 기존 고수를 꺾고 강호가 인정하면 그건 단순한 서사가 아니라 강호 위계(육천·오황·팔왕·칠성)의 실제 변동이다. rankChanges 로 기록되어 상태창에 반영된다.
+- 사망·실종·배신·승급·혼담·비밀 폭로 같은 큰 사건은 반드시 newEvents 에 기록한다.
+- 기존 컨텍스트의 [런타임 생성 데이터] 와 [활성 갈등] 을 일관성 있게 이어 받아라. AI 가 두 턴 전에 만든 인물을 다음 턴에 모르는 척 하지 마라.
+
 [세계관 사실 — 지어내지 마라]:- 너에게 주입된 [강호 개요]·[관련 세계관 정보]·[관련 기억] 안에 있는 사실만 단정해서 말한다.
 - 유저가 특정 인물·집단·문파·개념·사건·지명·무공·물건을 물었는데 컨텍스트에 없으면, 절대 그럴듯하게 만들어내지 마라.
 - 없는 것에 대한 표준 응답 예시(상황에 맞게 변형 가능):
@@ -216,6 +224,22 @@ export const EXTRACTOR_RULES = `너는 무협 게임의 상태 추출기다.
   "unresolvedThreads": [{ "title": "...", "content": "...", "importance": 1-10 }],
   "timeAdvance": { "sichen_delta": 0, "day_delta": 0, "month_delta": 0, "year_delta": 0, "set_sichen": "자|축|인|묘|진|사|오|미|신|유|술|해" },
   "upcomingEventUpdates": [{ "action": "add|update|remove", "id": "기존 수정/삭제 시", "title": "사건명", "description": "한두 줄", "year": 0, "month": 1, "day": 1, "location": "장소", "importance": 1-10, "status": "scheduled|ongoing|done|cancelled" }],
+  "worldPatch": {
+    "newNpcs": [{ "id": "선택", "name": "이름", "aliases": ["별호","축약"], "sect": "id", "faction": "id", "region": "id", "role": "역할", "realm": "경지id", "personality": "...", "specialty": "...", "secret": "비공개", "location": "...", "importance": 1-10 }],
+    "newFactions": [{ "id": "선택", "name": "단체", "alignment": "정파|사파|마교|중립", "summary": "..." }],
+    "newSects": [{ "id": "선택", "name": "문파", "faction": "id", "location": "...", "specialty": "..." }],
+    "newRegions": [{ "id": "선택", "name": "지역", "scope": "권역|도시|마을", "atmosphere": "..." }],
+    "newItems": [{ "id": "선택", "name": "이름", "rarity": "흔함|귀함|진귀|신물|전설", "effect": "..." }],
+    "newMartialArts": [{ "id": "선택", "name": "무공명", "grade": "삼류|이류|일류|절정|초절정|신공", "type": "검법|권법|...", "description": "..." }],
+    "newRelations": [{ "id": "선택", "from": "entity id", "to": "entity id", "relationType": "ally|enemy|rival|master_disciple|family|romantic_interest|political_partner|political_enemy|debt|grudge|hidden|neutral", "affinity": -100~100, "trust": -100~100, "fear": 0-100, "respect": 0-100, "publicReason": "...", "hiddenReason": "...", "knownToPlayer": true }],
+    "newEvents": [{ "id": "선택", "title": "사건명", "description": "...", "date": {"year":0,"month":0,"day":0}, "participants": ["id"], "location": "...", "importance": 1-10 }],
+    "newConflicts": [{ "id": "선택", "title": "갈등명", "type": "political|territorial|martial|economic|romantic|succession|revenge|criminal", "tension": 1-100, "stage": "dormant|emerging|escalating|peak|resolving|resolved", "participants": ["id"], "summary": "..." }],
+    "rumors": [{ "id": "선택", "content": "강호에 도는 소문 한 줄", "about": ["id"], "region": "...", "reliability": 1-100 }],
+    "updatedRelations": [{ "from":"...","to":"...","relationType":"...","affinity":-100~100,"trust":-100~100,"publicReason":"갱신 이유" }],
+    "updatedFactionStates": [{ "id":"세력 id","field":"power|wealth|military|internalUnity|publicReputation|...","delta": 0, "value": null, "reason":"..." }],
+    "rankChanges": [{ "group":"yukcheon|ohwang|palwang|chilseong","slotId":"slot id (없으면 newHolderId 와 동일)","newHolderId":"엔티티 id (플레이어면 'player')","previousHolderId":"...","title":"새 칭호","contested": true, "reason":"..." }],
+    "playerStateChanges": [{ "field":"reputation|rank|...","value": null, "delta": 0, "reason":"..." }]
+  },
   "summary": "이번 턴 1-2문장 요약"
 }
 
@@ -292,4 +316,12 @@ playerUpdates.field 에 사용 가능한 경로(모두 본문에 명시된 변�
   · 시간이 흐르며 사건이 가까워지면 본문에서 소문·초대장·준비 정황으로 언급되게 하고, 날짜가 지나면 status 를 done/ongoing 으로 바꾼다.
   · 유저 행동으로 일정이 바뀌면(취소·연기·앞당김) update/remove 로 반영한다.
   · 이미 등록된 사건을 중복 add 하지 마라(있으면 update).
+- worldPatch — AI 가 응답 중 만들어낸 새 세계 데이터를 영구 저장하는 통로:
+  · 새 NPC·단체·지명·아이템·무공·관계·사건·소문·갈등을 만들었다면 반드시 worldPatch 의 해당 배열에 구조화해서 넣는다.
+  · 같은 인물·물건을 다시 만들지 마라. 한 번 등록된 id/name 은 중복 등록 금지.
+  · 한 인물의 별호·축약·한자명은 aliases 에 모은다. ("한설", "설화", "韓雪" 등을 같은 인물로 묶기 위함.)
+  · 관계가 변하면 updatedRelations. 세력 수치가 변하면 updatedFactionStates.
+  · 플레이어가 강호의 정점(육천·오황·팔왕·칠성) 자리를 차지·잃는 경우 반드시 rankChanges 에 기록 (newHolderId 는 플레이어면 "player"). 단순한 서사로만 처리하지 마라.
+  · 별호 신규 부여/박탈, 경지 도약, 소속 변경, 평판 큰 변화는 playerStateChanges 에 한 줄씩 기록.
+  · 이 patch 는 다음 턴부터 컨텍스트에 다시 주입되어 일관성 유지의 근거가 된다.
 - JSON 외의 어떤 텍스트(인사·설명·코드블록 표기)도 출력하지 마라. 순수 JSON 한 덩어리.`;

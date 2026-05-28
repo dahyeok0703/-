@@ -3,6 +3,8 @@ import { SYSTEM_RULES } from "./prompts/system";
 import { regionDetail, realmDetail, sectDetail, searchWorld, worldPrimer } from "./world";
 import { estimateTokens } from "./tokens";
 import { formatGameTime, sichenPhase, STAT_DEFS, getXpRequiredFor, getNextStageId, nextStageRequiresEnlightenment, daysUntilLabel } from "../data/world-data";
+import { findEntitiesInText, getResolvedSupremeRanks } from "./world-registry";
+import { findRelations, findConflicts } from "./relations-rag";
 
 export interface BuiltPrompt {
   instructions: string;
@@ -224,6 +226,62 @@ function buildDynamicContext(
     }
   } else if (save.gameTime) {
     L.push("\n[다가오는 강호 일정] (아직 비어있음 — 향후 5년 굵직한 사건 4~7개를 생성해 등록하라)");
+  }
+
+  // 텍스트에서 엔티티 추출 → 관계·갈등 RAG
+  const ctxText = userInput + " " + recentMessages.slice(-4).map((m) => m.content).join(" ");
+  const foundEntities = findEntitiesInText(ctxText, save, 20);
+  const relRag = findRelations(save, foundEntities, 18);
+  const cons = findConflicts(save, foundEntities, 6);
+
+  if (relRag.length) {
+    L.push("\n[관련 관계망]");
+    for (const { rel, isRuntime } of relRag) {
+      const tag = isRuntime ? "(런타임)" : "";
+      const num = [
+        rel.affinity != null && `호감 ${rel.affinity}`,
+        rel.trust != null && `신뢰 ${rel.trust}`,
+        rel.fear ? `두려움 ${rel.fear}` : null,
+        rel.respect ? `존경 ${rel.respect}` : null,
+      ].filter(Boolean).join("·");
+      L.push(`- ${rel.from} → ${rel.to} [${rel.relationType}] ${num} ${tag} ${rel.publicReason ? "— " + truncate(rel.publicReason, 180) : ""}`);
+    }
+  }
+
+  if (cons.length) {
+    L.push("\n[활성 갈등]");
+    for (const { conflict: c2, isRuntime } of cons) {
+      const tag = isRuntime ? "(런타임)" : "";
+      L.push(`- ${c2.title} [${c2.type || "?"}/${c2.stage || "?"}/긴장 ${c2.tension || "?"}] ${tag} — ${truncate(c2.publicSummary || c2.summary || "", 220)}`);
+    }
+  }
+
+  // 강호 위계 — 플레이어 등재 시 표시
+  const ranks = getResolvedSupremeRanks(save).filter((m) => m.isPlayer);
+  if (ranks.length) {
+    L.push("\n[플레이어 강호 위계]");
+    for (const m of ranks) {
+      L.push(`- ${m.group}/${m.slotId} :: ${m.title || m.holderName}${m.contested ? " (논란)" : ""}${typeof m.legitimacy === "number" ? ` · 인정도 ${m.legitimacy}` : ""}`);
+    }
+  }
+
+  // 런타임 델타 요약 — 최근 생성 데이터 일부
+  const d = save.runtimeDelta;
+  if (d) {
+    const last = (arr: any[], n: number) => arr.slice(-n);
+    const npcs = last(d.generatedNpcs, 6);
+    const evs = last(d.generatedEvents, 5);
+    const rumors = last(d.rumors, 5);
+    const arts = last(d.generatedMartialArts, 3);
+    const items = last(d.generatedItems, 3);
+    if (npcs.length || evs.length || rumors.length || arts.length || items.length) {
+      L.push("\n[런타임 생성 데이터 — 일관성 유지 필수]");
+      for (const n of npcs) L.push(`- 인물 :: ${n.name}${n.realm ? `/${n.realm}` : ""}${n.sect ? `/${n.sect}` : ""} — ${truncate(n.personality || n.role || n.specialty || "", 120)}`);
+      for (const e of evs) L.push(`- 사건 :: ${e.title}${e.date ? ` (${e.date.year}.${e.date.month}.${e.date.day})` : ""} — ${truncate(e.description || "", 140)}`);
+      for (const r of rumors) L.push(`- 소문 :: ${truncate(r.content, 160)}`);
+      for (const a of arts) L.push(`- 무공 :: ${a.name} [${a.grade || "?"}] — ${truncate(a.description || "", 120)}`);
+      for (const i of items) L.push(`- 물건 :: ${i.name} [${i.rarity || "?"}] — ${truncate(i.effect || "", 120)}`);
+    }
   }
 
   if (c.biography_summary) L.push(`\n[일대기 요약] ${c.biography_summary}`);

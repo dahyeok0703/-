@@ -7,8 +7,9 @@ import {
   getMaxOutputTokens, setMaxOutputTokens,
   clearAllGameData, clearEverythingIncludingKey,
   listBackupSlots, saveBackupSlot, loadBackupSlot, deleteBackupSlot,
-  BackupSlot,
+  BackupSlot, saveSave,
 } from "@/lib/storage";
+import { getResolvedSupremeRanks } from "@/lib/world-registry";
 import {
   getSave, getMessages, getUsage,
   startNewGame, processTurn, regenerateLastResponse, restartGame,
@@ -1311,6 +1312,99 @@ export default function Page() {
             <p className="text-ink-300">캐릭터 없음</p>
           )}
         </div>
+
+        {save?.runtimeDelta && (() => {
+          const d = save.runtimeDelta;
+          const ranks = getResolvedSupremeRanks(save).filter((m: any) => m.isPlayer);
+          const recentEvents = (d.generatedEvents || []).slice(-3).reverse();
+          const recentHistory = (d.playerHistory || []).slice(-3).reverse();
+          if (ranks.length === 0 && recentEvents.length === 0 && recentHistory.length === 0 && (d.generatedNpcs?.length || 0) === 0) return null;
+          return (
+            <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">
+              <h2 className="font-bold mb-2">강호 위계·세계 변화</h2>
+              {ranks.length > 0 && (
+                <div className="mb-2">
+                  <div className="text-xs text-ink-300 mb-1">강호 위계</div>
+                  <ul className="space-y-1 text-xs">
+                    {ranks.map((r: any) => (
+                      <li key={r.group + r.slotId} className="flex justify-between gap-2">
+                        <span className="text-amber-200 font-bold">
+                          {{ yukcheon: "육천", ohwang: "오황", palwang: "팔왕", chilseong: "칠성" }[r.group as string]}
+                          {" · "}{r.title || r.holderName}
+                        </span>
+                        <span className="text-ink-300">
+                          {r.contested ? "논란" : ""}
+                          {typeof r.legitimacy === "number" ? ` 인정 ${r.legitimacy}` : ""}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-xs text-ink-300 mb-2">
+                <div>누적 생성 NPC: <span className="text-ink-100 font-bold">{d.generatedNpcs?.length || 0}</span></div>
+                <div>생성 사건: <span className="text-ink-100 font-bold">{d.generatedEvents?.length || 0}</span></div>
+                <div>새 관계: <span className="text-ink-100 font-bold">{d.generatedRelations?.length || 0}</span></div>
+                <div>소문: <span className="text-ink-100 font-bold">{d.rumors?.length || 0}</span></div>
+              </div>
+              {recentEvents.length > 0 && (
+                <div className="mb-2">
+                  <div className="text-xs text-ink-300 mb-1">최근 세계 변화</div>
+                  <ul className="space-y-0.5 text-xs">
+                    {recentEvents.map((e: any) => (
+                      <li key={e.id} className="truncate">
+                        <span className="text-ink-100">{e.title}</span>
+                        {e.description && <span className="text-ink-300"> — {e.description}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {recentHistory.length > 0 && (
+                <div>
+                  <div className="text-xs text-ink-300 mb-1">플레이어 자취</div>
+                  <ul className="space-y-0.5 text-xs">
+                    {recentHistory.map((h: any, i: number) => (
+                      <li key={i} className="text-ink-300">
+                        턴 {h.turn} — {h.entry}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className="mt-2 flex gap-1 flex-wrap">
+                <button
+                  onClick={() => {
+                    const blob = new Blob([JSON.stringify(save, null, 2)], { type: "application/json" });
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `wuxia_world_${save.character.identity.name || "save"}_${save.turn}.json`;
+                    a.click();
+                  }}
+                  className="px-2 py-0.5 text-xs bg-ink-700 hover:bg-ink-500 hover:text-ink-900 rounded"
+                >
+                  내보내기
+                </button>
+                <button
+                  onClick={() => {
+                    if (!confirm("런타임 생성 데이터(인물·사건·소문 등)를 모두 초기화할까요? 기본 캐릭터·기억은 유지됩니다.")) return;
+                    const next = { ...save, runtimeDelta: {
+                      generatedNpcs: [], generatedFactions: [], generatedSects: [], generatedRegions: [],
+                      generatedItems: [], generatedMartialArts: [], generatedRelations: [], generatedEvents: [],
+                      generatedConflicts: [], rumors: [], titleChanges: [], rankState: [], playerHistory: [],
+                      updatedAt: new Date().toISOString(),
+                    } };
+                    saveSave(next);
+                    refreshAll();
+                  }}
+                  className="px-2 py-0.5 text-xs bg-ink-700 hover:bg-red-900 hover:text-red-100 rounded"
+                >
+                  생성 데이터 초기화
+                </button>
+              </div>
+            </div>
+          );
+        })()}
 
         {save?.customCatalog && (save.customCatalog.weapons.length > 0 || save.customCatalog.arts.length > 0) && (
           <div className="bg-ink-700/30 border border-ink-500/30 rounded p-3">

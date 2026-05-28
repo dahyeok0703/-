@@ -128,6 +128,90 @@ export interface UpcomingEvent {
   status: "scheduled" | "ongoing" | "done" | "cancelled";
 }
 
+// 런타임 세계 델타 — AI 가 만들어낸 새 인물·단체·관계·사건·소문 등을 영구 보존.
+export interface RuntimeNpc {
+  id: string;
+  name: string;
+  aliases?: string[];
+  age?: number | string;
+  faction?: string;
+  sect?: string;
+  region?: string;
+  role?: string;
+  realm?: string;
+  personality?: string;
+  specialty?: string;
+  secret?: string;
+  location?: string;
+  importance?: number;
+  origin_turn?: number;
+  notes?: string;
+}
+
+export interface RuntimeRelation {
+  id: string;
+  from: string;
+  to: string;
+  relationType: string;
+  affinity?: number;
+  trust?: number;
+  fear?: number;
+  respect?: number;
+  publicReason?: string;
+  hiddenReason?: string;
+  knownToPlayer?: boolean;
+  lastChangedTurn?: number;
+}
+
+export interface RuntimeEvent {
+  id: string;
+  title: string;
+  description?: string;
+  date?: { year: number; month: number; day: number };
+  participants?: string[];
+  location?: string;
+  importance?: number;
+  origin_turn?: number;
+}
+
+export interface RuntimeRumor {
+  id: string;
+  content: string;
+  about?: string[];
+  region?: string;
+  reliability?: number;
+  origin_turn?: number;
+}
+
+export interface SupremeRankState {
+  group: "yukcheon" | "ohwang" | "palwang" | "chilseong";
+  slotId: string;
+  currentHolderId: string;
+  previousHolderIds: string[];
+  title?: string;
+  legitimacy?: number;
+  contested?: boolean;
+  changedAtTurn?: number;
+  reason?: string;
+}
+
+export interface RuntimeWorldDelta {
+  generatedNpcs: RuntimeNpc[];
+  generatedFactions: Array<{ id: string; name: string; alignment?: string; summary?: string; origin_turn?: number }>;
+  generatedSects: Array<{ id: string; name: string; faction?: string; location?: string; specialty?: string; origin_turn?: number }>;
+  generatedRegions: Array<{ id: string; name: string; scope?: string; atmosphere?: string; origin_turn?: number }>;
+  generatedItems: Array<{ id: string; name: string; rarity?: string; effect?: string; origin_turn?: number }>;
+  generatedMartialArts: Array<{ id: string; name: string; grade?: string; type?: string; description?: string; origin_turn?: number }>;
+  generatedRelations: RuntimeRelation[];
+  generatedEvents: RuntimeEvent[];
+  generatedConflicts: Array<{ id: string; title: string; type?: string; tension?: number; stage?: string; participants?: string[]; summary?: string; origin_turn?: number }>;
+  rumors: RuntimeRumor[];
+  titleChanges: Array<{ entityId: string; newTitle?: string; removedTitle?: string; turn: number; reason?: string }>;
+  rankState: SupremeRankState[];
+  playerHistory: Array<{ turn: number; entry: string }>;
+  updatedAt: string;
+}
+
 export interface SaveData {
   slot: string;
   createdAt: string;
@@ -138,6 +222,7 @@ export interface SaveData {
   gameTime: GameTime;
   customCatalog?: CustomCatalog;
   upcomingEvents?: UpcomingEvent[];
+  runtimeDelta?: RuntimeWorldDelta;
   worldStateOverrides: {
     npc_overrides: Record<string, unknown>;
     sect_overrides: Record<string, unknown>;
@@ -202,6 +287,31 @@ export interface ExtractedUpdates {
   eventLogs?: Array<{ title: string; content: string; importance: number; tags?: string[] }>;
   unresolvedThreads?: Array<{ title: string; content: string; importance: number }>;
   timeAdvance?: Record<string, unknown>;
+  // WORLD_PATCH: AI 가 응답 중 만들어낸 새 세계 데이터.
+  worldPatch?: {
+    newNpcs?: RuntimeNpc[];
+    newFactions?: Array<{ id?: string; name: string; alignment?: string; summary?: string }>;
+    newSects?: Array<{ id?: string; name: string; faction?: string; location?: string; specialty?: string }>;
+    newRegions?: Array<{ id?: string; name: string; scope?: string; atmosphere?: string }>;
+    newItems?: Array<{ id?: string; name: string; rarity?: string; effect?: string }>;
+    newMartialArts?: Array<{ id?: string; name: string; grade?: string; type?: string; description?: string }>;
+    newRelations?: RuntimeRelation[];
+    newEvents?: RuntimeEvent[];
+    newConflicts?: Array<{ id?: string; title: string; type?: string; tension?: number; stage?: string; participants?: string[]; summary?: string }>;
+    rumors?: Array<{ id?: string; content: string; about?: string[]; region?: string; reliability?: number }>;
+    updatedRelations?: RuntimeRelation[];
+    updatedFactionStates?: Array<{ id: string; field: string; delta?: number; value?: number | string; reason?: string }>;
+    rankChanges?: Array<{
+      group: "yukcheon" | "ohwang" | "palwang" | "chilseong";
+      slotId?: string;
+      newHolderId: string;
+      previousHolderId?: string;
+      title?: string;
+      contested?: boolean;
+      reason?: string;
+    }>;
+    playerStateChanges?: Array<{ field: string; value?: unknown; delta?: number; reason?: string }>;
+  };
   upcomingEventUpdates?: Array<{
     action: "add" | "update" | "remove";
     id?: string;

@@ -10,6 +10,7 @@ import { addMemory, createMemory, recentTextFromMessages, retrieveRelevantMemori
 import { buildPrompt } from "./prompt-builder";
 import { EXTRACTOR_RULES } from "./prompts/system";
 import { callResponses, callChatStream, expandQueryToKeywords, classifyError, CallResult } from "./openai-browser";
+import { emptyRuntimeDelta, promoteEntityToSupremeRank } from "./world-registry";
 import { mockChat, mockExtract } from "./mock";
 import { estimateCostUSD } from "./cost";
 import {
@@ -217,6 +218,7 @@ export function startNewGame(opts: NewGameOptions): SaveData {
     gameTime: { year: 1, month: 3, day: 1, sichen: "진" },
     customCatalog: { weapons: [], arts: [] },
     upcomingEvents: [],
+    runtimeDelta: emptyRuntimeDelta(),
     worldStateOverrides: {
       npc_overrides: {},
       sect_overrides: {},
@@ -623,6 +625,7 @@ function applyExtraction(rawText: string, save: SaveData) {
   applyTimeAdvance(save, parsed.timeAdvance);
   normalizeRealmProgress(save);
   applyUpcomingEventUpdates(save, parsed.upcomingEventUpdates);
+  applyWorldPatch(save, parsed.worldPatch);
 
   if (parsed.summary) {
     save.character.biography_summary =
@@ -834,6 +837,134 @@ function normalizeRealmProgress(save: SaveData) {
       r.awaiting_enlightenment = false;
     }
   }
+}
+
+function rid(prefix: string) {
+  return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+}
+
+// AI 가 만들어낸 새 세계 데이터를 영구 보존.
+function applyWorldPatch(save: SaveData, patch: ExtractedUpdates["worldPatch"]) {
+  if (!save.runtimeDelta) save.runtimeDelta = emptyRuntimeDelta();
+  const d = save.runtimeDelta;
+  const turn = save.turn;
+  if (!patch) return;
+
+  const ensureId = (kind: string, obj: any) => obj.id || rid(kind);
+
+  for (const n of patch.newNpcs || []) {
+    if (!n?.name) continue;
+    const id = n.id || rid("rt_npc");
+    if (!d.generatedNpcs.find((x) => x.id === id || x.name === n.name)) {
+      d.generatedNpcs.push({ ...n, id, origin_turn: turn });
+    }
+  }
+  for (const f of patch.newFactions || []) {
+    if (!f?.name) continue;
+    const id = ensureId("rt_fac", f);
+    if (!d.generatedFactions.find((x) => x.id === id || x.name === f.name)) {
+      d.generatedFactions.push({ ...f, id, origin_turn: turn });
+    }
+  }
+  for (const s of patch.newSects || []) {
+    if (!s?.name) continue;
+    const id = ensureId("rt_sect", s);
+    if (!d.generatedSects.find((x) => x.id === id || x.name === s.name)) {
+      d.generatedSects.push({ ...s, id, origin_turn: turn });
+    }
+  }
+  for (const r of patch.newRegions || []) {
+    if (!r?.name) continue;
+    const id = ensureId("rt_reg", r);
+    if (!d.generatedRegions.find((x) => x.id === id || x.name === r.name)) {
+      d.generatedRegions.push({ ...r, id, origin_turn: turn });
+    }
+  }
+  for (const i of patch.newItems || []) {
+    if (!i?.name) continue;
+    const id = ensureId("rt_item", i);
+    if (!d.generatedItems.find((x) => x.id === id || x.name === i.name)) {
+      d.generatedItems.push({ ...i, id, origin_turn: turn });
+    }
+  }
+  for (const a of patch.newMartialArts || []) {
+    if (!a?.name) continue;
+    const id = ensureId("rt_art", a);
+    if (!d.generatedMartialArts.find((x) => x.id === id || x.name === a.name)) {
+      d.generatedMartialArts.push({ ...a, id, origin_turn: turn });
+    }
+  }
+  for (const rel of patch.newRelations || []) {
+    if (!rel?.from || !rel?.to) continue;
+    const id = rel.id || rid("rt_rel");
+    if (!d.generatedRelations.find((x) => x.id === id || (x.from === rel.from && x.to === rel.to && x.relationType === rel.relationType))) {
+      d.generatedRelations.push({ ...rel, id, lastChangedTurn: turn });
+    }
+  }
+  for (const ev of patch.newEvents || []) {
+    if (!ev?.title) continue;
+    const id = ev.id || rid("rt_ev");
+    if (!d.generatedEvents.find((x) => x.id === id || x.title === ev.title)) {
+      d.generatedEvents.push({ ...ev, id, origin_turn: turn });
+    }
+  }
+  for (const c of patch.newConflicts || []) {
+    if (!c?.title) continue;
+    const id = ensureId("rt_conf", c);
+    if (!d.generatedConflicts.find((x) => x.id === id || x.title === c.title)) {
+      d.generatedConflicts.push({ ...c, id, origin_turn: turn });
+    }
+  }
+  for (const r of patch.rumors || []) {
+    if (!r?.content) continue;
+    const id = r.id || rid("rt_rumor");
+    if (!d.rumors.find((x) => x.id === id || x.content === r.content)) {
+      d.rumors.push({ ...r, id, origin_turn: turn });
+    }
+  }
+
+  // 기존 관계 갱신
+  for (const u of patch.updatedRelations || []) {
+    const found = d.generatedRelations.find(
+      (x) => (u.id && x.id === u.id) || (x.from === u.from && x.to === u.to && x.relationType === u.relationType),
+    );
+    if (found) {
+      Object.assign(found, u, { lastChangedTurn: turn });
+    } else if (u.from && u.to) {
+      d.generatedRelations.push({
+        id: u.id || rid("rt_rel"),
+        from: u.from,
+        to: u.to,
+        relationType: u.relationType || "neutral",
+        affinity: u.affinity,
+        trust: u.trust,
+        fear: u.fear,
+        respect: u.respect,
+        publicReason: u.publicReason,
+        hiddenReason: u.hiddenReason,
+        knownToPlayer: u.knownToPlayer,
+        lastChangedTurn: turn,
+      });
+    }
+  }
+
+  // supreme rank 변경
+  for (const rc of patch.rankChanges || []) {
+    if (!rc?.group || !rc?.newHolderId) continue;
+    promoteEntityToSupremeRank(save, rc.group, rc.slotId || rc.newHolderId, rc.newHolderId, {
+      title: rc.title,
+      reason: rc.reason,
+      contested: rc.contested,
+    });
+  }
+
+  // 플레이어 상태 (간단한 reason 로깅, 실제 필드는 playerUpdates 로 처리되므로 여기는 history 만)
+  for (const ps of patch.playerStateChanges || []) {
+    d.playerHistory.push({ turn, entry: `${ps.field} ${ps.delta != null ? `Δ${ps.delta}` : ps.value} ${ps.reason ? "(" + ps.reason + ")" : ""}`.trim() });
+  }
+  if (d.playerHistory.length > 200) d.playerHistory = d.playerHistory.slice(-200);
+
+  d.updatedAt = new Date().toISOString();
 }
 
 function applyUpcomingEventUpdates(save: SaveData, updates: ExtractedUpdates["upcomingEventUpdates"]) {
